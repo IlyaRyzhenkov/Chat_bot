@@ -1,3 +1,6 @@
+package Event;
+import EventStorage.EventStorage;
+
 public final class Event {
 
     protected final int id;
@@ -12,10 +15,20 @@ public final class Event {
         this.answers = answers;
     }
 
-    public Event reply(String s) throws Exception{
-        for (Answer answer : this.answers)
+    public Event reply(String s){
+        for (Answer answer : this.answers) {
             if (answer.text.compareTo(s) == 0)
                 return EventStorage.getEventById(answer.nextId);
-        throw new Exception("Unknown answer");
+        }
+        return createIncorrectReplyEvent();
+    }
+
+    public String getText(){
+        return text;
+    }
+
+    private Event createIncorrectReplyEvent(){
+        Event newEvent = new Event(100000, "Incorrect Reply", "incorrect reply", answers);
+        return newEvent;
     }
 }

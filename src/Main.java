@@ -1,11 +1,11 @@
-import java.util.Scanner;
+import Game.Game;
+import Game.ConsoleIO;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Tell me your name, stranger.");
-        Scanner scanner = new Scanner(System.in);
-        String name = scanner.nextLine();
-        System.out.println("Hello, " + name + ". Just wait for some time. The program will be continued...");
-
+        ConsoleIO console = new ConsoleIO();
+        Game game = new Game(console);
+        game.startGameAtID(1);
     }
 }
