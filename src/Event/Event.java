@@ -1,10 +1,6 @@
 package Event;
 import EventStorage.EventStorage;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 400951528d676ccc68955dffeee81c942b9316ee
 public final class Event {
 
     protected final int id;

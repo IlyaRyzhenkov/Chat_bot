@@ -1,8 +1,5 @@
 package EventStorage;
-<<<<<<< HEAD
 
-=======
->>>>>>> 400951528d676ccc68955dffeee81c942b9316ee
 import Event.Event;
 
 public class EventStorage {
