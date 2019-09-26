@@ -1,3 +1,5 @@
+package Event;
+
 public class Answer {
     public final String text;
     public final int nextId;

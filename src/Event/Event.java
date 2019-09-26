@@ -1,3 +1,7 @@
+package Event;
+import EventStorage.EventStorage;
+
+
 public final class Event {
 
     protected final int id;

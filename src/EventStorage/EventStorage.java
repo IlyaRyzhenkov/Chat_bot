@@ -1,3 +1,5 @@
+package EventStorage;
+
 import Event.Event;
 
 public class EventStorage {

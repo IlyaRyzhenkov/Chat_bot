@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event id="1" name="">
+  <name>Приветствие</name>
+  <text>
+    Кто ты?
+  </text>
+  <ans>
+  </ans>
+</event>
