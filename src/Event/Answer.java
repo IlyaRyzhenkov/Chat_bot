@@ -2,9 +2,9 @@ package Event;
 
 public class Answer {
     public final String text;
-    public final int nextId;
+    public final String nextId;
 
-    public Answer(String text, int nextId) {
+    public Answer(String text, String nextId) {
         this.text = text;
         this.nextId = nextId;
     }

@@ -1,10 +1,11 @@
 {
   "id": 1,
-  "name": "Приветствие",
-  "text": "Привет! Выебери дверь: 1, 2, 3",
-  "answers": {
-    "1": 2,
-    "2": 3,
-    "3": 4
-  }
+  "name": "РќР°С‡Р°Р»Рѕ РёРіСЂС‹",
+  "text": "вЂ” System activated. Please wait for some time...",
+  "answers": [
+    {
+      "text": "...",
+      "id": "2"
+    }
+  ]
 }
