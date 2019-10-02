@@ -19,7 +19,7 @@ public final class Event {
     }
 
     public Event reply(int n) throws IOException, ParseException{
-        if ((this.answers.length <= n) && (n > 0))
+        if ((this.answers.length >= n) && (n > 0))
            return EventStorage.getEventById(this.answers[n - 1].nextId);
         return createIncorrectReplyEvent();
     }
