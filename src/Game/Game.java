@@ -18,7 +18,7 @@ public class Game {
             sendEventText(current_event);
             sendEventAnswers(current_event);
             String reply = getReply();
-            current_event = current_event.reply(Integer.parseInt(reply));
+            current_event = current_event.reply(reply);
         }
     }
 

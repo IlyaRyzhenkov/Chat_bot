@@ -18,7 +18,13 @@ public final class Event {
         this.answers = answers;
     }
 
-    public Event reply(int n) throws IOException, ParseException{
+    public Event reply(String reply) throws IOException, ParseException{
+        int n;
+        try {
+            n = Integer.parseInt(reply);
+        } catch (NumberFormatException e){
+            return createIncorrectReplyEvent();
+        }
         if ((this.answers.length >= n) && (n > 0))
            return EventStorage.getEventById(this.answers[n - 1].nextId);
         return createIncorrectReplyEvent();
