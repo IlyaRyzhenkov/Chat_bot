@@ -6,10 +6,10 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 
 public class Game {
-    private ConsoleIO console;
+    private IOinterface console;
 
-    public Game(IOinterface consoleIO){
-        consoleIO = console;
+    public Game(IOinterface io){
+        console = io;
     }
 
     public void startGameAtID(String id)throws IOException, ParseException{
