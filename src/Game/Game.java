@@ -8,8 +8,8 @@ import java.io.IOException;
 public class Game {
     private ConsoleIO console;
 
-    public Game(ConsoleIO consoleIO){
-        console = consoleIO;
+    public Game(IOinterface consoleIO){
+        consoleIO = console;
     }
 
     public void startGameAtID(String id)throws IOException, ParseException{
