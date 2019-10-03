@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, ParseException{
+    public static void main(String[] args){
         ConsoleIO console = new ConsoleIO();
         Game game = new Game(console);
         game.startGameAtID("1");

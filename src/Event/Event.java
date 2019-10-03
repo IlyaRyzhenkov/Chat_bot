@@ -18,7 +18,7 @@ public final class Event {
         this.answers = answers;
     }
 
-    public Event reply(String reply) throws IOException, ParseException{
+    public Event reply(String reply){
         int n;
         try {
             n = Integer.parseInt(reply);

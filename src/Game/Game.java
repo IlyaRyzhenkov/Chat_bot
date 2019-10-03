@@ -12,7 +12,7 @@ public class Game {
         console = io;
     }
 
-    public void startGameAtID(String id)throws IOException, ParseException{
+    public void startGameAtID(String id){
         Event current_event = EventStorage.getEventById(id);
         while(true){
             sendEventText(current_event);
