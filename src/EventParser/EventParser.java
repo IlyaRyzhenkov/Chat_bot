@@ -12,9 +12,9 @@ import java.io.*;
 public class EventParser {
 
     public static Event parse(String path){
+        StringBuilder builder = new StringBuilder();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(path)));
-            StringBuilder builder = new StringBuilder();
             String currentLine;
             while ((currentLine = bufferedReader.readLine()) != null)
                 builder.append(currentLine);
