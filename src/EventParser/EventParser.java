@@ -6,10 +6,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.File;
+
+import java.io.*;
 
 public class EventParser {
 
@@ -20,6 +18,9 @@ public class EventParser {
             String currentLine;
             while ((currentLine = bufferedReader.readLine()) != null)
                 builder.append(currentLine);
+        } catch (IOException e){return null;}
+
+        try {
             JSONParser parser = new JSONParser();
             JSONObject parsedEvent = (JSONObject) parser.parse(builder.toString());
             JSONArray parsedAnswers = (JSONArray) parsedEvent.get("answers");
@@ -30,8 +31,7 @@ public class EventParser {
             }
             return new Event(parsedEvent.get("id").toString(), parsedEvent.get("name").toString(),
                     parsedEvent.get("text").toString(), answers);
-        }catch (ParseException e){return null;}
-        catch (IOException e) {return null;}
+        } catch (ParseException e) {return null;}
     }
 
     /*public static void create(String pathToStorage)
