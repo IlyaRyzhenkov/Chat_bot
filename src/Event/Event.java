@@ -29,4 +29,11 @@ public final class Event {
     public String getText(){
         return text;
     }
+
+    public String getAnswers(){
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < answers.length; i++)
+            builder.append(i + 1).append(". ").append(answers[i].text).append('\n');
+        return builder.toString();
+    }
 }

@@ -28,7 +28,7 @@ public class GameTest {
         Game game = new Game(console, storage);
         game.startGameAtID("1");
 
-        String[] expected = {"1", "1. 1", "2", "1. 1", incorrect_reply_message, "1. 1", incorrect_reply_message, "1. 1"};
+        String[] expected = {"1", "1. 1\n", "2", "1. 1\n", incorrect_reply_message, "1. 1\n", incorrect_reply_message, "1. 1\n"};
 
         assertEquals(console.recived_replies.size(), expected.length);
         for(int i = 0; i < expected.length; i++){
@@ -51,7 +51,7 @@ public class GameTest {
         Game game = new Game(console, storage);
         game.startGameAtID("1");
 
-        String[] expected = {"event_text", "1. answer1_text", "2. answer2_text", "3. answer3_text"};
+        String[] expected = {"event_text", "1. answer1_text\n2. answer2_text\n3. answer3_text\n"};
         assertEquals(console.recived_replies.size(), expected.length);
         for(int i = 0; i < expected.length; i++){
             assertEquals(console.recived_replies.get(i), expected[i]);

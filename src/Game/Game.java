@@ -43,8 +43,7 @@ public class Game {
     }
 
     private void sendEventAnswers(Event event){
-        for(int i = 0; i < event.answers.length; i++)
-            console.sendMessage((i+1) + ". " + event.answers[i].text);
+        console.sendMessage(event.getAnswers());
     }
 
     private String getReply(){
