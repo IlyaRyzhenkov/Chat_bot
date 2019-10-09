@@ -2,12 +2,9 @@ package EventStorage;
 
 import EventParser.EventParser;
 import Event.Event;
-import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
-
-public class EventStorage {
-    public static Event getEventById(String id)
+public class EventStorage implements ILoader{
+    public Event getEventById(String id)
     {
         EventParser parser;
         try {
