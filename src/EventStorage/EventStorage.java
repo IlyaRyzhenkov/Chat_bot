@@ -9,11 +9,12 @@ import java.io.IOException;
 public class EventStorage {
     public static Event getEventById(String id)
     {
-        return EventParser.parse("events\\" + id + ".json");
-    }
-    public static Event getEvent()
-    {
-        return getEventById("1");
+        EventParser parser;
+        try {
+            parser = new EventParser("events\\" + id + ".json");
+        } catch (IOException e){ return null; }
+        catch (ParseException e) { return null; }
+        return new Event(parser.getID(), parser.getName(), parser.getText(), parser.getAnswers());
     }
 
 }

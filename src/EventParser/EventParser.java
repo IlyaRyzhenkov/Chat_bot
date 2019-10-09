@@ -13,25 +13,40 @@ import java.io.File;
 
 public class EventParser {
 
-    public static Event parse(String path){
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(path)));
-            StringBuilder builder = new StringBuilder();
-            String currentLine;
-            while ((currentLine = bufferedReader.readLine()) != null)
-                builder.append(currentLine);
-            JSONParser parser = new JSONParser();
-            JSONObject parsedEvent = (JSONObject) parser.parse(builder.toString());
-            JSONArray parsedAnswers = (JSONArray) parsedEvent.get("answers");
-            Answer answers[] = new Answer[parsedAnswers.size()];
-            for (int i = 0; i < parsedAnswers.size(); i++) {
-                answers[i] = new Answer((String) ((JSONObject) parsedAnswers.get(i)).get("text"),
-                        (String) ((JSONObject) parsedAnswers.get(i)).get("id"));
-            }
-            return new Event(parsedEvent.get("id").toString(), parsedEvent.get("name").toString(),
-                    parsedEvent.get("text").toString(), answers);
-        }catch (ParseException e){return null;}
-        catch (IOException e) {return null;}
+    private JSONObject parsedEvent;
+
+    public EventParser(String path) throws ParseException, IOException{
+        BufferedReader bufferedReader;
+        StringBuilder builder = new StringBuilder();
+        JSONParser parser = new JSONParser();
+        bufferedReader = new BufferedReader(new FileReader(new File(path)));
+        String currentLine;
+        while ((currentLine = bufferedReader.readLine()) != null)
+            builder.append(currentLine);
+        parsedEvent = (JSONObject) parser.parse(builder.toString());
+
+    }
+
+    public String getID(){
+        return parsedEvent.get("id").toString();
+    }
+
+    public String getName(){
+        return parsedEvent.get("name").toString();
+    }
+
+    public String getText(){
+        return parsedEvent.get("text").toString();
+    }
+
+    public Answer[] getAnswers(){
+        JSONArray parsedAnswers = (JSONArray) parsedEvent.get("answers");
+        Answer answers[] = new Answer[parsedAnswers.size()];
+        for (int i = 0; i < parsedAnswers.size(); i++) {
+            answers[i] = new Answer((String) ((JSONObject) parsedAnswers.get(i)).get("text"),
+                    (String) ((JSONObject) parsedAnswers.get(i)).get("id"));
+        }
+        return answers;
     }
 
     /*public static void create(String pathToStorage)
