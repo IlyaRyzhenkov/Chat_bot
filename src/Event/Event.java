@@ -1,8 +1,4 @@
 package Event;
-import EventStorage.EventStorage;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 
 public final class Event {
 
@@ -18,24 +14,19 @@ public final class Event {
         this.answers = answers;
     }
 
-    public Event reply(String reply){
+    public String reply(String reply){
         int n;
         try {
             n = Integer.parseInt(reply);
         } catch (NumberFormatException e){
-            return createIncorrectReplyEvent();
+            return "Incorrect";
         }
         if ((this.answers.length >= n) && (n > 0))
-           return EventStorage.getEventById(this.answers[n - 1].nextId);
-        return createIncorrectReplyEvent();
+           return this.answers[n - 1].nextId;
+        return "Incorrect";
     }
 
     public String getText(){
         return text;
-    }
-
-    private Event createIncorrectReplyEvent(){
-        Event newEvent = new Event("100000", "Incorrect Reply", "incorrect reply", answers);
-        return newEvent;
     }
 }
