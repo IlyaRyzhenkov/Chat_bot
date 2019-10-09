@@ -43,8 +43,8 @@ public class EventParser {
         JSONArray parsedAnswers = (JSONArray) parsedEvent.get("answers");
         Answer answers[] = new Answer[parsedAnswers.size()];
         for (int i = 0; i < parsedAnswers.size(); i++) {
-            answers[i] = new Answer((String) ((JSONObject) parsedAnswers.get(i)).get("text"),
-                    (String) ((JSONObject) parsedAnswers.get(i)).get("id"));
+            answers[i] = new Answer((((JSONObject) parsedAnswers.get(i)).get("text")).toString(),
+                    (((JSONObject) parsedAnswers.get(i)).get("id")).toString());
         }
         return answers;
     }

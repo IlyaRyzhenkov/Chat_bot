@@ -1,0 +1,11 @@
+{
+  "id": "test/incorrect_text_file",
+  "name": "TestName",
+  "ERROR": "This evemt was made for test EventParser. It's not useful.",
+  "answers": [
+    {
+      "text": "Ok",
+      "id": "test/test"
+    }
+  ]
+}
