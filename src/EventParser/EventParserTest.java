@@ -75,8 +75,8 @@ public class EventParserTest {
         Answer[] actual = parser.getAnswers();
         assertEquals(expected.length, actual.length);
         for(int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i].nextId, actual[i].nextId);
-            assertEquals(expected[i].text, actual[i].text);
+            assertEquals(expected[i].getNextId(), actual[i].getNextId());
+            assertEquals(expected[i].getText(), actual[i].getText());
         }
     }
 

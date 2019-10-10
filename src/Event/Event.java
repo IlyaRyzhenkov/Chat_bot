@@ -22,7 +22,7 @@ public final class Event {
             return "Incorrect";
         }
         if ((this.answers.length >= n) && (n > 0))
-           return this.answers[n - 1].nextId;
+           return this.answers[n - 1].getNextId();
         return "Incorrect";
     }
 
@@ -30,7 +30,7 @@ public final class Event {
         StringBuilder builder = new StringBuilder();
         builder.append(text).append('\n');
         for(int i = 0; i < answers.length; i++)
-            builder.append(i + 1).append(". ").append(answers[i].text).append('\n');
+            builder.append(i + 1).append(". ").append(answers[i].getText()).append('\n');
         return builder.toString();
     }
 
