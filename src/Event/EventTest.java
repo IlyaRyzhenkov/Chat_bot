@@ -26,24 +26,13 @@ public class EventTest {
     }
 
     @Test
-    public void getText() {
+    public void testToString() {
         Event event = new Event("1", "name", "text", new Answer[]{
                 new Answer("ans1", "2"),
                 new Answer("ans2", "3"),
                 new Answer("ans3", "4")});
-        String actual = event.getText();
-        String expected = "text";
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void getAnswers() {
-        Event event = new Event("1", "name", "text", new Answer[]{
-                new Answer("ans1", "2"),
-                new Answer("ans2", "3"),
-                new Answer("ans3", "4")});
-        String actual = event.getAnswers();
-        String expected = "1. ans1\n2. ans2\n3. ans3\n";
+        String actual = event.toString();
+        String expected = "text\n1. ans1\n2. ans2\n3. ans3\n";
         assertEquals(expected, actual);
     }
 }

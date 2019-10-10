@@ -5,7 +5,7 @@ public final class Event {
     private final String id;
     private final String name;
     private final String text;
-    public final Answer[] answers;
+    private final Answer[] answers;
 
     public Event(String id, String name, String text, Answer[] answers) {
         this.id = id;
@@ -26,14 +26,15 @@ public final class Event {
         return "Incorrect";
     }
 
-    public String getText(){
-        return text;
-    }
-
-    public String getAnswers(){
+    public String toString(){
         StringBuilder builder = new StringBuilder();
+        builder.append(text).append('\n');
         for(int i = 0; i < answers.length; i++)
             builder.append(i + 1).append(". ").append(answers[i].text).append('\n');
         return builder.toString();
+    }
+
+    public Answer[] getAnswers(){
+        return answers;
     }
 }

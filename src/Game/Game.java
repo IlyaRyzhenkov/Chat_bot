@@ -20,8 +20,7 @@ public class Game {
                 break;
             }
 
-            sendEventText(current_event);
-            sendEventAnswers(current_event);
+            sendEventInfo(current_event);
             String reply = getReply();
             String next_event_id = current_event.reply(reply);
 
@@ -35,15 +34,11 @@ public class Game {
     }
 
     private Event createIncorrectReplyEvent(){
-        return new Event("100000", "Incorrect Reply", "incorrect reply", current_event.answers);
+        return new Event("100000", "Incorrect Reply", "incorrect reply", current_event.getAnswers());
     }
 
-    private void sendEventText(Event event){
-        console.sendMessage(event.getText());
-    }
-
-    private void sendEventAnswers(Event event){
-        console.sendMessage(event.getAnswers());
+    private void sendEventInfo(Event event){
+        console.sendMessage(event.toString());
     }
 
     private String getReply(){

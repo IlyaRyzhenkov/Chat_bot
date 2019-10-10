@@ -16,5 +16,4 @@ public class EventStorage implements ILoader{
         catch (ParseException e) { return null; }
         return new Event(parser.getID(), parser.getName(), parser.getText(), parser.getAnswers());
     }
-
 }
