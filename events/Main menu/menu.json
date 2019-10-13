@@ -1,0 +1,25 @@
+{
+  "id": "Main menu/menu",
+  "name": "Main menu",
+  "text": "Главное меню:",
+  "importance": false,
+  "type": "simple",
+  "parent": true,
+  "answers": [
+    {
+      "text": "Новая игра",
+      "id": "Main menu/new_game",
+      "dependencies": []
+    },
+    {
+      "text": "Загрузить игру",
+      "id": "Main menu/load",
+      "dependencies": [],
+    },
+    {
+      "text": "Выход",
+      "id": "Main menu/exit",
+      "dependencies": [],
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "Exceptions/cant_read_file",
+  "name": "Can't read file",
+  "text": "ERROR: Невозможно найти или прочитать необходимый для игры файл.",
+  "importance": false,
+  "parent": true,
+  "type": "exception",
+  "answers": [
+    {
+      "text": "Нажмите что-нибудь, чтобы продолжить...",
+      "id": "Main menu/menu",
+      "dependencies": []
+    }
+  ]
+}

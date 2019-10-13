@@ -1,6 +1,6 @@
 package Game;
 
-import Event.Event;
+import Event.SimpleEvent;
 import EventStorage.ILoader;
 
 import java.util.HashMap;
@@ -8,13 +8,13 @@ import java.util.Map;
 
 
 public class TestStorage implements ILoader {
-    private Map<String, Event> events = new HashMap<String, Event>();
+    private Map<String, SimpleEvent> events = new HashMap<String, SimpleEvent>();
 
-    public void addEvent(String id, Event event){
+    public void addEvent(String id, SimpleEvent event){
         events.put(id, event);
     }
 
-    public Event getEventById(String str) {
+    public SimpleEvent getEventById(String str) {
         return events.getOrDefault(str, null);
     }
 }

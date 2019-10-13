@@ -1,0 +1,20 @@
+{
+  "id": "Main menu/load",
+  "name": "Load game",
+  "text": "Загрузка:",
+  "importance": true,
+  "parent": false,
+  "type": "any_answer",
+  "answers": [
+    {
+      "text": "<Введите путь к файлу сохранения>",
+      "id": "Main menu/ask_load",
+      "dependencies": []
+    },
+    {
+      "text": "Назад",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

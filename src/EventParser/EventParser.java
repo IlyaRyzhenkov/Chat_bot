@@ -1,6 +1,5 @@
 package EventParser;
 
-import Event.Event;
 import Event.Answer;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -10,6 +9,7 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.File;
+import java.util.HashMap;
 
 public class EventParser {
 
@@ -24,27 +24,53 @@ public class EventParser {
         while ((currentLine = bufferedReader.readLine()) != null)
             builder.append(currentLine);
         parsedEvent = (JSONObject) parser.parse(builder.toString());
-
     }
 
+    private String getStringParam(String key) { return parsedEvent.get(key).toString(); }
+
     public String getID(){
-        return parsedEvent.get("id").toString();
+        return getStringParam("id");
     }
 
     public String getName(){
-        return parsedEvent.get("name").toString();
+        return getStringParam("name");
     }
 
     public String getText(){
-        return parsedEvent.get("text").toString();
+        return getStringParam("text");
     }
+
+    public String getType() {
+        return getStringParam("type");
+    }
+
+    public boolean isImportant() {
+        return Boolean.parseBoolean(getStringParam("importance"));
+    }
+
+    public boolean isParent() {
+        return Boolean.parseBoolean(getStringParam("parent"));
+    }
+
+
 
     public Answer[] getAnswers(){
         JSONArray parsedAnswers = (JSONArray) parsedEvent.get("answers");
         Answer answers[] = new Answer[parsedAnswers.size()];
         for (int i = 0; i < parsedAnswers.size(); i++) {
-            answers[i] = new Answer((((JSONObject) parsedAnswers.get(i)).get("text")).toString(),
-                    (((JSONObject) parsedAnswers.get(i)).get("id")).toString());
+            HashMap<String, String> dependencies = new HashMap<String, String>();
+            JSONArray parsedDependencies = (JSONArray) ((JSONObject)parsedAnswers.get(i)).get("dependencies");
+            for (int j = 0; j < parsedDependencies.size(); j++) {
+                dependencies.put(
+                        ((JSONObject)((JSONObject) parsedDependencies.get(j)).get("id")).toString(),
+                        ((JSONObject)((JSONObject) parsedDependencies.get(j)).get("answer")).toString()
+                );
+            }
+            answers[i] = new Answer(
+                    (((JSONObject) parsedAnswers.get(i)).get("text")).toString(),
+                    (((JSONObject) parsedAnswers.get(i)).get("id")).toString(),
+                    dependencies
+            );
         }
         return answers;
     }

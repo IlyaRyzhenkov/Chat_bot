@@ -1,6 +1,6 @@
 package Game;
 
-public interface IOinterface {
+public interface IOInterface {
     void sendMessage(String str);
 
     String getMessage();

@@ -1,0 +1,15 @@
+{
+  "id": "Exceptions/damaged_file",
+  "name": "Damaged file",
+  "text": "ERROR: Необходимый для игры файл повреждён.",
+  "importance": false,
+  "parent": true,
+  "type": "exception",
+  "answers": [
+    {
+      "text": "Нажмите что-нибудь, чтобы продолжить...",
+      "id": "Main menu/menu",
+      "dependencies": []
+    }
+  ]
+}

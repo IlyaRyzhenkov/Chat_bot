@@ -6,6 +6,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -28,8 +30,7 @@ public class EventParserTest {
     }
 
     @Test
-    public void getIncorrectFileID()
-    {
+    public void getIncorrectFileID() {
         EventParser parser = getParser("events/test/incorrect_id_file.json");
         e.expect(NullPointerException.class);
         e.expectMessage(not(equalTo("")));
@@ -71,11 +72,11 @@ public class EventParserTest {
     public void getCorrectFileAnswers() {
         EventParser parser = getParser("events/test/correct_file.json");
         Answer[] expected = new Answer[1];
-        expected[0] = new Answer("Ok", "test/test");
+        expected[0] = new Answer("Ok", "test/test", new HashMap<>());
         Answer[] actual = parser.getAnswers();
         assertEquals(expected.length, actual.length);
         for(int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i].getNextId(), actual[i].getNextId());
+            assertEquals(expected[i].getId(), actual[i].getId());
             assertEquals(expected[i].getText(), actual[i].getText());
         }
     }

@@ -2,16 +2,18 @@ package Event;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
-public class EventTest {
+public class SimpleEventTest {
     private String incorrect_reply_id = "Incorrect";
     @Test
     public void testReply() {
-        Event event = new Event("1", "1", "1", new Answer[]{
-                new Answer("1", "2"),
-                new Answer("2", "3"),
-                new Answer("3", "4")});
+        SimpleEvent event = new SimpleEvent("1", "1", "1", new Answer[]{
+                new Answer("1", "2", new HashMap<>()),
+                new Answer("2", "3", new HashMap<>()),
+                new Answer("3", "4", new HashMap<>())}, false, false);
         String[] actual = new String[5];
         actual[0] = event.reply("1");
         actual[1] = event.reply("2");
@@ -27,10 +29,10 @@ public class EventTest {
 
     @Test
     public void testToString() {
-        Event event = new Event("1", "name", "text", new Answer[]{
-                new Answer("ans1", "2"),
-                new Answer("ans2", "3"),
-                new Answer("ans3", "4")});
+        SimpleEvent event = new SimpleEvent("1", "name", "text", new Answer[]{
+                new Answer("ans1", "2", new HashMap<>()),
+                new Answer("ans2", "3", new HashMap<>()),
+                new Answer("ans3", "4", new HashMap<>())}, false, false);
         String actual = event.toString();
         String expected = "text\n1. ans1\n2. ans2\n3. ans3\n";
         assertEquals(expected, actual);

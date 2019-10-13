@@ -1,0 +1,20 @@
+{
+  "id": "Main menu/ask_load",
+  "name": "Ask load",
+  "text": "Загрузить файл сохранения: %Main menu/load%?",
+  "importance": false,
+  "parent": false,
+  "type": "load_game",
+  "answers": [
+    {
+      "text": "Да",
+      "id": "reserved",
+      "dependencies": []
+    },
+    {
+      "text": "Нет",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

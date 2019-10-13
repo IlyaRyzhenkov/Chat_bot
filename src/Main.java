@@ -12,6 +12,6 @@ public class Main {
         ConsoleIO console = new ConsoleIO();
         ILoader storage = new EventStorage();
         Game game = new Game(console, storage);
-        game.startGameAtID("1");
+        game.startGameAtID("Main menu/menu");
     }
 }

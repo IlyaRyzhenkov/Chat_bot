@@ -1,0 +1,20 @@
+{
+  "id": "Main menu/new_game",
+  "name": "New game",
+  "text": "Начать новую игру?",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "Да",
+      "id": "Chapter 0. Introduction/0",
+      "dependencies": []
+    },
+    {
+      "text": "Нет",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 package Game;
 import java.util.Scanner;
 
-public class ConsoleIO implements IOinterface{
+public class ConsoleIO implements IOInterface {
     private Scanner scanner;
 
     public ConsoleIO(){

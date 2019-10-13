@@ -1,0 +1,15 @@
+{
+  "id": "Chapter 0. Introduction/1",
+  "name": "Начало игры",
+  "text": "Голос:\n— Система активирована. Пожалуйста, подождите какое-то время.",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "Далее",
+      "id": "Chapter 0. Introduction/2",
+      "dependencies": []
+    }
+  ]
+}

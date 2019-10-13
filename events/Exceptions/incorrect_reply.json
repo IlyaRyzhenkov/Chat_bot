@@ -1,0 +1,15 @@
+{
+  "id": "Exceptions/incorrect_reply",
+  "name": "Incorrect reply",
+  "text": "ERROR: Неправильный ответ, попробуйте ещё раз:",
+  "importance": false,
+  "parent": false,
+  "type": "exception",
+  "answers": [
+    {
+      "text": "Нажмите что-нибудь, чтобы продолжить...",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

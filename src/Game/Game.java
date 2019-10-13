@@ -1,40 +1,47 @@
 package Game;
-import Event.Event;
+import Event.*;
 import EventStorage.ILoader;
+import Player.Player;
+
+import java.util.Stack;
 
 public class Game {
-    private IOinterface console;
+    private IOInterface console;
     private ILoader storage;
-    private Event current_event;
+    private Event currentEvent;
+    private final Stack<String> parentIDs;
+    private final Player player;
 
-    public Game(IOinterface io, ILoader loader){
+    public Game(IOInterface io, ILoader loader){
         console = io;
         storage = loader;
+        this.parentIDs = new Stack<String>();
+        this.player = new Player();
     }
 
     public void startGameAtID(String id){
-        current_event = storage.getEventById(id);
+        currentEvent = storage.getEventById(id);
         while(true){
 
-            if(current_event == null){
+            sendEventInfo(currentEvent);
+            String reply = getReply();
+
+            if(currentEvent.isImportant()) {
+                player.remember(currentEvent.getId(), reply);
+            }
+            String nextEventId = currentEvent.reply(reply);
+            if(nextEventId.isEmpty()) {
+                nextEventId = parentIDs.pop();
+            }
+            Event nextEvent = storage.getEventById(nextEventId);
+            if(nextEvent == null){
                 break;
             }
-
-            sendEventInfo(current_event);
-            String reply = getReply();
-            String next_event_id = current_event.reply(reply);
-
-            if(next_event_id.equals("Incorrect")){
-                current_event = createIncorrectReplyEvent();
+            if((currentEvent.isParent())||(nextEvent.getClass() == ExceptionEvent.class)) {
+                this.parentIDs.push(currentEvent.getId());
             }
-            else {
-                current_event = storage.getEventById(next_event_id);
-            }
+            currentEvent = nextEvent;
         }
-    }
-
-    private Event createIncorrectReplyEvent(){
-        return new Event("100000", "Incorrect Reply", "incorrect reply", current_event.getAnswers());
     }
 
     private void sendEventInfo(Event event){

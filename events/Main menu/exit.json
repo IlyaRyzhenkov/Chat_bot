@@ -1,0 +1,20 @@
+{
+  "id": "Main menu/exit",
+  "name": "Exit",
+  "text": "Вы уверены, что хотите выйти?",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "Да",
+      "id": "exit",
+      "dependencies": []
+    },
+    {
+      "text": "Нет",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}
