@@ -1,16 +1,11 @@
 {
   "id": "Main menu/load",
   "name": "Load game",
-  "text": "Загрузка:",
+  "text": "Введите путь к файлу сохранения:",
   "importance": true,
   "parent": false,
   "type": "any_answer",
   "answers": [
-    {
-      "text": "<Введите путь к файлу сохранения>",
-      "id": "Main menu/ask_load",
-      "dependencies": []
-    },
     {
       "text": "Назад",
       "id": "",
