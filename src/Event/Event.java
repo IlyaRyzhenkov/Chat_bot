@@ -27,6 +27,8 @@ public abstract class Event {
         return builder.toString();
     }
 
+    public String getText() { return this.text; }
+
     public String getId() { return this.id; }
 
     public String getName() { return this.name; }
