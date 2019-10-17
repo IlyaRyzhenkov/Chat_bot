@@ -12,7 +12,7 @@ public class AnyAnswerEvent extends Event {
         try {
             n = Integer.parseInt(reply);
         } catch (NumberFormatException e) {
-
         }
+        return "";
     }
 }

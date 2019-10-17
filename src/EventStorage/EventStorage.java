@@ -23,7 +23,6 @@ public class EventStorage implements ILoader{
                         parser.isImportant(), parser.isParent());
             case "exception":
                 return new ExceptionEvent(parser.getID(), parser.getName(), parser.getText(), parser.getAnswers());
-
         }
         return getEventById("Exception/damaged_file");
     }

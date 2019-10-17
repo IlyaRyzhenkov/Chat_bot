@@ -8,7 +8,7 @@ public class ExceptionEvent extends Event {
 
     @Override
     public String reply(String reply) {
-        return getAnswers()[0].getId();
+        return "";
     }
 
 }
