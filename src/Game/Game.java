@@ -97,8 +97,10 @@ public class Game {
         console.sendMessage("Введите имя файла");
         String filename2 = console.getMessage();
         GameInfo info = save_loader.loadGame(filename2);
-        parentIDs = info.getIDstack();
-        player.setImportantData(info.getPlayerData());
-        startGameAtID(info.getEventToStart());
+        if (info != null) {
+            parentIDs = info.getIDstack();
+            player.setImportantData(info.getPlayerData());
+            startGameAtID(info.getEventToStart());
+        }
     }
 }
