@@ -20,4 +20,8 @@ public class Player {
     public String recall(String id) {
         return importantData.get(id);
     }
+
+    public void setImportantData(HashMap<String, String> data){
+        importantData = data;
+    }
 }

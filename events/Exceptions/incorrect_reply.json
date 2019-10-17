@@ -5,11 +5,5 @@
   "importance": false,
   "parent": false,
   "type": "exception",
-  "answers": [
-    {
-      "text": "Нажмите что-нибудь, чтобы продолжить...",
-      "id": "",
-      "dependencies": []
-    }
-  ]
+  "answers": []
 }

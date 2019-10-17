@@ -2,6 +2,8 @@ package Game;
 
 import Event.SimpleEvent;
 import Event.Answer;
+import SaveLoader.AbstractSaveLoader;
+import SaveLoader.ISaveLoader;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import static org.junit.Assert.*;
 
 public class GameTest {
     private String incorrect_reply_message = "incorrect reply";
+    private ISaveLoader loader = new AbstractSaveLoader();
 
     @Test
     public void testIncorrectReplies() {
@@ -27,7 +30,7 @@ public class GameTest {
         storage.addEvent("2", new SimpleEvent("2", "2", "2",
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
 
-        Game game = new Game(console, storage);
+        Game game = new Game(console, storage, loader);
         game.startGameAtID("1");
 
         String[] expected = {"1", "1. 1\n", "2", "1. 1\n", incorrect_reply_message, "1. 1\n", incorrect_reply_message, "1. 1\n"};
@@ -50,7 +53,7 @@ public class GameTest {
                 new Answer("answer2_text", "-1", new HashMap<>()),
                 new Answer("answer3_text", "-1", new HashMap<>())}, false, false));
 
-        Game game = new Game(console, storage);
+        Game game = new Game(console, storage, loader);
         game.startGameAtID("1");
 
         String[] expected = {"event_text", "1. answer1_text\n2. answer2_text\n3. answer3_text\n"};
@@ -67,7 +70,7 @@ public class GameTest {
         Test1IO console = new Test1IO(messages);
 
         TestStorage storage = new TestStorage();
-        Game game = new Game(console, storage);
+        Game game = new Game(console, storage, loader);
         game.startGameAtID("1");
 
         assertEquals(console.received_replies.size(), 0);
