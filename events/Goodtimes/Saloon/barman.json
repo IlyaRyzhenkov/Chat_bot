@@ -1,0 +1,15 @@
+{
+  "id": "Goodtimes/Saloon/barman",
+  "name": "Бармен в салуне Гудтаймс",
+  "text": "Рок Снейк:\n— Хей! Добро пожаловать в Салун#903. Меня зовут Рок Снейк.",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "— Привет.",
+      "id": "Goodtimes/Saloon/Barman/0",
+      "dependencies": []
+    }
+  ]
+}

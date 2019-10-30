@@ -14,7 +14,7 @@ public class TestStorage implements ILoader {
         events.put(id, event);
     }
 
-    public SimpleEvent getEventById(String str) {
+    public SimpleEvent getEventById(String str, HashMap<String, String> data) {
         return events.getOrDefault(str, null);
     }
 }

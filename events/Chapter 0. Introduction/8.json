@@ -1,0 +1,20 @@
+{
+  "id": "Chapter 0. Introduction/6",
+  "name": "Первый взгляд на мир",
+  "text": "Билли Уойлиш:\n— Постарайтесь вспомнить ваше имя.",
+  "importance": true,
+  "parent": false,
+  "type": "any_answer",
+  "answers": [
+    {
+      "text": "default",
+      "id": "Chapter 0. Introduction/7",
+      "dependencies": []
+    },
+    {
+      "text": "",
+      "id": "Chapter 0. Introduction/8",
+      "dependencies": []
+    }
+  ]
+}

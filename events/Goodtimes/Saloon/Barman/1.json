@@ -1,0 +1,15 @@
+{
+  "id": "Goodtimes/Saloon/Barman/1",
+  "name": "Салун#903",
+  "text": "Рок Снейк:\n— Да, это Салун#903. И я горжусь этим названием! Чего ещё ты ожидал от робота?..",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "— Понял.",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

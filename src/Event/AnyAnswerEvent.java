@@ -12,10 +12,12 @@ public class AnyAnswerEvent extends Event {
         String lowerReply = reply.toLowerCase();
         String defaultID = "";
         for (Answer answer: answers) {
+            if(answer.getText().toLowerCase().compareTo("default") == 0) {
+                defaultID = answer.getId();
+                continue;
+            }
             if(answer.getText().toLowerCase().compareTo(lowerReply) == 0)
                 return answer.getId();
-            if(answer.getText().toLowerCase().compareTo("default") == 0)
-                defaultID = answer.getId();
         }
         return defaultID;
     }

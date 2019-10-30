@@ -1,0 +1,31 @@
+{
+  "id": "Goodtimes/Saloon/Barman/0",
+  "name": "Бармен в салуне Гудтаймс",
+  "text": "Рок Снейк:\n— Чем могу помочь?",
+  "importance": false,
+  "parent": true,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "— Салун#903?",
+      "id": "Goodtimes/Saloon/Barman/1",
+      "dependencies": []
+    },
+    {
+      "text": "— Мне нужен Двуствольный Джонни.",
+      "id": "Goodtimes/Saloon/Barman/2",
+      "dependencies": []
+    },
+    {
+      "text": "— Расскажи о себе.",
+      "id": "Goodtimes/Saloon/Barman/3",
+      "dependencies": []
+    },
+
+    {
+      "text": "— До скорого!",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

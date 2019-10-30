@@ -1,0 +1,20 @@
+{
+  "id": "Goodtimes/Saloon/Barman/5",
+  "name": "Перезапуск",
+  "text": "Рок Снейк:\n— Никто не знает, что это, но теперь время отсчитывается от Перезапуска. Если тебе интересно, то сейчас 30 июля 1428 года.",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "— Великая Дорога?",
+      "id": "Goodtimes/Saloon/Barman/4",
+      "dependencies": []
+    },
+    {
+      "text": "— Поговорим о чём-нибудь другом.",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

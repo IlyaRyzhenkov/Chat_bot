@@ -27,7 +27,7 @@ public class Game {
 
     public void startGameAtID(String id){
         isGameRunning = true;
-        currentEvent = storage.getEventById(id);
+        currentEvent = storage.getEventById(id, this.player.getImportantData());
         String nextEventId = "";
         while(isGameRunning){
 
@@ -44,7 +44,7 @@ public class Game {
             if(nextEventId.isEmpty()) {
                 nextEventId = parentIDs.pop();
             }
-            Event nextEvent = storage.getEventById(nextEventId);
+            Event nextEvent = storage.getEventById(nextEventId, this.player.getImportantData());
             if(nextEvent == null){
                 break;
             }
