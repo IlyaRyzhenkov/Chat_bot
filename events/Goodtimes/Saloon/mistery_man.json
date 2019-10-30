@@ -1,0 +1,20 @@
+{
+  "id": "Goodtimes/Saloon/mistery_man",
+  "name": "Незнакомец в плаще",
+  "text": "Незнакомец в плаще:\n— Я не настроен разговаривать.",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "— Почему же?",
+      "id": "Goodtimes/Mystery Man/1",
+      "dependencies": []
+    },
+    {
+      "text": "Уйти",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

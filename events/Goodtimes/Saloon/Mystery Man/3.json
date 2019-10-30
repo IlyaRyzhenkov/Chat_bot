@@ -1,0 +1,15 @@
+{
+  "id": "Goodtimes/Saloon/Mystery Man/3",
+  "name": "Незнакомец в плаще. 3",
+  "text": "Незнакомец в плаще ловит вашу руку, второй рукой достаёт из-под плаща револьвер и простреливает вам голову.",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "Далее",
+      "id": "Main menu/loose_game",
+      "dependencies": []
+    }
+  ]
+}

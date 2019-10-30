@@ -1,0 +1,15 @@
+{
+  "id": "Main menu/loose_game",
+  "name": "Проигрышь",
+  "text": "Вы проиграли.",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "В главное меню",
+      "id": "Main menu/menu",
+      "dependencies": []
+    }
+  ]
+}

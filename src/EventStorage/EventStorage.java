@@ -5,6 +5,8 @@ import EventParser.EventParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EventStorage implements ILoader{
@@ -19,18 +21,35 @@ public class EventStorage implements ILoader{
         catch (ParseException e) { return getEventById("Exceptions/damaged_file", playerData); }
         String type = parser.getType();
         String text = complementTextWithData(parser.getText(), playerData);
+        Answer[] answers = filterAnswersWithData(parser.getAnswers(), playerData);
 
         switch (type) {
             case "simple":
-                return new SimpleEvent(parser.getID(), parser.getName(), text, parser.getAnswers(),
-                        parser.isImportant(), parser.isParent());
+                return new SimpleEvent(parser.getID(), parser.getName(), text, answers, parser.isImportant(),
+                        parser.isParent());
             case "any_answer":
-                return new AnyAnswerEvent(parser.getID(), parser.getName(), text, parser.getAnswers(),
-                        parser.isImportant(), parser.isParent());
+                return new AnyAnswerEvent(parser.getID(), parser.getName(), text, answers, parser.isImportant(),
+                        parser.isParent());
             case "exception":
-                return new ExceptionEvent(parser.getID(), parser.getName(), text, parser.getAnswers());
+                return new ExceptionEvent(parser.getID(), parser.getName(), text, answers);
         }
         return getEventById("Exception/damaged_file", playerData);
+    }
+
+    private static Answer[] filterAnswersWithData(Answer[] answers, HashMap<String, String> data) {
+        ArrayList<Answer> result = new ArrayList<Answer>();
+        for(Answer answer: answers) {
+            boolean flag = true;
+            HashMap<String, String> dependencies = answer.getDependencies();
+            for(String key: dependencies.keySet()) {
+                if(!((data.containsKey(key))&&(data.get(key).compareTo(dependencies.get(key)) == 0))) {
+                    flag = false;
+                }
+            }
+            if (flag)
+                result.add(answer);
+        }
+        return result.toArray(new Answer[result.size()]);
     }
 
     private static String complementTextWithData(String text, HashMap<String, String> data) {

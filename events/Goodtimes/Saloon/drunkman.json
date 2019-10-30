@@ -1,0 +1,15 @@
+{
+  "id": "Goodtimes/Saloon/barman",
+  "name": "Завсегдатай",
+  "text": "Мужчина:\n— Прости, приятель, мы не в настроении трепаться. Поговори лучше с барменом",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "— Хорошо.",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

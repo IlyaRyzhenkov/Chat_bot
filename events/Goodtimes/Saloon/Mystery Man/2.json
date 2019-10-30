@@ -1,0 +1,20 @@
+{
+  "id": "Goodtimes/Saloon/Mystery Man/2",
+  "name": "Незнакомец в плаще. 2",
+  "text": "Незнакомец в плаще:\n— ...",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "Помохать перед лицом у незнакомца",
+      "id": "Goodtimes/Mystery Man/3",
+      "dependencies": []
+    },
+    {
+      "text": "Уйти",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

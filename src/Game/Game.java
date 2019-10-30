@@ -28,8 +28,8 @@ public class Game {
     public void startGameAtID(String id){
         isGameRunning = true;
         currentEvent = storage.getEventById(id, this.player.getImportantData());
-        String nextEventId = "";
         while(isGameRunning){
+            String nextEventId = "";
 
             sendEventInfo(currentEvent);
             String reply = getReply();
@@ -42,7 +42,8 @@ public class Game {
                 nextEventId = currentEvent.reply(reply);
             }
             if(nextEventId.isEmpty()) {
-                nextEventId = parentIDs.pop();
+                currentEvent = storage.getEventById(parentIDs.pop(), this.player.getImportantData());
+                continue;
             }
             Event nextEvent = storage.getEventById(nextEventId, this.player.getImportantData());
             if(nextEvent == null){

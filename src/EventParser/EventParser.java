@@ -62,8 +62,8 @@ public class EventParser {
             JSONArray parsedDependencies = (JSONArray) ((JSONObject)parsedAnswers.get(i)).get("dependencies");
             for (int j = 0; j < parsedDependencies.size(); j++) {
                 dependencies.put(
-                        ((JSONObject)((JSONObject) parsedDependencies.get(j)).get("id")).toString(),
-                        ((JSONObject)((JSONObject) parsedDependencies.get(j)).get("answer")).toString()
+                        (((JSONObject) parsedDependencies.get(j)).get("id")).toString(),
+                        (((JSONObject) parsedDependencies.get(j)).get("answer")).toString()
                 );
             }
             answers[i] = new Answer(
