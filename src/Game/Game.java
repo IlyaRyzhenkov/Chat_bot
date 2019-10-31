@@ -104,4 +104,12 @@ public class Game {
             startGameAtID(info.getEventToStart());
         }
     }
+
+    public Stack<String> getParentIDs() {
+        return this.parentIDs;
+    }
+
+    public Player getPlayer() {
+        return this.player;
+    }
 }
