@@ -9,10 +9,12 @@ import java.util.Stack;
 public class AbstractSaveLoader implements ISaveLoader {
     public String savedFilename;
     public GameInfo savedGameInfo;
+    public boolean isGameSaved = false;
 
     public void saveGame(String filename, GameInfo gameData) {
         savedFilename = filename;
         savedGameInfo = gameData;
+        isGameSaved = true;
     }
 
     public GameInfo loadGame(String filename) {

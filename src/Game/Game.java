@@ -43,7 +43,10 @@ public class Game {
                 nextEventId = currentEvent.reply(reply);
             }
             if(nextEventId.isEmpty()) {
-                currentEvent = storage.getEventById(parentIDs.pop(), this.player.getImportantData());
+                if(!parentIDs.empty())
+                    currentEvent = storage.getEventById(parentIDs.pop(), this.player.getImportantData());
+                else
+                    stopGame();
                 continue;
             }
             Event nextEvent = storage.getEventById(nextEventId, this.player.getImportantData());
@@ -116,10 +119,6 @@ public class Game {
             player.setImportantData(info.getPlayerData());
             startGameAtID(info.getEventToStart());
         }
-    }
-
-    public Stack<String> getParentIDs() {
-        return this.parentIDs;
     }
 
     public Player getPlayer() {

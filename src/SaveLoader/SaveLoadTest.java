@@ -18,8 +18,7 @@ public class SaveLoadTest {
     public void SaveGame()
     {
         ArrayList<String> messages = new ArrayList<String>();
-        messages.add("load");
-        messages.add("filename");
+        messages.add("1");
         messages.add("save");
         messages.add("test1");
         AbstractSaveLoader loader = new AbstractSaveLoader();
@@ -27,12 +26,16 @@ public class SaveLoadTest {
 
         storage.addEvent("1", new SimpleEvent("1", "1", "1",
                 new Answer[]{new Answer("1", "2", new HashMap<>())}, false, false));
+        storage.addEvent("2", new SimpleEvent("2", "2", "2",
+                new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
         Game.IOInterface console = new Game.Test1IO(messages);
         Game.Game game = new Game.Game(console, storage, loader);
         game.startGameAtID("1");
+
+        assertTrue("error game not saved", loader.isGameSaved);
         assertEquals("error wrong filename", loader.savedFilename, "test1");
-        assertFalse("error wrong stack", loader.savedGameInfo.getIDstack().empty());
-        assertEquals("error wrong event to start", loader.savedGameInfo.getEventToStart(), "1");
-        assertFalse("error wrong player info", loader.savedGameInfo.getPlayerData().isEmpty());
+        assertTrue("error wrong stack", loader.savedGameInfo.getIDstack().empty());
+        assertEquals("error wrong event to start", loader.savedGameInfo.getEventToStart(), "2");
+        assertTrue("error wrong player info", loader.savedGameInfo.getPlayerData().isEmpty());
     }
 }
