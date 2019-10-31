@@ -1,5 +1,6 @@
 package Game;
 
+import Event.ExceptionEvent;
 import Event.SimpleEvent;
 import Event.Answer;
 import SaveLoader.AbstractSaveLoader;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 public class GameTest {
-    private String incorrect_reply_message = "incorrect reply";
+    private String incorrect_reply_message = "exp\n1. 1";
     private ISaveLoader loader = new AbstractSaveLoader();
 
     @Test
@@ -20,7 +21,9 @@ public class GameTest {
         ArrayList<String> messages = new ArrayList<String>();
         messages.add("1");
         messages.add("2");
+        messages.add("3");
         messages.add("abc");
+        messages.add("23");
         messages.add("1");
         Test1IO console = new Test1IO(messages);
 
@@ -29,12 +32,15 @@ public class GameTest {
                 new Answer[]{new Answer("1", "2", new HashMap<>())}, false, false));
         storage.addEvent("2", new SimpleEvent("2", "2", "2",
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
+        storage.addEvent("incorrect_reply", new ExceptionEvent("incorrect_reply", "exp", "exp",
+                new Answer[]{new Answer("1", "1", new HashMap<>())}));
 
         Game game = new Game(console, storage, loader);
         game.startGameAtID("1");
 
-        String[] expected = {"1", "1. 1\n", "2", "1. 1\n", incorrect_reply_message, "1. 1\n", incorrect_reply_message, "1. 1\n"};
-
+        String[] expected = {"1\n1. 1\n", "2\n1. 1\n", incorrect_reply_message, "1. 1\n", incorrect_reply_message, "1. 1\n"};
+        for (int i = 0; i < console.received_replies.size(); i++)
+            System.out.print(console.received_replies.get(i));
         assertEquals(console.received_replies.size(), expected.length);
         for(int i = 0; i < expected.length; i++){
             assertEquals(console.received_replies.get(i), expected[i]);
@@ -56,23 +62,10 @@ public class GameTest {
         Game game = new Game(console, storage, loader);
         game.startGameAtID("1");
 
-        String[] expected = {"event_text", "1. answer1_text\n2. answer2_text\n3. answer3_text\n"};
+        String[] expected = {"event_text\n1. answer1_text\n2. answer2_text\n3. answer3_text\n"};
         assertEquals(console.received_replies.size(), expected.length);
         for(int i = 0; i < expected.length; i++){
             assertEquals(console.received_replies.get(i), expected[i]);
         }
-    }
-
-    @Test
-    public void testStartWithWrongId(){
-        ArrayList<String> messages = new ArrayList<String>();
-        messages.add("1");
-        Test1IO console = new Test1IO(messages);
-
-        TestStorage storage = new TestStorage();
-        Game game = new Game(console, storage, loader);
-        game.startGameAtID("1");
-
-        assertEquals(console.received_replies.size(), 0);
     }
 }

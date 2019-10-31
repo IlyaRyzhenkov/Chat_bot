@@ -5,6 +5,7 @@ import Player.Player;
 import SaveLoader.GameInfo;
 import SaveLoader.ISaveLoader;
 
+import java.util.HashMap;
 import java.util.Stack;
 
 public class Game {
@@ -54,6 +55,18 @@ public class Game {
             }
             currentEvent = nextEvent;
         }
+    }
+
+    public Stack<String> getParentIDs()
+    {
+        Stack<String> nstack = new Stack<String>();
+        nstack.addAll(parentIDs);
+        return nstack;
+    }
+
+    public HashMap<String, String> getPlayerData()
+    {
+        return player.getImportantData();
     }
 
     private boolean handleMessage(String message){
