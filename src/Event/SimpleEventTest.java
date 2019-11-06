@@ -7,7 +7,6 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 public class SimpleEventTest {
-    private String incorrect_reply_id = "Incorrect";
     @Test
     public void testReply() {
         SimpleEvent event = new SimpleEvent("1", "1", "1", new Answer[]{
@@ -20,6 +19,7 @@ public class SimpleEventTest {
         actual[2] = event.reply("3");
         actual[3] = event.reply("4");
         actual[4] = event.reply("abc");
+        String incorrect_reply_id = "Exceptions/incorrect_reply";
         String[] expected = {"2", "3", "4", incorrect_reply_id, incorrect_reply_id};
 
         for(int i = 0; i < 5; i++){
