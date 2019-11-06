@@ -30,41 +30,44 @@ public class Game {
         isGameRunning = true;
         currentEvent = storage.getEventById(id, this.player.getImportantData());
         while(isGameRunning){
-            String nextEventId = "";
-
-            sendEventInfo(currentEvent);
-            String reply = getReply();
-
-            if(currentEvent.isImportant()) {
-                player.remember(currentEvent.getId(), reply);
-            }
-
-            if (!handleMessage(reply)) {
-                nextEventId = currentEvent.reply(reply);
-            }
-            if(nextEventId.isEmpty()) {
-                if(!parentIDs.empty())
-                    currentEvent = storage.getEventById(parentIDs.pop(), this.player.getImportantData());
-                else
-                    stopGame();
-                continue;
-            }
-            Event nextEvent = storage.getEventById(nextEventId, this.player.getImportantData());
-            if(nextEvent == null){
-                break;
-            }
-            if((currentEvent.isParent())||(nextEvent.getClass() == ExceptionEvent.class)) {
-                this.parentIDs.push(currentEvent.getId());
-            }
-            currentEvent = nextEvent;
+            makeEventIteration();
         }
     }
 
-    public Stack<String> getParentIDs()
-    {
-        Stack<String> nstack = new Stack<String>();
-        nstack.addAll(parentIDs);
-        return nstack;
+    public void makeEventIteration(){
+        String nextEventId = "";
+
+        sendEventInfo(currentEvent);
+        String reply = getReply();
+        if(reply == null)
+            return;
+
+        if(currentEvent.isImportant()) {
+            player.remember(currentEvent.getId(), reply);
+        }
+
+        if (!handleMessage(reply)) {
+            nextEventId = currentEvent.reply(reply);
+        }
+        if(nextEventId.isEmpty()) {
+            if(!parentIDs.empty())
+                currentEvent = storage.getEventById(parentIDs.pop(), this.player.getImportantData());
+            else
+                stopGame();
+            return;
+        }
+        Event nextEvent = storage.getEventById(nextEventId, this.player.getImportantData());
+        if(nextEvent == null){
+            return;
+        }
+        if((currentEvent.isParent())||(nextEvent.getClass() == ExceptionEvent.class)) {
+            this.parentIDs.push(currentEvent.getId());
+        }
+        currentEvent = nextEvent;
+    }
+
+    public Stack<String> getParentIDs(){
+        return parentIDs;
     }
 
     public HashMap<String, String> getPlayerData()

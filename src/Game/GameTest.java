@@ -13,7 +13,7 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 public class GameTest {
-    private String incorrect_reply_message = "exp\n1. 1";
+    private String incorrect_reply_message = "exp\n1. 1\n";
     private ISaveLoader loader = new AbstractSaveLoader();
 
     @Test
@@ -25,6 +25,7 @@ public class GameTest {
         messages.add("abc");
         messages.add("23");
         messages.add("1");
+        messages.add("exit");
         Test1IO console = new Test1IO(messages);
 
         TestStorage storage = new TestStorage();
@@ -32,13 +33,14 @@ public class GameTest {
                 new Answer[]{new Answer("1", "2", new HashMap<>())}, false, false));
         storage.addEvent("2", new SimpleEvent("2", "2", "2",
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
-        storage.addEvent("incorrect_reply", new ExceptionEvent("incorrect_reply", "exp", "exp",
+        storage.addEvent("Exceptions/incorrect_reply", new ExceptionEvent("Exceptions/incorrect_reply", "exp", "exp",
                 new Answer[]{new Answer("1", "1", new HashMap<>())}));
 
         Game game = new Game(console, storage, loader);
         game.startGameAtID("1");
 
-        String[] expected = {"1\n1. 1\n", "2\n1. 1\n", incorrect_reply_message, "1. 1\n", incorrect_reply_message, "1. 1\n"};
+        String[] expected = {"1\n1. 1\n", "2\n1. 1\n", incorrect_reply_message, "2\n.1 1\n",
+                incorrect_reply_message, "2\n.1 1\n", "2\n.1 1\n"};
         assertEquals(console.received_replies.size(), expected.length);
         for(int i = 0; i < expected.length; i++){
             assertEquals(console.received_replies.get(i), expected[i]);
@@ -49,6 +51,7 @@ public class GameTest {
     public void testEventAnswersText(){
         ArrayList<String> messages = new ArrayList<String>();
         messages.add("1");
+        messages.add("exit");
         Test1IO console = new Test1IO(messages);
 
         TestStorage storage = new TestStorage();
