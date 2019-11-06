@@ -19,7 +19,7 @@ public class SaveLoadTest {
     {
         ArrayList<String> messages = new ArrayList<String>();
         messages.add("1");
-        messages.add("save");
+        messages.add("/save");
         messages.add("test1");
         AbstractSaveLoader loader = new AbstractSaveLoader();
         TestStorage storage = new TestStorage();

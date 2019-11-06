@@ -45,9 +45,12 @@ public class Game {
         if(currentEvent.isImportant()) {
             player.remember(currentEvent.getId(), reply);
         }
-
-        if (!handleMessage(reply)) {
+        boolean isCommand = handleMessage(reply);
+        if (!isCommand) {
             nextEventId = currentEvent.reply(reply);
+        }
+        else{
+            nextEventId = currentEvent.getId();
         }
         if(nextEventId.isEmpty()) {
             if(!parentIDs.empty())
@@ -77,16 +80,20 @@ public class Game {
 
     private boolean handleMessage(String message){
         switch (message.toLowerCase()) {
-            case ("save"):
+            case ("/save"):
                 SaveGame();
                 return true;
 
-            case ("load"):
+            case ("/load"):
                 LoadGame();
                 return true;
 
-            case("exit"):
+            case("/exit"):
                 stopGame();
+                return true;
+
+            case("/help"):
+                sendHelpMessage();
                 return true;
 
             default:
@@ -122,6 +129,18 @@ public class Game {
             player.setImportantData(info.getPlayerData());
             startGameAtID(info.getEventToStart());
         }
+    }
+
+    private void sendHelpMessage()
+    {
+        String message = "Story-game bot\n" +
+                "You can win or lose by answering bots questions.\n" +
+                "You can save the current state of game by '/save' command.\n" +
+                "You can load the game state by '/load' command.\n" +
+                "You can stop the game by '/exit' command.\n" +
+                "You should`nt answering the questions by this commands and the 'default' word.\n" +
+                "Good luck and have fun!";
+        console.sendMessage(message);
     }
 
     public Player getPlayer() {
