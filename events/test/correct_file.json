@@ -2,10 +2,14 @@
   "id": "test/correct_file",
   "name": "TestName",
   "text": "This event was made for test EventParser. It's not useful.",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
   "answers": [
     {
       "text": "Ok",
-      "id": "test/test"
+      "id": "test/correct_file",
+      "dependencies": []
     }
   ]
 }

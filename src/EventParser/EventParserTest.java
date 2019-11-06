@@ -72,7 +72,7 @@ public class EventParserTest {
     public void getCorrectFileAnswers() {
         EventParser parser = getParser("events/test/correct_file.json");
         Answer[] expected = new Answer[1];
-        expected[0] = new Answer("Ok", "test/test", new HashMap<>());
+        expected[0] = new Answer("Ok", "test/correct_file", new HashMap<>());
         Answer[] actual = parser.getAnswers();
         assertEquals(expected.length, actual.length);
         for(int i = 0; i < expected.length; i++) {
