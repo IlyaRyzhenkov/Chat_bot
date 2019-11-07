@@ -15,12 +15,13 @@ import static org.junit.Assert.*;
 public class SaveLoadTest {
 
     @Test
-    public void SaveGame()
+    public void SaveLoadGame()
     {
         ArrayList<String> messages = new ArrayList<String>();
         messages.add("1");
         messages.add("/save");
         messages.add("test1");
+        messages.add("/exit");
         AbstractSaveLoader loader = new AbstractSaveLoader();
         TestStorage storage = new TestStorage();
 
