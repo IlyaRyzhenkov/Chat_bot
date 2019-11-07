@@ -48,7 +48,7 @@ public class GameDataTest {
         TestStorage storage = new TestStorage();
         storage.addEvent("test1", new SimpleEvent("test1", "test1", "test1",
                 new Answer[]{new Answer("1", "test2", new HashMap<>()),
-                        new Answer("2", "3", new HashMap<>())}, false, true));
+                        new Answer("2", "test3", new HashMap<>())}, false, true));
         storage.addEvent("test2", new SimpleEvent("test2", "test2", "test2",
                 new Answer[]{new Answer("1", "", new HashMap<>())}, false, false));
         storage.addEvent("test3", new SimpleEvent("test3", "test3", "test3",
@@ -57,7 +57,7 @@ public class GameDataTest {
 
         Game game = new Game(console, storage, loader);
         game.startGameAtID("test1");
-        assertEquals(0, game.getParentIDs().size());
+        assertEquals(1, game.getParentIDs().size());
     }
 
     @Test
