@@ -19,7 +19,7 @@ public abstract class Event {
 
     public abstract String reply(String reply);
 
-    public String toString(){
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(text).append('\n');
         for(int i = 0; i < answers.length; i++)
@@ -35,7 +35,7 @@ public abstract class Event {
 
     public boolean isImportant() { return this.isImportant; }
 
-    public boolean isParent() {return this.isParent;}
+    public boolean isParent() { return this.isParent;}
 
-    public Answer[] getAnswers(){ return this.answers; }
+    public Answer[] getAnswers() { return this.answers; }
 }

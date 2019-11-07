@@ -15,7 +15,7 @@ public class EventParser {
 
     private JSONObject parsedEvent;
 
-    public EventParser(String path) throws ParseException, IOException{
+    public EventParser(String path) throws ParseException, IOException {
         BufferedReader bufferedReader;
         StringBuilder builder = new StringBuilder();
         JSONParser parser = new JSONParser();
@@ -28,15 +28,15 @@ public class EventParser {
 
     private String getStringParam(String key) { return parsedEvent.get(key).toString(); }
 
-    public String getID(){
+    public String getID() {
         return getStringParam("id");
     }
 
-    public String getName(){
+    public String getName() {
         return getStringParam("name");
     }
 
-    public String getText(){
+    public String getText() {
         return getStringParam("text");
     }
 
@@ -54,7 +54,7 @@ public class EventParser {
 
 
 
-    public Answer[] getAnswers(){
+    public Answer[] getAnswers() {
         JSONArray parsedAnswers = (JSONArray) parsedEvent.get("answers");
         Answer answers[] = new Answer[parsedAnswers.size()];
         for (int i = 0; i < parsedAnswers.size(); i++) {
