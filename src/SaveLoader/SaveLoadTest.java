@@ -2,14 +2,11 @@ package SaveLoader;
 
 import Event.Answer;
 import Event.SimpleEvent;
-import EventStorage.EventStorage;
-import EventStorage.ILoader;
 import Game.TestStorage;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import static org.junit.Assert.*;
 
 public class SaveLoadTest {

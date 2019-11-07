@@ -17,6 +17,7 @@ public class GameDataTest {
         ArrayList<String> messages = new ArrayList<String>();
         messages.add("1");
         messages.add("1");
+        messages.add("/exit");
         AbstractSaveLoader loader = new AbstractSaveLoader();
         Test1IO console = new Test1IO(messages);
 
@@ -40,6 +41,7 @@ public class GameDataTest {
         messages.add("1");
         messages.add("2");
         messages.add("1");
+        messages.add("/exit");
         AbstractSaveLoader loader = new AbstractSaveLoader();
         Test1IO console = new Test1IO(messages);
 
@@ -63,6 +65,7 @@ public class GameDataTest {
         ArrayList<String> messages = new ArrayList<String>();
         messages.add("1");
         messages.add("1");
+        messages.add("/exit");
         AbstractSaveLoader loader = new AbstractSaveLoader();
         Test1IO console = new Test1IO(messages);
 

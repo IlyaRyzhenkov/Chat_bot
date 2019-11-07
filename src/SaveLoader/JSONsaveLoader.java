@@ -8,6 +8,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.swing.*;
 import java.io.FileReader;
 import java.io.Reader;
 import java.io.FileWriter;
@@ -36,7 +37,7 @@ public class JSONsaveLoader implements ISaveLoader {
         obj.put("Player data", hashSet);
         obj.put("StartEvent", gameData.getEventToStart());
 
-        String path = String.format("Saved\\%s.json", filename);
+        String path = makeFullFilename(filename);
         try (FileWriter file = new FileWriter(path)) {
             file.write(obj.toJSONString());
         } catch (IOException e) {
@@ -45,8 +46,8 @@ public class JSONsaveLoader implements ISaveLoader {
     }
 
     public GameInfo loadGame(String filename) {
+        String path = makeFullFilename(filename);
         JSONParser parser = new JSONParser();
-        String path = String.format("Saved\\%s.json", filename);
         try(Reader reader = new FileReader(path)){
             JSONObject obj = (JSONObject) parser.parse(reader);
             Stack<String> IDstack = new Stack<String>();
@@ -74,5 +75,12 @@ public class JSONsaveLoader implements ISaveLoader {
             System.err.print("File damaged\n");
             return null;
         }
+    }
+
+    private String makeFullFilename(String filename){
+        if (filename.length() > 5)
+            if (filename.substring(filename.length() - 5).equals(".json"))
+                return filename;
+        return String.format("Saved\\%s.json", filename);
     }
 }
