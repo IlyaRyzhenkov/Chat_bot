@@ -10,16 +10,6 @@
       "text": "Новая игра",
       "id": "Main menu/new_game",
       "dependencies": []
-    },
-    {
-      "text": "Загрузить игру",
-      "id": "Main menu/load",
-      "dependencies": [],
-    },
-    {
-      "text": "Выход",
-      "id": "Main menu/exit",
-      "dependencies": [],
     }
   ]
 }
