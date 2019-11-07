@@ -17,7 +17,7 @@ public class Game {
     private Stack<String> parentIDs;
     private final Player player;
 
-    public Game(IOInterface io, ILoader loader, ISaveLoader save_loader){
+    public Game(IOInterface io, ILoader loader, ISaveLoader save_loader) {
         console = io;
         storage = loader;
         this.save_loader = save_loader;
@@ -26,7 +26,7 @@ public class Game {
         this.player = new Player();
     }
 
-    public void startGameAtID(String id){
+    public void startGameAtID(String id) {
         isGameRunning = true;
         currentEvent = storage.getEventById(id, this.player.getImportantData());
         while(isGameRunning){
@@ -34,7 +34,7 @@ public class Game {
         }
     }
 
-    public void makeEventIteration(){
+    public void makeEventIteration() {
         String nextEventId = "";
 
         sendEventInfo(currentEvent);
@@ -73,19 +73,18 @@ public class Game {
         return parentIDs;
     }
 
-    public HashMap<String, String> getPlayerData()
-    {
+    public HashMap<String, String> getPlayerData() {
         return player.getImportantData();
     }
 
-    private boolean handleMessage(String message){
+    private boolean handleMessage(String message) {
         switch (message.toLowerCase()) {
             case ("/save"):
-                SaveGame();
+                saveGame();
                 return true;
 
             case ("/load"):
-                LoadGame();
+                loadGame();
                 return true;
 
             case("/exit"):
@@ -113,14 +112,14 @@ public class Game {
         return console.getMessage();
     }
 
-    private void SaveGame(){
+    private void saveGame() {
         console.sendMessage("Введите имя файла");
         String filename = console.getMessage();
         GameInfo info = new GameInfo(parentIDs, player.getImportantData(), currentEvent.getId());
         save_loader.saveGame(filename, info);
     }
 
-    private void LoadGame(){
+    private void loadGame() {
         console.sendMessage("Введите имя файла");
         String filename2 = console.getMessage();
         GameInfo info = save_loader.loadGame(filename2);
@@ -131,8 +130,7 @@ public class Game {
         }
     }
 
-    private void sendHelpMessage()
-    {
+    private void sendHelpMessage() {
         String message = "Story-game bot\n" +
                 "You can win or lose by answering bots questions.\n" +
                 "You can save the current state of game by '/save' command.\n" +

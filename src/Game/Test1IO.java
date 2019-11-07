@@ -8,7 +8,7 @@ public class Test1IO implements IOInterface {
     private final ArrayList<String> messages;
     private int index = 0;
 
-    public Test1IO(ArrayList<String> messages){
+    public Test1IO(ArrayList<String> messages) {
         this.messages = messages;
         received_replies = new ArrayList<String>();
     }

@@ -3,7 +3,6 @@ package SaveLoader;
 import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Stack;
@@ -12,8 +11,7 @@ import static org.junit.Assert.*;
 public class JSONsaveLoaderTest {
 
     @Test
-    public void TestLoadCorrectFile()
-    {
+    public void testLoadCorrectFile() {
         JSONsaveLoader loader = new JSONsaveLoader();
         GameInfo info = loader.loadGame("events/test/correct_savefile.json");
         assertEquals("Wrong event to start id","Start", info.getEventToStart());
@@ -21,7 +19,7 @@ public class JSONsaveLoaderTest {
         Stack<String> stack = info.getIDstack();
         String[] expectedStack = {"first", "second"};
         assertEquals("Wrong stack size", 2, stack.size());
-        for (int i = 0; i < expectedStack.length; i++){
+        for (int i = 0; i < expectedStack.length; i++) {
             assertEquals("Wrong " + i + " element of stack", expectedStack[i], stack.get(i));
         }
 
@@ -29,37 +27,37 @@ public class JSONsaveLoaderTest {
         String[] keys = {"key1", "key2"};
         String[] values = {"val1", "val2"};
         assertEquals("Wrong player info size", 2, playerInfo.size());
-        for (int i = 0; i < keys.length; i++){
+        for (int i = 0; i < keys.length; i++) {
             assertEquals("Wrong value on key:" + keys[i], values[i], playerInfo.get(keys[i]));
         }
     }
 
     @Test
-    public void TestLoadDamagedFile(){
+    public void testLoadDamagedFile() {
         JSONsaveLoader loader = new JSONsaveLoader();
         GameInfo info = loader.loadGame("events/test/damaged_savefile.json");
         assertNull("Game info not null", info);
     }
 
     @Test
-    public void TestLoadWithWrongFullFilename(){
+    public void testLoadWithWrongFullFilename() {
         JSONsaveLoader loader = new JSONsaveLoader();
         GameInfo info = loader.loadGame("bad_filename.json");
         assertNull("Game info not null", info);
     }
 
     @Test
-    public void TestLoadWithWrongFilename(){
+    public void testLoadWithWrongFilename() {
         JSONsaveLoader loader = new JSONsaveLoader();
         GameInfo info = loader.loadGame("bad_filename");
         assertNull("Game info not null", info);
     }
 
     @Test
-    public void TestSaveFile(){
+    public void testSaveFile() {
         String filename = "events/test/test_savedgame.json";
         File file = new File(filename);
-        if (file.exists()){
+        if (file.exists()) {
             file.delete();
         }
         Stack<String> stack = new Stack<>();
@@ -74,13 +72,13 @@ public class JSONsaveLoaderTest {
         saver.saveGame(filename, info);
 
         String actual = "";
-        try(FileReader reader = new FileReader(filename)){
+        try(FileReader reader = new FileReader(filename)) {
             int c;
-            while((c = reader.read()) != -1){
+            while((c = reader.read()) != -1) {
                 actual += (char)c;
             }
         }
-        catch (IOException e){
+        catch (IOException e) {
             assertNull(e);
         }
 
@@ -90,7 +88,7 @@ public class JSONsaveLoaderTest {
                 "\"StartEvent\":\"Start\"}";
         assertEquals("Files not same", expected, actual);
         File file2 = new File(filename);
-        if (file2.exists()){
+        if (file2.exists()) {
             file2.delete();
         }
     }

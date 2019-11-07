@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         ConsoleIO console = new ConsoleIO();
         ILoader storage = new EventStorage();
         ISaveLoader loader = new JSONsaveLoader();

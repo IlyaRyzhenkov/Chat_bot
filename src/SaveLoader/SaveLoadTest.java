@@ -12,8 +12,7 @@ import static org.junit.Assert.*;
 public class SaveLoadTest {
 
     @Test
-    public void SaveLoadGame()
-    {
+    public void saveLoadGame() {
         ArrayList<String> messages = new ArrayList<String>();
         messages.add("1");
         messages.add("/save");

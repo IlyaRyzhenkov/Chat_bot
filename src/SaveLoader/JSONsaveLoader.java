@@ -1,14 +1,8 @@
 package SaveLoader;
-import Event.Event;
-import Event.Answer;
-import Game.ConsoleIO;
-import Player.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-import javax.swing.*;
 import java.io.FileReader;
 import java.io.Reader;
 import java.io.FileWriter;
@@ -23,12 +17,12 @@ public class JSONsaveLoader implements ISaveLoader {
     public void saveGame(String filename, GameInfo gameData) {
         JSONObject obj = new JSONObject();
         JSONArray stack = new JSONArray();
-        for (int i = 0; i < gameData.getIDstack().size(); i++){
+        for (int i = 0; i < gameData.getIDstack().size(); i++) {
             stack.add(gameData.getIDstack().get(i));
         }
         obj.put("stack", stack);
         JSONArray hashSet = new JSONArray();
-        for (String key: gameData.getPlayerData().keySet()){
+        for (String key: gameData.getPlayerData().keySet()) {
             JSONArray pair = new JSONArray();
             pair.add(key);
             pair.add(gameData.getPlayerData().get(key));
@@ -48,7 +42,7 @@ public class JSONsaveLoader implements ISaveLoader {
     public GameInfo loadGame(String filename) {
         String path = makeFullFilename(filename);
         JSONParser parser = new JSONParser();
-        try(Reader reader = new FileReader(path)){
+        try(Reader reader = new FileReader(path)) {
             JSONObject obj = (JSONObject) parser.parse(reader);
             Stack<String> IDstack = new Stack<String>();
             JSONArray JSONstack = (JSONArray) obj.get("stack");
@@ -68,16 +62,16 @@ public class JSONsaveLoader implements ISaveLoader {
             String eventID = (String) obj.get("StartEvent");
             return new GameInfo(IDstack, playerData, eventID);
 
-        } catch (IOException e){
+        } catch (IOException e) {
             System.err.print("Error reading file\n");
             return null;
-        } catch (ParseException e){
+        } catch (ParseException e) {
             System.err.print("File damaged\n");
             return null;
         }
     }
 
-    private String makeFullFilename(String filename){
+    private String makeFullFilename(String filename) {
         if (filename.length() > 5)
             if (filename.substring(filename.length() - 5).equals(".json"))
                 return filename;

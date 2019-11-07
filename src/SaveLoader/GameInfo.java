@@ -8,7 +8,7 @@ public class GameInfo {
     private HashMap<String, String> playerData;
     private String eventToStart;
 
-    public GameInfo(Stack<String> idstack, HashMap<String, String> playerData, String eventIdToStart){
+    public GameInfo(Stack<String> idstack, HashMap<String, String> playerData, String eventIdToStart) {
         IDstack = idstack;
         this.playerData = playerData;
         eventToStart = eventIdToStart;
