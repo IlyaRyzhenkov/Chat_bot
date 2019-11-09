@@ -1,7 +1,6 @@
 package Game;
 
 import Event.Event;
-import Event.SimpleEvent;
 import EventStorage.ILoader;
 
 import java.util.HashMap;

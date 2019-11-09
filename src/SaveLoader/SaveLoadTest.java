@@ -1,7 +1,7 @@
 package SaveLoader;
 
 import Event.Answer;
-import Event.SimpleEvent;
+import Event.SimpleEvent.SimpleEvent;
 import Game.TestStorage;
 import org.junit.Test;
 

@@ -1,4 +1,7 @@
-package Event;
+package Event.ExceptionEvent;
+
+import Event.Event;
+import Event.Answer;
 
 public class ExceptionEvent extends Event {
 

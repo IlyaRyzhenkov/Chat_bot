@@ -1,4 +1,4 @@
-package Event;
+package Event.AnyAnswerEvent;
 
 import org.junit.Test;
 

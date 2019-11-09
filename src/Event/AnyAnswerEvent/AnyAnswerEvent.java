@@ -1,5 +1,7 @@
-package Event;
+package Event.AnyAnswerEvent;
 
+import Event.Event;
+import Event.Answer;
 public class AnyAnswerEvent extends Event {
 
     public AnyAnswerEvent(String id, String name, String text, Answer[] answers, boolean isImportant, boolean isParent) {

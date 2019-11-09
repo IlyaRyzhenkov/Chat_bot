@@ -1,8 +1,9 @@
-package Event;
+package Event.SimpleEvent;
 
 import org.junit.Test;
 
 import java.util.HashMap;
+import Event.Answer;
 
 import static org.junit.Assert.*;
 

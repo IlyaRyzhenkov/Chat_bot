@@ -1,4 +1,7 @@
-package Event;
+package Event.SimpleEvent;
+
+import Event.Event;
+import Event.Answer;
 
 public final class SimpleEvent extends Event {
 

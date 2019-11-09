@@ -1,7 +1,7 @@
 package Game;
 
-import Event.ExceptionEvent;
-import Event.SimpleEvent;
+import Event.ExceptionEvent.ExceptionEvent;
+import Event.SimpleEvent.SimpleEvent;
 import Event.Answer;
 import SaveLoader.AbstractSaveLoader;
 import SaveLoader.ISaveLoader;

@@ -1,6 +1,6 @@
 package EventParser;
 
-import Event.SimpleEvent;
+import Event.SimpleEvent.SimpleEvent;
 import Event.Answer;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;

@@ -1,5 +1,6 @@
 package Game;
 import Event.*;
+import Event.ExceptionEvent.ExceptionEvent;
 import EventStorage.ILoader;
 import Player.Player;
 import SaveLoader.GameInfo;

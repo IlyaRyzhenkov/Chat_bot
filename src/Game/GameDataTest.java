@@ -1,7 +1,7 @@
 package Game;
 
 import Event.Answer;
-import Event.SimpleEvent;
+import Event.SimpleEvent.SimpleEvent;
 import SaveLoader.AbstractSaveLoader;
 import org.junit.Test;
 

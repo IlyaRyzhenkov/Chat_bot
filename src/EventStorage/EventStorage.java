@@ -1,11 +1,14 @@
 package EventStorage;
 
-import Event.*;
+import Event.Answer;
+import Event.Event;
+import Event.AnyAnswerEvent.AnyAnswerEvent;
+import Event.ExceptionEvent.ExceptionEvent;
+import Event.SimpleEvent.SimpleEvent;
 import EventParser.EventParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
