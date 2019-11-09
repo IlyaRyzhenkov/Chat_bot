@@ -3,11 +3,11 @@ package Checker;
 import Checker.iChecker;
 import Dice.Dice;
 
-public class ElderichHorrorCheckerModel implements iChecker {
+public class EldritchHorrorCheckerModel implements iChecker {
 
     private Dice dice;
 
-    public ElderichHorrorCheckerModel() {
+    public EldritchHorrorCheckerModel() {
         dice = new Dice();
     }
     public boolean check(String diceSequence, int difficulty) {
