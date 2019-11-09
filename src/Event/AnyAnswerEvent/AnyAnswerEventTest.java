@@ -1,7 +1,7 @@
 package Event.AnyAnswerEvent;
 
 import org.junit.Test;
-
+import Event.Answer;
 import java.util.HashMap;
 
 import static org.junit.Assert.*;

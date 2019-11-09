@@ -4,6 +4,11 @@ import java.util.HashMap;
 
 public class Player {
     private HashMap<String, String> importantData;
+    private int knowledge;
+    private int strength;
+    private int communication;
+    private int attention;
+    private int luck;
 
     public Player() {
         this.importantData = new HashMap<String, String>();
