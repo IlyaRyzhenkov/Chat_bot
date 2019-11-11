@@ -13,11 +13,19 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class Main {
 
     public static void main(String[] args) {
-        if (false) {
+        if (args.length < 1) {
+            System.err.print("No run parameters, use -c to run console, or -t to run tg-bot");
+            System.exit(1);
+        }
+        if (args[0].equals("-c")) {
+            runConsole();
+        }
+        if (args[0].equals("-t")) {
             runTelegram();
         }
         else {
-            runConsole();
+            System.err.print("Wrong run parameters");
+            System.exit(2);
         }
     }
 
