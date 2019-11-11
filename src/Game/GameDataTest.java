@@ -28,9 +28,9 @@ public class GameDataTest {
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
 
         Game game = new Game(console, storage, loader);
-        game.startGameAtID("test1");
-        assertEquals(1, game.getParentIDs().size());
-        assertEquals("test1", game.getParentIDs().get(0));
+        game.startGameAtID("test1", null);
+        assertEquals(1, game.getPlayerTable().get("player").getEventStack().size());
+        assertEquals("test1", game.getPlayerTable().get("player").getEventStack().get(0));
     }
 
 
@@ -56,8 +56,8 @@ public class GameDataTest {
 
 
         Game game = new Game(console, storage, loader);
-        game.startGameAtID("test1");
-        assertEquals(1, game.getParentIDs().size());
+        game.startGameAtID("test1", null);
+        assertEquals(1, game.getPlayerTable().get("player").getEventStack().size());
     }
 
     @Test
@@ -76,9 +76,9 @@ public class GameDataTest {
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
 
         Game game = new Game(console, storage, loader);
-        game.startGameAtID("test1");
-        assertEquals(1, game.getPlayer().getImportantData().size());
-        assertTrue(game.getPlayer().getImportantData().containsKey("test1"));
-        assertEquals("1", game.getPlayer().recall("test1"));
+        game.startGameAtID("test1", null);
+        assertEquals(1, game.getPlayerTable().get("player").getImportantData().size());
+        assertTrue(game.getPlayerTable().get("player").getImportantData().containsKey("test1"));
+        assertEquals("1", game.getPlayerTable().get("player").recall("test1"));
     }
 }

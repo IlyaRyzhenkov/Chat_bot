@@ -2,7 +2,7 @@ package Game;
 
 import java.util.ArrayList;
 
-public class Test1IO implements IOInterface {
+public class Test1IO implements OInterface {
 
     public ArrayList<String> received_replies;
     private final ArrayList<String> messages;
@@ -13,11 +13,11 @@ public class Test1IO implements IOInterface {
         received_replies = new ArrayList<String>();
     }
 
-    public void sendMessage(String str) {
-        received_replies.add(str);
+    public void sendMessage(Message message) {
+        received_replies.add(message.getMessage());
     }
 
-    public String getMessage() {
-        return index < messages.size() ? messages.get(index++) : null;
+    public Message getMessage() {
+        return index < messages.size() ? new Message("player", messages.get(index++)) : null;
     }
 }

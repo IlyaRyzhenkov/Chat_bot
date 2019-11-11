@@ -34,7 +34,7 @@ public class GameTest {
                 new Answer[]{new Answer("1", "1", new HashMap<>())}));
 
         Game game = new Game(console, storage, loader);
-        game.startGameAtID("1");
+        game.startGameAtID("1", null);
 
         String[] expected = {"1\n1. 1\n", "2\n1. 1\n", incorrect_reply_message, "2\n1. 1\n"};
         assertEquals(console.received_replies.size(), expected.length);
@@ -61,7 +61,7 @@ public class GameTest {
                 new Answer[]{new Answer("1", "1", new HashMap<>())}));
 
         Game game = new Game(console, storage, loader);
-        game.startGameAtID("1");
+        game.startGameAtID("1", null);
 
         String[] expected = {"1\n1. 1\n", "2\n1. 1\n", incorrect_reply_message, "2\n1. 1\n"};
         assertEquals(console.received_replies.size(), expected.length);
@@ -84,7 +84,7 @@ public class GameTest {
                 new Answer("answer3_text", "-1", new HashMap<>())}, false, false));
 
         Game game = new Game(console, storage, loader);
-        game.startGameAtID("1");
+        game.startGameAtID("1", null);
 
         String[] expected = {
                 "event_text\n1. answer1_text\n2. answer2_text\n3. answer3_text\n",

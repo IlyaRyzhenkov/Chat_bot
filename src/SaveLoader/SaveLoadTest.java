@@ -25,9 +25,9 @@ public class SaveLoadTest {
                 new Answer[]{new Answer("1", "2", new HashMap<>())}, false, false));
         storage.addEvent("2", new SimpleEvent("2", "2", "2",
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
-        Game.IOInterface console = new Game.Test1IO(messages);
+        Game.OInterface console = new Game.Test1IO(messages);
         Game.Game game = new Game.Game(console, storage, loader);
-        game.startGameAtID("1");
+        game.startGameAtID("1", null);
 
         assertTrue("error game not saved", loader.isGameSaved);
         assertEquals("error wrong filename", loader.savedFilename, "test1");
