@@ -29,6 +29,7 @@ public class Bot extends TelegramLongPollingBot implements OInterface {
         try {
             execute(message);
         } catch (TelegramApiException e) {
+            e.printStackTrace();
             System.err.print("error sending message");
         }
     }

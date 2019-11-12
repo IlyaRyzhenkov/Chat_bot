@@ -15,8 +15,10 @@ public class Game {
     private ILoader storage;
     private ISaveLoader save_loader;
     private Event currentEvent;
-    private boolean isGameRunning;
     private HashMap<String, Player> playerTable;
+
+    private boolean isGameRunning;
+    private boolean isGameLoaded;
 
     public Game(OInterface io, ILoader loader, ISaveLoader save_loader) {
         console = io;
@@ -36,9 +38,10 @@ public class Game {
         }
     }
 
-    public void makeEventIteration(Message message) {
+    public synchronized void makeEventIteration(Message message) {
         String nextEventId = "";
         isGameRunning = true;
+        isGameLoaded = false;
         if (!playerTable.containsKey(message.getPlayer())) {
             CreatePlayer(message.getPlayer());
             return;
@@ -80,12 +83,14 @@ public class Game {
         if((currentEvent.isParent())||(nextEvent.getClass() == ExceptionEvent.class)) {
             player.getEventStack().push(currentEvent.getId());
         }
+        if (isGameLoaded)
+            return;
         sendEventInfo(player, nextEvent);
         player.setCurrentEvent(nextEventId);
     }
 
     private boolean handleMessage(Player player, String message) {
-        switch (message.toLowerCase()) {
+        switch (message.toLowerCase().split(" ")[0]) {
             case ("/save"):
                 saveGame(player, message);
                 return true;
@@ -120,30 +125,37 @@ public class Game {
         console.sendMessage(new Message(player.getId(), event.toString()));
     }
 
-    private void saveGame(Player player, String command) {
+    private synchronized void saveGame(Player player, String command) {
         String filename = command.split(" ")[1];
-        GameInfo info = new GameInfo(player.getEventStack(), player.getImportantData(), currentEvent.getId());
+        GameInfo info = new GameInfo(player);
         save_loader.saveGame(filename, info);
         console.sendMessage(new Message(player.getId(), "Игра сохранена"));
     }
 
-    private void loadGame(Player player, String command) {
+    private synchronized void loadGame(Player play, String command) {
         String filename2 = command.split(" ")[1];
         GameInfo info = save_loader.loadGame(filename2);
         if (info != null) {
+            isGameLoaded = true;
+            Player player = new Player();
             player.setEventStack(info.getIDstack());
             player.setImportantData(info.getPlayerData());
-            startGameAtID(info.getEventToStart(), null);
+            player.setCurrentEvent(info.getEventToStart());
+            player.setId(play.getId());
+            playerTable.put(player.getId(), player);
+            console.sendMessage(new Message(player.getId(), "Игра загружена"));
+            Event lastEvent = storage.getEventById(player.getCurrentEvent(), player.getImportantData());
+            sendEventInfo(player, lastEvent);
         }
     }
 
     private void sendHelpMessage(Player player) {
         String message = "Story-game bot\n" +
                 "You can win or lose by answering bots questions.\n" +
-                "You can save the current state of game by '/save' command.\n" +
-                "You can load the game state by '/load' command.\n" +
+                "You can save the current state of game by '/save <<filename>>' command.\n" +
+                "You can load the game state by '/load <<filename>>' command.\n" +
                 "You can stop the game by '/exit' command.\n" +
-                "You should`nt answering the questions by this commands and the 'default' word.\n" +
+                "You should'nt answering the questions by this commands and the 'default' word.\n" +
                 "Good luck and have fun!";
         console.sendMessage(new Message(player.getId(), message));
     }

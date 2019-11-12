@@ -44,7 +44,7 @@ public class Main {
 
         try {
             ILoader storage = new EventStorage();
-            ISaveLoader loader = new AbstractSaveLoader();
+            ISaveLoader loader = new JSONsaveLoader();
             Bot bot = new Bot();
             Game game = new Game(bot, storage, loader);
             bot.setGame(game);
