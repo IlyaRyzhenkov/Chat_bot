@@ -18,12 +18,7 @@ public class GameTest {
 
     @Test
     public void testIncorrectReplies1() {
-        ArrayList<String> messages = new ArrayList<String>();
-        messages.add("1");
-        messages.add("asd");
-        messages.add("asd");
-        messages.add("/exit");
-        Test1IO console = new Test1IO(messages);
+        Test1IO console = new Test1IO(null);
 
         TestStorage storage = new TestStorage();
         storage.addEvent("1", new SimpleEvent("1", "1", "1",
@@ -34,7 +29,11 @@ public class GameTest {
                 new Answer[]{new Answer("1", "1", new HashMap<>())}));
 
         Game game = new Game(console, storage, loader);
-        game.startGameAtID("1", null);
+        game.setInitialID("1");
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "asd"));
+        game.makeEventIteration(new Message("player", "asd"));
 
         String[] expected = {"1\n1. 1\n", "2\n1. 1\n", incorrect_reply_message, "2\n1. 1\n"};
         assertEquals(console.received_replies.size(), expected.length);
@@ -45,12 +44,7 @@ public class GameTest {
 
     @Test
     public void testIncorrectReplies2() {
-        ArrayList<String> messages = new ArrayList<String>();
-        messages.add("1");
-        messages.add("3");
-        messages.add("asd");
-        messages.add("/exit");
-        Test1IO console = new Test1IO(messages);
+        Test1IO console = new Test1IO(null);
 
         TestStorage storage = new TestStorage();
         storage.addEvent("1", new SimpleEvent("1", "1", "1",
@@ -61,7 +55,11 @@ public class GameTest {
                 new Answer[]{new Answer("1", "1", new HashMap<>())}));
 
         Game game = new Game(console, storage, loader);
-        game.startGameAtID("1", null);
+        game.setInitialID("1");
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "3"));
+        game.makeEventIteration(new Message("player", "asd"));
 
         String[] expected = {"1\n1. 1\n", "2\n1. 1\n", incorrect_reply_message, "2\n1. 1\n"};
         assertEquals(console.received_replies.size(), expected.length);
@@ -72,10 +70,7 @@ public class GameTest {
 
     @Test
     public void testEventAnswersText(){
-        ArrayList<String> messages = new ArrayList<String>();
-        messages.add("1");
-        messages.add("/exit");
-        Test1IO console = new Test1IO(messages);
+        Test1IO console = new Test1IO(null);
 
         TestStorage storage = new TestStorage();
         storage.addEvent("1", new SimpleEvent("1", "name", "event_text", new Answer[]{
@@ -84,7 +79,9 @@ public class GameTest {
                 new Answer("answer3_text", "-1", new HashMap<>())}, false, false));
 
         Game game = new Game(console, storage, loader);
-        game.startGameAtID("1", null);
+        game.setInitialID("1");
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "1"));
 
         String[] expected = {
                 "event_text\n1. answer1_text\n2. answer2_text\n3. answer3_text\n",
@@ -93,5 +90,49 @@ public class GameTest {
         for(int i = 0; i < expected.length; i++){
             assertEquals(console.received_replies.get(i), expected[i]);
         }
+    }
+
+    @Test
+    public void testHelpCommand() {
+        Test1IO console = new Test1IO(null);
+
+        TestStorage storage = new TestStorage();
+        storage.addEvent("1", new SimpleEvent("1", "1", "1",
+                new Answer[]{new Answer("1", "2", new HashMap<>())}, false, false));
+        Game game = new Game(console, storage, loader);
+        game.setInitialID("1");
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "/help"));
+
+        String expectedHelpMessage = "Story-game bot\n" +
+                "You can win or lose by answering bots questions.\n" +
+                "You can save the current state of game by '/save <<filename>>' command.\n" +
+                "You can load the game state by '/load <<filename>>' command.\n" +
+                "You can stop the game by '/exit' command.\n" +
+                "You should'nt answering the questions by this commands and the 'default' word.\n" +
+                "Good luck and have fun!";
+
+        assertEquals("wrong answers count", 3, console.received_replies.size());
+        assertEquals("wrong first message", "1\n1. 1\n", console.received_replies.get(0));
+        assertEquals("wrong help message", expectedHelpMessage, console.received_replies.get(1));
+        assertEquals("wronf third message", "1\n1. 1\n", console.received_replies.get(2));
+    }
+
+    @Test
+    public void testExitCommand() {
+        Test1IO console = new Test1IO(null);
+
+        TestStorage storage = new TestStorage();
+        storage.addEvent("1", new SimpleEvent("1", "1", "1",
+                new Answer[]{new Answer("1", "2", new HashMap<>())}, false, false));
+        Game game = new Game(console, storage, loader);
+        game.setInitialID("1");
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "/exit"));
+
+        assertFalse("game not stoped", game.getPlayerTable().containsKey("player"));
+        assertEquals("wrong message count", 2, console.received_replies.size());
+        assertEquals("wrong first message", "1\n1. 1\n", console.received_replies.get(0));
+        assertEquals("wrong exit message", "exit from game", console.received_replies.get(1));
     }
 }

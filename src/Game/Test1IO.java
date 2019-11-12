@@ -2,7 +2,7 @@ package Game;
 
 import java.util.ArrayList;
 
-public class Test1IO implements OInterface {
+public class Test1IO implements OInterface, ConsoleInInterface {
 
     public ArrayList<String> received_replies;
     private final ArrayList<String> messages;

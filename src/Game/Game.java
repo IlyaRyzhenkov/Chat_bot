@@ -172,4 +172,12 @@ public class Game {
     public HashMap<String, Player> getPlayerTable() {
         return playerTable;
     }
+
+    public boolean isGameRunning() {
+        return isGameRunning;
+    }
+
+    public void setInitialID(String initialID) {
+        this.initialID = initialID;
+    }
 }

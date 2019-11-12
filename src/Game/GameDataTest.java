@@ -14,12 +14,8 @@ public class GameDataTest {
 
     @Test
     public void addParentToStack() {
-        ArrayList<String> messages = new ArrayList<String>();
-        messages.add("1");
-        messages.add("1");
-        messages.add("/exit");
         AbstractSaveLoader loader = new AbstractSaveLoader();
-        Test1IO console = new Test1IO(messages);
+        Test1IO console = new Test1IO(null);
 
         TestStorage storage = new TestStorage();
         storage.addEvent("test1", new SimpleEvent("test1", "test1", "test1",
@@ -28,7 +24,12 @@ public class GameDataTest {
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
 
         Game game = new Game(console, storage, loader);
-        game.startGameAtID("test1", null);
+
+        game.setInitialID("test1");
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "1"));
+
         assertEquals(1, game.getPlayerTable().get("player").getEventStack().size());
         assertEquals("test1", game.getPlayerTable().get("player").getEventStack().get(0));
     }
@@ -36,14 +37,8 @@ public class GameDataTest {
 
     @Test
     public void getParentFromStack() {
-        ArrayList<String> messages = new ArrayList<String>();
-        messages.add("1");
-        messages.add("1");
-        messages.add("2");
-        messages.add("1");
-        messages.add("/exit");
         AbstractSaveLoader loader = new AbstractSaveLoader();
-        Test1IO console = new Test1IO(messages);
+        Test1IO console = new Test1IO(null);
 
         TestStorage storage = new TestStorage();
         storage.addEvent("test1", new SimpleEvent("test1", "test1", "test1",
@@ -54,20 +49,21 @@ public class GameDataTest {
         storage.addEvent("test3", new SimpleEvent("test3", "test3", "test3",
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
 
-
         Game game = new Game(console, storage, loader);
-        game.startGameAtID("test1", null);
+        game.setInitialID("test1");
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "2"));
+        game.makeEventIteration(new Message("player", "1"));
+
         assertEquals(1, game.getPlayerTable().get("player").getEventStack().size());
     }
 
     @Test
     public void rememberData() {
-        ArrayList<String> messages = new ArrayList<String>();
-        messages.add("1");
-        messages.add("1");
-        messages.add("/exit");
         AbstractSaveLoader loader = new AbstractSaveLoader();
-        Test1IO console = new Test1IO(messages);
+        Test1IO console = new Test1IO(null);
 
         TestStorage storage = new TestStorage();
         storage.addEvent("test1", new SimpleEvent("test1", "test1", "test1",
@@ -76,7 +72,11 @@ public class GameDataTest {
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
 
         Game game = new Game(console, storage, loader);
-        game.startGameAtID("test1", null);
+        game.setInitialID("test1");
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "1"));
+        game.makeEventIteration(new Message("player", "1"));
+
         assertEquals(1, game.getPlayerTable().get("player").getImportantData().size());
         assertTrue(game.getPlayerTable().get("player").getImportantData().containsKey("test1"));
         assertEquals("1", game.getPlayerTable().get("player").recall("test1"));
