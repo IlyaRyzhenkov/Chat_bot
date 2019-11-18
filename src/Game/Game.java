@@ -1,5 +1,7 @@
 package Game;
+import Checker.iChecker;
 import Event.*;
+import Event.CheckEvent.CheckEvent;
 import Event.ExceptionEvent.ExceptionEvent;
 import EventStorage.ILoader;
 import Player.Player;
@@ -15,13 +17,15 @@ public class Game {
     private ILoader storage;
     private ISaveLoader save_loader;
     private Event currentEvent;
+    private iChecker checker;
     private HashMap<String, Player> playerTable;
 
     private boolean isGameRunning;
     private boolean isGameLoaded;
 
-    public Game(OInterface io, ILoader loader, ISaveLoader save_loader) {
+    public Game(OInterface io, ILoader loader, ISaveLoader save_loader, iChecker checker) {
         console = io;
+        this.checker = checker;
         storage = loader;
         this.save_loader = save_loader;
         isGameRunning = false;
@@ -51,6 +55,12 @@ public class Game {
         String reply = message.getMessage();
         if(reply == null)
             return;
+
+        if(currentEvent.getClass() == CheckEvent.class) {
+            reply = checker.check(player.getAttributeDiceSet(((CheckEvent)currentEvent).getAttribute()),
+                    ((CheckEvent) currentEvent).getDifficulty())
+            ? "y" : "n";
+        }
 
         if(currentEvent.isImportant()) {
             player.remember(currentEvent.getId(), reply);
@@ -137,7 +147,7 @@ public class Game {
         GameInfo info = save_loader.loadGame(filename2);
         if (info != null) {
             isGameLoaded = true;
-            Player player = new Player();
+            Player player = new Player(5, 5, 5,5 , 5); //TODO
             player.setEventStack(info.getIDstack());
             player.setImportantData(info.getPlayerData());
             player.setCurrentEvent(info.getEventToStart());
@@ -161,7 +171,7 @@ public class Game {
     }
 
     private synchronized void CreatePlayer(String playerID) {
-        Player player = new Player();
+        Player player = new Player(5, 5, 5, 5, 5); //TODO
         player.setId(playerID);
         player.setCurrentEvent(initialID);
         playerTable.put(playerID, player);

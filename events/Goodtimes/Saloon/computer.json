@@ -1,0 +1,35 @@
+{
+  "id": "Goodtimes/Saloon/computer",
+  "name": "Компьютер в салуне Гудтаймс",
+  "text": "Компьютер:\n— Система заблокирована. Требуется подтверждение для доступа к данным.",
+  "importance": false,
+  "parent": true,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "Ввести пароль",
+      "id": "Goodtimes/Saloon/Computer/0",
+      "dependencies": []
+    },
+    {
+      "text": "Взлом",
+      "id": "Goodtimes/Saloon/Computer/1",
+      "dependencies": []
+    },
+    {
+      "text": "Войти в систему",
+      "id": "Goodtimes/Saloon/Computer/3",
+      "dependencies": [
+        {
+          "id": "Goodtimes/Saloon/Computer/3",
+          "answer": "2"
+        }
+      ]
+    },
+    {
+      "text": "Назад",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

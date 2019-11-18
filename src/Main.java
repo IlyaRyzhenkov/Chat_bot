@@ -1,3 +1,5 @@
+import Checker.EldritchHorrorChecker;
+import Checker.iChecker;
 import EventStorage.EventStorage;
 import EventStorage.ILoader;
 import Game.Game;
@@ -33,7 +35,8 @@ public class Main {
         ConsoleIO console = new ConsoleIO();
         ILoader storage = new EventStorage();
         ISaveLoader loader = new JSONsaveLoader();
-        Game game = new Game(console, storage, loader);
+        iChecker checker = new EldritchHorrorChecker();
+        Game game = new Game(console, storage, loader, checker);
         game.startGameAtID("Main menu/menu", console);
     }
 
@@ -45,8 +48,9 @@ public class Main {
         try {
             ILoader storage = new EventStorage();
             ISaveLoader loader = new JSONsaveLoader();
+            iChecker checker = new EldritchHorrorChecker();
             Bot bot = new Bot();
-            Game game = new Game(bot, storage, loader);
+            Game game = new Game(bot, storage, loader, checker);
             bot.setGame(game);
             botsApi.registerBot(bot);
         } catch (TelegramApiException e) {

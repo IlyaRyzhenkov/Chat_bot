@@ -1,0 +1,30 @@
+{
+  "id": "Goodtimes/Saloon/Computer/Diary/0",
+  "name": "Дневник Зиги",
+  "text": "Компьютер:\n— Дневник Зиги. Выберите часть:",
+  "importance": false,
+  "parent": true,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "Часть 1",
+      "id": "Goodtimes/Saloon/Computer/Diary/1",
+      "dependencies": []
+    },
+    {
+      "text": "Часть 2",
+      "id": "Goodtimes/Saloon/Computer/Diary/2",
+      "dependencies": []
+    },
+    {
+      "text": "Часть 3",
+      "id": "Goodtimes/Saloon/Computer/Diary/3",
+      "dependencies": []
+    },
+    {
+      "text": "Выход",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

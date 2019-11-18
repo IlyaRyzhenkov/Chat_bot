@@ -1,0 +1,20 @@
+{
+  "id": "Goodtimes/Saloon/Computer/3",
+  "name": "Компьютер в салуне Гудтаймс",
+  "text": "Компьютер:\n— Добро пожаловать! Система Doors 9 приветствует вас. Чем могу помочь?",
+  "importance": true,
+  "parent": true,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "Дневник Зиги.",
+      "id": "Goodtimes/Saloon/Computer/Diary/0",
+      "dependencies": []
+    },
+    {
+      "text": "Выход",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "Goodtimes/Saloon/Computer/2",
+  "name": "Взлом компьютера в салуне Гудтаймс",
+  "text": "Компьютер:\n*Недовольно жужит жёстким дисокм*",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "Далее",
+      "id": "Goodtimes/Saloon/Computer/3",
+      "dependencies": []
+    }
+  ]
+}

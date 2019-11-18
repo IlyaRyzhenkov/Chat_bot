@@ -1,5 +1,7 @@
 package SaveLoader;
 
+import Checker.EldritchHorrorChecker;
+import Checker.iChecker;
 import Event.Answer;
 import Event.SimpleEvent.SimpleEvent;
 import Game.Message;
@@ -15,13 +17,14 @@ public class SaveLoadTest {
     public void saveGame() {
         AbstractSaveLoader loader = new AbstractSaveLoader();
         TestStorage storage = new TestStorage();
+        iChecker checker = new EldritchHorrorChecker();
 
         storage.addEvent("1", new SimpleEvent("1", "1", "1",
                 new Answer[]{new Answer("1", "2", new HashMap<>())}, false, false));
         storage.addEvent("2", new SimpleEvent("2", "2", "2",
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
         Game.OInterface console = new Game.Test1IO(null);
-        Game.Game game = new Game.Game(console, storage, loader);
+        Game.Game game = new Game.Game(console, storage, loader, checker);
         game.setInitialID("1");
         game.makeEventIteration(new Message("player", "1"));
         game.makeEventIteration(new Message("player", "1"));
@@ -38,13 +41,14 @@ public class SaveLoadTest {
     @Test
     public void loadGame() {
         AbstractSaveLoader loader = new AbstractSaveLoader();
+        iChecker checker = new EldritchHorrorChecker();
         TestStorage storage = new TestStorage();
         storage.addEvent("1", new SimpleEvent("1", "1", "1",
                 new Answer[]{new Answer("1", "2", new HashMap<>())}, false, false));
         storage.addEvent("2", new SimpleEvent("2", "2", "2",
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
         Game.OInterface console = new Game.Test1IO(null);
-        Game.Game game = new Game.Game(console, storage, loader);
+        Game.Game game = new Game.Game(console, storage, loader, checker);
         game.setInitialID("1");
         game.makeEventIteration(new Message("player", "1"));
         game.makeEventIteration(new Message("player", "/load 123"));

@@ -1,5 +1,7 @@
 package Game;
 
+import Checker.EldritchHorrorChecker;
+import Checker.iChecker;
 import Event.Answer;
 import Event.SimpleEvent.SimpleEvent;
 import SaveLoader.AbstractSaveLoader;
@@ -16,6 +18,7 @@ public class GameDataTest {
     public void addParentToStack() {
         AbstractSaveLoader loader = new AbstractSaveLoader();
         Test1IO console = new Test1IO(null);
+        iChecker checker = new EldritchHorrorChecker();
 
         TestStorage storage = new TestStorage();
         storage.addEvent("test1", new SimpleEvent("test1", "test1", "test1",
@@ -23,7 +26,7 @@ public class GameDataTest {
         storage.addEvent("test2", new SimpleEvent("test2", "test2", "test2",
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
 
-        Game game = new Game(console, storage, loader);
+        Game game = new Game(console, storage, loader, checker);
 
         game.setInitialID("test1");
         game.makeEventIteration(new Message("player", "1"));
@@ -39,6 +42,7 @@ public class GameDataTest {
     public void getParentFromStack() {
         AbstractSaveLoader loader = new AbstractSaveLoader();
         Test1IO console = new Test1IO(null);
+        iChecker checker = new EldritchHorrorChecker();
 
         TestStorage storage = new TestStorage();
         storage.addEvent("test1", new SimpleEvent("test1", "test1", "test1",
@@ -49,7 +53,7 @@ public class GameDataTest {
         storage.addEvent("test3", new SimpleEvent("test3", "test3", "test3",
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
 
-        Game game = new Game(console, storage, loader);
+        Game game = new Game(console, storage, loader, checker);
         game.setInitialID("test1");
         game.makeEventIteration(new Message("player", "1"));
         game.makeEventIteration(new Message("player", "1"));
@@ -64,6 +68,7 @@ public class GameDataTest {
     public void rememberData() {
         AbstractSaveLoader loader = new AbstractSaveLoader();
         Test1IO console = new Test1IO(null);
+        iChecker checker = new EldritchHorrorChecker();
 
         TestStorage storage = new TestStorage();
         storage.addEvent("test1", new SimpleEvent("test1", "test1", "test1",
@@ -71,7 +76,7 @@ public class GameDataTest {
         storage.addEvent("test2", new SimpleEvent("test2", "test2", "test2",
                 new Answer[]{new Answer("1", "-1", new HashMap<>())}, false, false));
 
-        Game game = new Game(console, storage, loader);
+        Game game = new Game(console, storage, loader, checker);
         game.setInitialID("test1");
         game.makeEventIteration(new Message("player", "1"));
         game.makeEventIteration(new Message("player", "1"));

@@ -44,6 +44,11 @@ public class EventParser {
         return getStringParam("type");
     }
 
+    public String getAttribute() { return this.getType().compareTo("check") == 0 ? getStringParam("attribute") : null; }
+
+    public int getDifficulty() { return this.getType().compareTo("check") == 0
+            ? Integer.parseInt(getStringParam("difficulty")) : null; }
+
     public boolean isImportant() {
         return Boolean.parseBoolean(getStringParam("importance"));
     }

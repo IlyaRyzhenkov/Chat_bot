@@ -1,0 +1,20 @@
+{
+  "id": "Goodtimes/Saloon/Computer/0",
+  "name": "Доступ к компьютеру в салуне Гудтаймс",
+  "text": "Компьютер:\n— Введите пароль:",
+  "importance": false,
+  "parent": false,
+  "type": "any_answer",
+  "answers": [
+    {
+      "text": "0451",
+      "id": "Goodtimes/Saloon/Computer/3",
+      "dependencies": []
+    },
+    {
+      "text": "default",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

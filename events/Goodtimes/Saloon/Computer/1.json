@@ -1,0 +1,22 @@
+{
+  "id": "Goodtimes/Saloon/Computer/1",
+  "name": "Доступ к компьютеру в салуне Гудтаймс",
+  "text": "Вы пытаетесь взломать компьютер.",
+  "importance": false,
+  "parent": false,
+  "attribute": "knowledge",
+  "difficulty": 1,
+  "type": "check",
+  "answers": [
+    {
+      "text": "y",
+      "id": "Goodtimes/Saloon/Computer/2",
+      "dependencies": []
+    },
+    {
+      "text": "n",
+      "id": "",
+      "dependencies": []
+    }
+  ]
+}

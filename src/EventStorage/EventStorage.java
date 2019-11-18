@@ -1,6 +1,7 @@
 package EventStorage;
 
 import Event.Answer;
+import Event.CheckEvent.CheckEvent;
 import Event.Event;
 import Event.AnyAnswerEvent.AnyAnswerEvent;
 import Event.ExceptionEvent.ExceptionEvent;
@@ -26,6 +27,9 @@ public class EventStorage implements ILoader {
         Answer[] answers = filterAnswersWithData(parser.getAnswers(), playerData);
 
         switch (type) {
+            case "check":
+                return new CheckEvent(parser.getID(), parser.getName(), parser.getText(), parser.getAttribute(),
+                        parser.getDifficulty(), answers, parser.isImportant());
             case "simple":
                 return new SimpleEvent(parser.getID(), parser.getName(), text, answers, parser.isImportant(),
                         parser.isParent());
