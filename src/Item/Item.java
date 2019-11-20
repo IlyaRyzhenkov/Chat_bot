@@ -1,22 +1,22 @@
 package Item;
 
 public abstract class Item implements iItem{
-    private int knowledge;
-    private int strength;
-    private int communication;
-    private int attention;
-    private int luck;
     private String info;
     private String name;
+    private String id;
 
-
-    public Item(int knowledge, int strength, int communication, int attention, int luck) {
-        this.knowledge = knowledge;
-        this.strength = strength;
-        this.communication = communication;
-        this.attention = attention;
-        this.luck = luck;
+    public Item(String id, String name, String info) {
+        this.name = name;
+        this.info = info;
+        this.id = id;
     }
 
+    public String getId() { return this.id; }
+
+    public String getInfo() {
+        return this.info;
+    }
+
+    public String getName() { return  this.name; }
 
 }

@@ -4,10 +4,18 @@ import Event.*;
 import Event.CheckEvent.CheckEvent;
 import Event.ExceptionEvent.ExceptionEvent;
 import EventStorage.ILoader;
+import Item.Item;
+import Item.Outfitted.BaseKnowledgeBook;
+import Item.Outfitted.Robe;
+import Item.Outfitted.Screwdriver;
+import Item.Single.AidKit;
 import Player.Player;
 import SaveLoader.GameInfo;
 import SaveLoader.ISaveLoader;
+import Item.OutfittedItem;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
@@ -117,10 +125,16 @@ public class Game {
                 sendHelpMessage(player);
                 return true;
 
+            case("/inv"):
+                inventory(player);
+                return true;
+
             default:
                 return false;
         }
     }
+
+
 
     private void stopGame(Player player) {
         isGameRunning = false;
@@ -142,12 +156,85 @@ public class Game {
         console.sendMessage(new Message(player.getId(), "Игра сохранена"));
     }
 
+    private synchronized void inventory(Player player) {
+        String[] command = new String[] {"", ""};
+        String helpMessage = "Use /about <item number> to get more information about some item.\n" +
+                "Use /inv to get current state of inventory.\n" +
+                "Use /equip <item number> to equip suit/weapon/accessory.\n" +
+                "Use /unequip <suit/weapon/accessory> to unequip suit/weapon/accessory respectively.\n" +
+                "Use /back to exit from inventory.\n" +
+                "Use /help to get this message again.\n";
+        console.sendMessage(new Message(player.getId(),  helpMessage));
+        while(true) {
+            Message message = inConsole.getMessage();
+            if(!playerTable.containsKey(message.getPlayer()))
+                continue;
+            command = message.getMessage().split(" ", 2);
+            switch (command[0]) {
+                case("/about"):
+                    try {
+                        console.sendMessage(new Message(player.getId(),
+                                "\n" + player.getInventory().getItems().get(Integer.parseInt(command[1]) - 1).getName()
+                                        + "\n - " + player.getInventory().getItems().get(Integer.parseInt(command[1]) - 1).getInfo() + "\n"));
+                    }catch (Exception e) {
+                        console.sendMessage(new Message(player.getId(), "Try again."));
+                    }
+                    continue;
+                case("/inv"):
+                    console.sendMessage(new Message(player.getId(),
+                            "\n" + player.toString() + "\n" + player.getInventory().toString() + "\n"));
+                    continue;
+                case("/equip"):
+                    try {
+                        ((OutfittedItem)player.getInventory().getItems().get(Integer.parseInt(command[1]) - 1)).equip(player);
+                    } catch (Exception e) {
+                        console.sendMessage(new Message(player.getId(), "Try again."));
+                    }
+                    continue;
+                case("/unequip"):
+                    switch (command[1]){
+                        case("suit"):
+                            if(player.getInventory().getSuit() != null)
+                                player.getInventory().getSuit().unequip(player);
+                            continue;
+                        case("weapon"):
+                            if(player.getInventory().getWeapon() != null)
+                                player.getInventory().getWeapon().unequip(player);
+                            continue;
+                        case("accessory"):
+                            if(player.getInventory().getAccessory() != null)
+                                player.getInventory().getAccessory().unequip(player);
+                            continue;
+                        default:
+                            console.sendMessage(new Message(player.getId(), "Try again."));
+                    }
+                    continue;
+                case("/help"):
+                    console.sendMessage(new Message(player.getId(), helpMessage));
+                    continue;
+                case("/back"):
+                    return;
+                default:
+                    console.sendMessage(new Message(player.getId(), "Try again."));
+            }
+
+        }
+    }
+
     private synchronized void loadGame(Player play, String command) {
         String filename2 = command.split(" ")[1];
         GameInfo info = save_loader.loadGame(filename2);
         if (info != null) {
             isGameLoaded = true;
-            Player player = new Player(5, 5, 5,5 , 5); //TODO
+            Player player = new Player(5, 5, 5,5 , 5, 5, 10,
+                    new ArrayList<Item>() {
+                        {
+                            add(new AidKit());
+                            add(new Robe());
+                            add(new BaseKnowledgeBook());
+                            add(new Screwdriver());
+                        }
+                    }); //TODO
             player.setEventStack(info.getIDstack());
             player.setImportantData(info.getPlayerData());
             player.setCurrentEvent(info.getEventToStart());
@@ -171,7 +258,15 @@ public class Game {
     }
 
     private synchronized void CreatePlayer(String playerID) {
-        Player player = new Player(5, 5, 5, 5, 5); //TODO
+        Player player = new Player(5, 5, 5, 5, 5,5, 10,
+                new ArrayList<Item>() {
+                    {
+                        add(new AidKit());
+                        add(new Robe());
+                        add(new BaseKnowledgeBook());
+                        add(new Screwdriver());
+                    }
+                }); //TODO
         player.setId(playerID);
         player.setCurrentEvent(initialID);
         playerTable.put(playerID, player);
