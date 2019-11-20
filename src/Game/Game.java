@@ -13,6 +13,7 @@ import Player.Player;
 import SaveLoader.GameInfo;
 import SaveLoader.ISaveLoader;
 import Item.OutfittedItem;
+import Item.SingleItem;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -162,6 +163,7 @@ public class Game {
                 "Use /inv to get current state of inventory.\n" +
                 "Use /equip <item number> to equip suit/weapon/accessory.\n" +
                 "Use /unequip <suit/weapon/accessory> to unequip suit/weapon/accessory respectively.\n" +
+                "Use /use <item number> to use this single item." +
                 "Use /back to exit from inventory.\n" +
                 "Use /help to get this message again.\n";
         console.sendMessage(new Message(player.getId(),  helpMessage));
@@ -183,6 +185,13 @@ public class Game {
                 case("/inv"):
                     console.sendMessage(new Message(player.getId(),
                             "\n" + player.toString() + "\n" + player.getInventory().toString() + "\n"));
+                    continue;
+                case("/use"):
+                    try {
+                        ((SingleItem)player.getInventory().getItems().get(Integer.parseInt(command[1]) - 1)).use(player);
+                    } catch (Exception e) {
+                        console.sendMessage(new Message(player.getId(), "Try again."));
+                    }
                     continue;
                 case("/equip"):
                     try {
