@@ -1,0 +1,9 @@
+{
+  "id": "Outfitted/Weapon/Screwdriver",
+  "name": "Отвёртка",
+  "info": "Шлицевая отвёртка. Поможет в случае стычки, но не самое эффективное оружие. +1 к силе. ",
+  "type": "outfitted",
+  "attributes": {
+      "strength": 1
+    }
+}

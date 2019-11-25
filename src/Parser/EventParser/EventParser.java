@@ -1,32 +1,18 @@
-package EventParser;
+package Parser.EventParser;
 
 import Event.Answer;
+import Parser.Parser;
 import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.File;
 import java.util.HashMap;
 
-public class EventParser {
-
-    private JSONObject parsedEvent;
+public class EventParser extends Parser implements iEventParser {
 
     public EventParser(String path) throws ParseException, IOException {
-        BufferedReader bufferedReader;
-        StringBuilder builder = new StringBuilder();
-        JSONParser parser = new JSONParser();
-        bufferedReader = new BufferedReader(new FileReader(new File(path)));
-        String currentLine;
-        while ((currentLine = bufferedReader.readLine()) != null)
-            builder.append(currentLine);
-        parsedEvent = (JSONObject) parser.parse(builder.toString());
+        super(path);
     }
-
-    private String getStringParam(String key) { return parsedEvent.get(key).toString(); }
 
     public String getID() {
         return getStringParam("id");
@@ -60,8 +46,8 @@ public class EventParser {
 
 
     public Answer[] getAnswers() {
-        JSONArray parsedAnswers = (JSONArray) parsedEvent.get("answers");
-        Answer answers[] = new Answer[parsedAnswers.size()];
+        JSONArray parsedAnswers = (JSONArray) parsedObject.get("answers");
+        Answer[] answers = new Answer[parsedAnswers.size()];
         for (int i = 0; i < parsedAnswers.size(); i++) {
             HashMap<String, String> dependencies = new HashMap<String, String>();
             JSONArray parsedDependencies = (JSONArray) ((JSONObject)parsedAnswers.get(i)).get("dependencies");

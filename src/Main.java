@@ -1,12 +1,13 @@
 import Checker.EldritchHorrorChecker;
 import Checker.iChecker;
-import EventStorage.EventStorage;
-import EventStorage.ILoader;
+import Storage.EventEventStorage;
+import Storage.IEventStorage;
 import Game.Game;
 import Game.ConsoleIO;
-import SaveLoader.AbstractSaveLoader;
 import SaveLoader.ISaveLoader;
 import SaveLoader.JSONsaveLoader;
+import Storage.IItemStorage;
+import Storage.ItemStorage;
 import TelegramBot.Bot;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -33,10 +34,11 @@ public class Main {
 
     private static void runConsole() {
         ConsoleIO console = new ConsoleIO();
-        ILoader storage = new EventStorage();
+        IEventStorage storage = new EventEventStorage();
+        IItemStorage itemStorage = new ItemStorage();
         ISaveLoader loader = new JSONsaveLoader();
         iChecker checker = new EldritchHorrorChecker();
-        Game game = new Game(console, storage, loader, checker);
+        Game game = new Game(console, storage, loader, checker, itemStorage);
         game.startGameAtID("Main menu/menu", console);
     }
 
@@ -46,11 +48,12 @@ public class Main {
         TelegramBotsApi botsApi = new TelegramBotsApi();
 
         try {
-            ILoader storage = new EventStorage();
+            IEventStorage storage = new EventEventStorage();
             ISaveLoader loader = new JSONsaveLoader();
+            IItemStorage itemStorage = new ItemStorage();
             iChecker checker = new EldritchHorrorChecker();
             Bot bot = new Bot();
-            Game game = new Game(bot, storage, loader, checker);
+            Game game = new Game(bot, storage, loader, checker, itemStorage);
             bot.setGame(game);
             botsApi.registerBot(bot);
         } catch (TelegramApiException e) {

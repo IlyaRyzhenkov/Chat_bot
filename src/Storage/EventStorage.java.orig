@@ -1,20 +1,20 @@
-package EventStorage;
+package Storage;
 
-import EventParser.EventParser;
+import Parser.Parser;
 import Event.SimpleEvent.SimpleEvent;
 
-public class EventStorage implements ILoader{
+public class Storage implements ILoader{
     public Event getEventById(String id)
     {
 <<<<<<< HEAD
-        EventParser parser;
+        Parser parser;
         try {
-            parser = new EventParser("events\\" + id + ".json");
+            parser = new Parser("events\\" + id + ".json");
         } catch (IOException e){ return null; }
         catch (ParseException e) { return null; }
         return new Event(parser.getID(), parser.getName(), parser.getText(), parser.getAnswers());
 =======
-        return EventParser.parse("events\\" + id + ".json");
+        return Parser.parse("events\\" + id + ".json");
     }
     public Event getEvent()
     {

@@ -1,4 +1,4 @@
-package EventStorage;
+package Storage;
 
 import Event.Answer;
 import Event.CheckEvent.CheckEvent;
@@ -6,22 +6,22 @@ import Event.Event;
 import Event.AnyAnswerEvent.AnyAnswerEvent;
 import Event.ExceptionEvent.ExceptionEvent;
 import Event.SimpleEvent.SimpleEvent;
-import EventParser.EventParser;
+import Parser.EventParser.EventParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class EventStorage implements ILoader {
-    public Event getEventById(String id, HashMap<String, String> playerData) {
+public class EventEventStorage implements IEventStorage {
+    public Event getById(String id, HashMap<String, String> playerData) {
         if(id.compareTo("exit") == 0)
             return null;
         EventParser parser;
         try {
             parser = new EventParser("events/" + id + ".json");
-        } catch (IOException e) { return getEventById("Exceptions/cant_read_file", playerData); }
-        catch (ParseException e) { return getEventById("Exceptions/damaged_file", playerData); }
+        } catch (IOException e) { return getById("Exceptions/cant_read_file", playerData); }
+        catch (ParseException e) { return getById("Exceptions/damaged_file", playerData); }
         String type = parser.getType();
         String text = complementTextWithData(parser.getText(), playerData);
         Answer[] answers = filterAnswersWithData(parser.getAnswers(), playerData);
@@ -39,7 +39,7 @@ public class EventStorage implements ILoader {
             case "exception":
                 return new ExceptionEvent(parser.getID(), parser.getName(), text, answers);
         }
-        return getEventById("Exception/damaged_file", playerData);
+        return getById("Exception/damaged_file", playerData);
     }
 
     private Answer[] filterAnswersWithData(Answer[] answers, HashMap<String, String> data) {

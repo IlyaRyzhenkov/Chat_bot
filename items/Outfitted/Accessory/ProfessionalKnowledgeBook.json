@@ -1,0 +1,9 @@
+{
+  "id": "Outfitted/Accessory/ProfessionalKnowledgeBook",
+  "name": "Самая научная книга",
+  "info": "Г. С. Ландсберг - Элементарный учебник физики. Колебания и волны. Оптика. Атомная и ядерная физика. +3 к знаниям.",
+  "type": "outfitted",
+  "attributes": {
+      "knowledge": 3
+    }
+}

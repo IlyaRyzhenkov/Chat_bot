@@ -15,6 +15,7 @@ public class Player {
     private String currentEvent;
     private String id;
     private HashMap<String, Integer> attributes;
+    private boolean isInventoryOpen;
     private int hp;
     private int maxHp;
     private Inventory inventory;
@@ -22,6 +23,7 @@ public class Player {
     public Player(int knowledge, int strength, int communication, int attention, int luck, int hp, int maxHp, ArrayList<Item> items) {
         this.hp = hp;
         this.maxHp = maxHp;
+        this.isInventoryOpen = false;
         this.importantData = new HashMap<String, String>();
         this.eventStack = new Stack<>();
         this.inventory = new Inventory(items);
@@ -35,6 +37,11 @@ public class Player {
             }
         };
     }
+
+    public boolean isInventoryOpen() { return this.isInventoryOpen; }
+
+    public void openInventory() { this.isInventoryOpen = true; }
+    public void closeInventory() { this.isInventoryOpen = false; }
 
     public void hit(int dmg) {
         this.hp = Math.max(0, getHp() - dmg);

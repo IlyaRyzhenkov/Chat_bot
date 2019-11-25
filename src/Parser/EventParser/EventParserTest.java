@@ -1,7 +1,6 @@
-package EventParser;
+package Parser.EventParser;
 
 import Event.Answer;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -26,7 +25,7 @@ public class EventParserTest {
     @Test
     public void getCorrectFileID() {
         EventParser parser = getParser("events/test/correct_file.json");
-        Assert.assertEquals("test/correct_file", parser.getID());
+        assertEquals("test/correct_file", parser.getID());
     }
 
     @Test
@@ -41,7 +40,7 @@ public class EventParserTest {
     @Test
     public void getCorrectFileName() {
         EventParser parser = getParser("events/test/correct_file.json");
-        Assert.assertEquals("TestName", parser.getName());
+        assertEquals("TestName", parser.getName());
     }
 
     @Test
@@ -56,7 +55,7 @@ public class EventParserTest {
     @Test
     public void getCorrectFileText() {
         EventParser parser = getParser("events/test/correct_file.json");
-        Assert.assertEquals("This event was made for test EventParser. It's not useful.", parser.getText());
+        assertEquals("This event was made for test EventParser. It's not useful.", parser.getText());
     }
 
     @Test

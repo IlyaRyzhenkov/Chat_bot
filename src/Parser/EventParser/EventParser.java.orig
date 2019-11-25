@@ -1,4 +1,4 @@
-package EventParser;
+package Parser;
 
 import Event.SimpleEvent.SimpleEvent;
 import Event.Answer;
@@ -9,12 +9,12 @@ import org.json.simple.parser.ParseException;
 
 import java.io.*;
 
-public class EventParser {
+public class Parser {
 
 <<<<<<< HEAD
     private JSONObject parsedEvent;
 
-    public EventParser(String path) throws ParseException, IOException{
+    public Parser(String path) throws ParseException, IOException{
         BufferedReader bufferedReader;
         StringBuilder builder = new StringBuilder();
         JSONParser parser = new JSONParser();

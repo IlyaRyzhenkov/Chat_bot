@@ -1,21 +1,20 @@
 package Game;
+import AlternativeInteractionControllers.InventoryController.InventoryController;
+import AlternativeInteractionControllers.InventoryController.iInventoryController;
 import Checker.iChecker;
 import Event.*;
 import Event.CheckEvent.CheckEvent;
 import Event.ExceptionEvent.ExceptionEvent;
-import EventStorage.ILoader;
+import Storage.IEventStorage;
 import Item.Item;
-import Item.Outfitted.BaseKnowledgeBook;
-import Item.Outfitted.Robe;
-import Item.Outfitted.Screwdriver;
 import Item.Single.AidKit;
 import Player.Player;
 import SaveLoader.GameInfo;
 import SaveLoader.ISaveLoader;
 import Item.OutfittedItem;
 import Item.SingleItem;
+import Storage.IItemStorage;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,8 +22,10 @@ public class Game {
     private String initialID = "Main menu/menu";
     private ConsoleInInterface inConsole = null;
     private OInterface console;
-    private ILoader storage;
+    private IEventStorage eventStorage;
+    private IItemStorage itemStorage;
     private ISaveLoader save_loader;
+    private iInventoryController inventoryController;
     private Event currentEvent;
     private iChecker checker;
     private HashMap<String, Player> playerTable;
@@ -32,10 +33,12 @@ public class Game {
     private boolean isGameRunning;
     private boolean isGameLoaded;
 
-    public Game(OInterface io, ILoader loader, ISaveLoader save_loader, iChecker checker) {
+    public Game(OInterface io, IEventStorage loader, ISaveLoader save_loader, iChecker checker, IItemStorage itemStorage) {
         console = io;
+        this.inventoryController = new InventoryController();
         this.checker = checker;
-        storage = loader;
+        this.itemStorage = itemStorage;
+        eventStorage = loader;
         this.save_loader = save_loader;
         isGameRunning = false;
         this.playerTable = new HashMap<String, Player>();
@@ -60,10 +63,12 @@ public class Game {
             return;
         }
         Player player = playerTable.get(message.getPlayer());
-        currentEvent = storage.getEventById(player.getCurrentEvent(), player.getImportantData());
+        currentEvent = eventStorage.getById(player.getCurrentEvent(), player.getImportantData());
         String reply = message.getMessage();
         if(reply == null)
             return;
+
+
 
         if(currentEvent.getClass() == CheckEvent.class) {
             reply = checker.check(player.getAttributeDiceSet(((CheckEvent)currentEvent).getAttribute()),
@@ -75,6 +80,10 @@ public class Game {
             player.remember(currentEvent.getId(), reply);
         }
         boolean isCommand = handleMessage(player, reply);
+        if(player.isInventoryOpen()) {
+            inventory(player, reply);
+            return;
+        }
         if (!isGameRunning) {
             isGameRunning = true;
             return;
@@ -87,7 +96,7 @@ public class Game {
         }
         if(nextEventId.isEmpty()) {
             if(!player.getEventStack().empty()) {
-                currentEvent = storage.getEventById(player.getEventStack().pop(), player.getImportantData());
+                currentEvent = eventStorage.getById(player.getEventStack().pop(), player.getImportantData());
                 sendEventInfo(player, currentEvent);
                 player.setCurrentEvent(currentEvent.getId());
             }
@@ -95,7 +104,7 @@ public class Game {
                 stopGame(player);
             return;
         }
-        Event nextEvent = storage.getEventById(nextEventId, player.getImportantData());
+        Event nextEvent = eventStorage.getById(nextEventId, player.getImportantData());
         if(nextEvent == null){
             return;
         }
@@ -109,6 +118,7 @@ public class Game {
     }
 
     private boolean handleMessage(Player player, String message) {
+        if(player.isInventoryOpen()) return true;
         switch (message.toLowerCase().split(" ")[0]) {
             case ("/save"):
                 saveGame(player, message);
@@ -127,7 +137,7 @@ public class Game {
                 return true;
 
             case("/inv"):
-                inventory(player);
+                player.openInventory();
                 return true;
 
             default:
@@ -157,76 +167,43 @@ public class Game {
         console.sendMessage(new Message(player.getId(), "Игра сохранена"));
     }
 
-    private synchronized void inventory(Player player) {
-        String[] command = new String[] {"", ""};
-        String helpMessage = "Use /about <item number> to get more information about some item.\n" +
-                "Use /inv to get current state of inventory.\n" +
-                "Use /equip <item number> to equip suit/weapon/accessory.\n" +
-                "Use /unequip <suit/weapon/accessory> to unequip suit/weapon/accessory respectively.\n" +
-                "Use /use <item number> to use this single item." +
-                "Use /back to exit from inventory.\n" +
-                "Use /help to get this message again.\n";
-        console.sendMessage(new Message(player.getId(),  helpMessage));
-        while(true) {
-            Message message = inConsole.getMessage();
-            if(!playerTable.containsKey(message.getPlayer()))
-                continue;
-            command = message.getMessage().split(" ", 2);
-            switch (command[0]) {
-                case("/about"):
-                    try {
-                        console.sendMessage(new Message(player.getId(),
-                                "\n" + player.getInventory().getItems().get(Integer.parseInt(command[1]) - 1).getName()
-                                        + "\n - " + player.getInventory().getItems().get(Integer.parseInt(command[1]) - 1).getInfo() + "\n"));
-                    }catch (Exception e) {
-                        console.sendMessage(new Message(player.getId(), "Try again."));
-                    }
-                    continue;
-                case("/inv"):
-                    console.sendMessage(new Message(player.getId(),
-                            "\n" + player.toString() + "\n" + player.getInventory().toString() + "\n"));
-                    continue;
-                case("/use"):
-                    try {
-                        ((SingleItem)player.getInventory().getItems().get(Integer.parseInt(command[1]) - 1)).use(player);
-                    } catch (Exception e) {
-                        console.sendMessage(new Message(player.getId(), "Try again."));
-                    }
-                    continue;
-                case("/equip"):
-                    try {
-                        ((OutfittedItem)player.getInventory().getItems().get(Integer.parseInt(command[1]) - 1)).equip(player);
-                    } catch (Exception e) {
-                        console.sendMessage(new Message(player.getId(), "Try again."));
-                    }
-                    continue;
-                case("/unequip"):
-                    switch (command[1]){
-                        case("suit"):
-                            if(player.getInventory().getSuit() != null)
-                                player.getInventory().getSuit().unequip(player);
-                            continue;
-                        case("weapon"):
-                            if(player.getInventory().getWeapon() != null)
-                                player.getInventory().getWeapon().unequip(player);
-                            continue;
-                        case("accessory"):
-                            if(player.getInventory().getAccessory() != null)
-                                player.getInventory().getAccessory().unequip(player);
-                            continue;
-                        default:
-                            console.sendMessage(new Message(player.getId(), "Try again."));
-                    }
-                    continue;
-                case("/help"):
-                    console.sendMessage(new Message(player.getId(), helpMessage));
-                    continue;
-                case("/back"):
-                    return;
-                default:
-                    console.sendMessage(new Message(player.getId(), "Try again."));
-            }
-
+    private synchronized void inventory(Player player, String message) {
+        if (!player.isInventoryOpen()) {
+            console.sendMessage(new Message(player.getId(),
+                    "Inventory opened.\n" + inventoryController.getHelpMessage()));
+            return;
+        }
+        String[] command = message.split(" ", 2);
+        switch (command[0]) {
+            case ("/about"):
+                console.sendMessage(new Message(player.getId(),
+                        inventoryController.getItemInfo(player, Integer.parseInt(command[1]) - 1)));
+                break;
+            case ("/inv"):
+                console.sendMessage(new Message(player.getId(),
+                        inventoryController.getInventoryInfo(player)));
+                break;
+            case ("/use"):
+                console.sendMessage(new Message(player.getId(),
+                        inventoryController.use(player, Integer.parseInt(command[1]) - 1)));
+                break;
+            case ("/equip"):
+                console.sendMessage(new Message(player.getId(),
+                        inventoryController.equip(player, Integer.parseInt(command[1]) - 1)));
+                break;
+            case ("/unequip"):
+                console.sendMessage(new Message(player.getId(),
+                        inventoryController.unequip(player, command[1])));
+                break;
+            case ("/help"):
+                console.sendMessage(new Message(player.getId(),
+                        inventoryController.getHelpMessage()));
+                break;
+            case ("/back"):
+                player.closeInventory();
+                break;
+            default:
+                console.sendMessage(new Message(player.getId(), "Try again."));
         }
     }
 
@@ -238,19 +215,19 @@ public class Game {
             Player player = new Player(5, 5, 5,5 , 5, 5, 10,
                     new ArrayList<Item>() {
                         {
-                            add(new AidKit());
-                            add(new Robe());
-                            add(new BaseKnowledgeBook());
-                            add(new Screwdriver());
+                            add(itemStorage.getById("Single/AidKit"));
+                            add(itemStorage.getById("Outfitted/Suit/Robe"));
+                            add(itemStorage.getById("Outfitted/Accessory/BaseKnowledgeBook"));
+                            add(itemStorage.getById("Outfitted/Weapon/Screwdriver"));
                         }
-                    }); //TODO
+                    });
             player.setEventStack(info.getIDstack());
             player.setImportantData(info.getPlayerData());
             player.setCurrentEvent(info.getEventToStart());
             player.setId(play.getId());
             playerTable.put(player.getId(), player);
             console.sendMessage(new Message(player.getId(), "Игра загружена"));
-            Event lastEvent = storage.getEventById(player.getCurrentEvent(), player.getImportantData());
+            Event lastEvent = eventStorage.getById(player.getCurrentEvent(), player.getImportantData());
             sendEventInfo(player, lastEvent);
         }
     }
@@ -270,16 +247,16 @@ public class Game {
         Player player = new Player(5, 5, 5, 5, 5,5, 10,
                 new ArrayList<Item>() {
                     {
-                        add(new AidKit());
-                        add(new Robe());
-                        add(new BaseKnowledgeBook());
-                        add(new Screwdriver());
+                        add(itemStorage.getById("Single/AidKit"));
+                        add(itemStorage.getById("Outfitted/Suit/Robe"));
+                        add(itemStorage.getById("Outfitted/Accessory/BaseKnowledgeBook"));
+                        add(itemStorage.getById("Outfitted/Weapon/Screwdriver"));
                     }
-                }); //TODO
+                });
         player.setId(playerID);
         player.setCurrentEvent(initialID);
         playerTable.put(playerID, player);
-        currentEvent = storage.getEventById(player.getCurrentEvent(), player.getImportantData());
+        currentEvent = eventStorage.getById(player.getCurrentEvent(), player.getImportantData());
         sendEventInfo(player, currentEvent);
     }
 

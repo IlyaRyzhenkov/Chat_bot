@@ -7,9 +7,10 @@ import Event.SimpleEvent.SimpleEvent;
 import Event.Answer;
 import SaveLoader.AbstractSaveLoader;
 import SaveLoader.ISaveLoader;
+import Storage.IItemStorage;
+import Storage.ItemStorage;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
@@ -22,8 +23,9 @@ public class GameTest {
     public void testIncorrectReplies1() {
         Test1IO console = new Test1IO(null);
         iChecker checker = new EldritchHorrorChecker();
+        IItemStorage itemStorage = new ItemStorage();
 
-        TestStorage storage = new TestStorage();
+        TestEventStorage storage = new TestEventStorage();
         storage.addEvent("1", new SimpleEvent("1", "1", "1",
                 new Answer[]{new Answer("1", "2", new HashMap<>())}, false, false));
         storage.addEvent("2", new SimpleEvent("2", "2", "2",
@@ -31,7 +33,7 @@ public class GameTest {
         storage.addEvent("Exceptions/incorrect_reply", new ExceptionEvent("Exceptions/incorrect_reply", "exp", "exp",
                 new Answer[]{new Answer("1", "1", new HashMap<>())}));
 
-        Game game = new Game(console, storage, loader, checker);
+        Game game = new Game(console, storage, loader, checker, itemStorage);
         game.setInitialID("1");
         game.makeEventIteration(new Message("player", "1"));
         game.makeEventIteration(new Message("player", "1"));
@@ -49,8 +51,9 @@ public class GameTest {
     public void testIncorrectReplies2() {
         Test1IO console = new Test1IO(null);
         iChecker checker = new EldritchHorrorChecker();
+        IItemStorage itemStorage = new ItemStorage();
 
-        TestStorage storage = new TestStorage();
+        TestEventStorage storage = new TestEventStorage();
         storage.addEvent("1", new SimpleEvent("1", "1", "1",
                 new Answer[]{new Answer("1", "2", new HashMap<>())}, false, false));
         storage.addEvent("2", new SimpleEvent("2", "2", "2",
@@ -58,7 +61,7 @@ public class GameTest {
         storage.addEvent("Exceptions/incorrect_reply", new ExceptionEvent("Exceptions/incorrect_reply", "exp", "exp",
                 new Answer[]{new Answer("1", "1", new HashMap<>())}));
 
-        Game game = new Game(console, storage, loader, checker);
+        Game game = new Game(console, storage, loader, checker, itemStorage);
         game.setInitialID("1");
         game.makeEventIteration(new Message("player", "1"));
         game.makeEventIteration(new Message("player", "1"));
@@ -76,14 +79,15 @@ public class GameTest {
     public void testEventAnswersText(){
         Test1IO console = new Test1IO(null);
         iChecker checker = new EldritchHorrorChecker();
+        IItemStorage itemStorage = new ItemStorage();
 
-        TestStorage storage = new TestStorage();
+        TestEventStorage storage = new TestEventStorage();
         storage.addEvent("1", new SimpleEvent("1", "name", "event_text", new Answer[]{
                 new Answer("answer1_text", "1", new HashMap<>()),
                 new Answer("answer2_text", "-1", new HashMap<>()),
                 new Answer("answer3_text", "-1", new HashMap<>())}, false, false));
 
-        Game game = new Game(console, storage, loader, checker);
+        Game game = new Game(console, storage, loader, checker, itemStorage);
         game.setInitialID("1");
         game.makeEventIteration(new Message("player", "1"));
         game.makeEventIteration(new Message("player", "1"));
@@ -101,11 +105,12 @@ public class GameTest {
     public void testHelpCommand() {
         Test1IO console = new Test1IO(null);
         iChecker checker = new EldritchHorrorChecker();
+        IItemStorage itemStorage = new ItemStorage();
 
-        TestStorage storage = new TestStorage();
+        TestEventStorage storage = new TestEventStorage();
         storage.addEvent("1", new SimpleEvent("1", "1", "1",
                 new Answer[]{new Answer("1", "2", new HashMap<>())}, false, false));
-        Game game = new Game(console, storage, loader, checker);
+        Game game = new Game(console, storage, loader, checker, itemStorage);
         game.setInitialID("1");
         game.makeEventIteration(new Message("player", "1"));
         game.makeEventIteration(new Message("player", "/help"));
@@ -128,11 +133,12 @@ public class GameTest {
     public void testExitCommand() {
         Test1IO console = new Test1IO(null);
         iChecker checker = new EldritchHorrorChecker();
+        IItemStorage itemStorage = new ItemStorage();
 
-        TestStorage storage = new TestStorage();
+        TestEventStorage storage = new TestEventStorage();
         storage.addEvent("1", new SimpleEvent("1", "1", "1",
                 new Answer[]{new Answer("1", "2", new HashMap<>())}, false, false));
-        Game game = new Game(console, storage, loader, checker);
+        Game game = new Game(console, storage, loader, checker, itemStorage);
         game.setInitialID("1");
         game.makeEventIteration(new Message("player", "1"));
         game.makeEventIteration(new Message("player", "/exit"));
