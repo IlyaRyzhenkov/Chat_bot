@@ -82,7 +82,12 @@ public class Game {
         boolean isCommand = handleMessage(player, reply);
         if(player.isInventoryOpen()) {
             inventory(player, reply);
-            return;
+            if(player.isInventoryOpen())
+                return;
+            else {
+                sendEventInfo(player, currentEvent);
+                return;
+            }
         }
         if (!isGameRunning) {
             isGameRunning = true;
