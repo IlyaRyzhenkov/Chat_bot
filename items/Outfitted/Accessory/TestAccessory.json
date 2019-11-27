@@ -1,0 +1,8 @@
+{
+  "id": "Outfitted/Accessory/TestAccessory",
+  "name": "Test Accessory",
+  "info": "Test Accessory info",
+  "type": "outfitted",
+  "attributes": {
+    }
+}

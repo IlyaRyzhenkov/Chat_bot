@@ -1,0 +1,8 @@
+{
+  "id": "Outfitted/Weapon/TestWeapon",
+  "name": "Test Weapon",
+  "info": "Test Weapon info",
+  "type": "outfitted",
+  "attributes": {
+  }
+}

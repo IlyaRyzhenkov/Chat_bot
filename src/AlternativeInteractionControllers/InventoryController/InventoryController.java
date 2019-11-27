@@ -8,7 +8,9 @@ public class InventoryController implements iInventoryController{
 
     @Override
     public String getItemInfo(Player player, int itemInventoryPosition) {
-        return player.getInventory().getItems().get(itemInventoryPosition).getInfo();
+        if(itemInventoryPosition > player.getInventory().getItems().size() || itemInventoryPosition < 1)
+            return "Wrong item position. Try again.";
+        return player.getInventory().getItems().get(itemInventoryPosition - 1).getInfo();
     }
 
     @Override
@@ -31,8 +33,8 @@ public class InventoryController implements iInventoryController{
     public String equip(Player player, int itemInventoryPosition) {
         String use;
         try {
-            use = "Item \"" + player.getInventory().getItems().get(itemInventoryPosition).getName() + "\" has been equipped.";
-            ((OutfittedItem) player.getInventory().getItems().get(itemInventoryPosition)).equip(player);
+            use = "Item \"" + player.getInventory().getItems().get(itemInventoryPosition - 1).getName() + "\" has been equipped.";
+            ((OutfittedItem) player.getInventory().getItems().get(itemInventoryPosition - 1)).equip(player);
         } catch (NullPointerException | ClassCastException | IndexOutOfBoundsException e) { return "Can't equip this item."; }
         return use;
     }
@@ -62,8 +64,8 @@ public class InventoryController implements iInventoryController{
     public String use(Player player, int itemInventoryPosition) {
         String use;
         try {
-            use = "Item \"" + player.getInventory().getItems().get(itemInventoryPosition).getName() + "\" has been used.";
-            ((SingleItem) player.getInventory().getItems().get(itemInventoryPosition)).use(player);
+            use = "Item \"" + player.getInventory().getItems().get(itemInventoryPosition - 1).getName() + "\" has been used.";
+            ((SingleItem) player.getInventory().getItems().get(itemInventoryPosition - 1)).use(player);
         } catch (NullPointerException | ClassCastException | IndexOutOfBoundsException e) { return "Can't use this item."; }
         return use;
     }

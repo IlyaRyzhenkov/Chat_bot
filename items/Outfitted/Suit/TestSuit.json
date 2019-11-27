@@ -1,0 +1,8 @@
+{
+  "id": "Outfitted/Suit/TestSuit",
+  "name": "Test Suit",
+  "info": "Test Suit info",
+  "type": "outfitted",
+  "attributes": {
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "id": "Single/TestItem",
+  "name": "Test Item",
+  "info": "Test Item info",
+  "type": "single",
+  "maxNumberOfUses": 99
+}

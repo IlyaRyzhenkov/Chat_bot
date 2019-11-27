@@ -1,6 +1,7 @@
 package Storage;
 
 import Item.Item;
+import Item.Single.TestItem;
 import Item.Suit;
 import Item.Weapon;
 import Item.Accessory;
@@ -23,6 +24,8 @@ public class ItemStorage implements IItemStorage{
                 case ("AidKit"):
                 case ("BigAidKit"):
                     return new AidKit(parser.getId(), parser.getName(), parser.getInfo(), parser.getMaxNumberOfUses());
+                case("TestItem"):
+                    return new TestItem(parser.getId(), parser.getName(), parser.getInfo(), parser.getMaxNumberOfUses());
                 default:
                     return null;
             }
