@@ -4,6 +4,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 import static org.junit.Assert.*;
@@ -67,7 +68,15 @@ public class JSONsaveLoaderTest {
         pInfo.put("key1", "val1");
         pInfo.put("key2", "val2");
 
-        GameInfo info = new GameInfo(stack, pInfo, "Start");
+        GameInfo info = new GameInfo(stack, pInfo, "Start", 5, 5, new ArrayList<>(), "", "", "", new HashMap<String, Integer>() {
+            {
+                put("knowledge", 5);
+                put("strength", 5);
+                put("communication", 5);
+                put("attention", 5);
+                put("luck", 5);
+            }
+        });
         JSONsaveLoader saver = new JSONsaveLoader();
         saver.saveGame(filename, info);
 

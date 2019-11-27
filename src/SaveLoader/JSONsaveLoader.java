@@ -5,6 +5,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,8 +29,26 @@ public class JSONsaveLoader implements ISaveLoader {
             pair.add(gameData.getPlayerData().get(key));
             hashSet.add(pair);
         }
+        JSONObject inventory = new JSONObject();
+        inventory.put("suit", gameData.getPlayerSuitId());
+        inventory.put("weapon", gameData.getPlayerWeaponId());
+        inventory.put("accessory", gameData.getPlayerAccessoryId());
+        JSONArray items = new JSONArray();
+        for(String item: gameData.getPlayerItems())
+            items.add(item);
+        inventory.put("items", items);
+        JSONArray attributes = new JSONArray();
+        for(String a: gameData.getPlayerAttributes().keySet()) {
+            JSONObject o = new JSONObject();
+            o.put("attribute", a);
+            o.put("value", gameData.getPlayerAttributes().get(a));
+        }
+        obj.put("attributes", attributes);
+        obj.put("inventory", inventory);
         obj.put("Player data", hashSet);
         obj.put("StartEvent", gameData.getEventToStart());
+        obj.put("hp", gameData.getPlayerHp());
+        obj.put("maxHp", gameData.getMaxPlayerHp());
 
         String path = makeFullFilename(filename);
         try (FileWriter file = new FileWriter(path)) {
@@ -60,7 +79,24 @@ public class JSONsaveLoader implements ISaveLoader {
                 playerData.put((String) pair.get(0), (String) pair.get(1));
             }
             String eventID = (String) obj.get("StartEvent");
-            return new GameInfo(IDstack, playerData, eventID);
+            HashMap<String, Integer> attributes = new HashMap<String, Integer>();
+            JSONArray jsonAttributes = (JSONArray) obj.get("attributes");
+            Iterator<JSONObject> attributesIterator = jsonAttributes.iterator();
+            while(attributesIterator.hasNext()) {
+                attributes.put((String) attributesIterator.next().get("attribute"),
+                        Integer.parseInt((String)attributesIterator.next().get("value")));
+            }
+            JSONObject jsonInventory = (JSONObject) obj.get("inventory");
+            JSONArray jsonItems = (JSONArray) jsonInventory.get("items");
+            ArrayList<String> items = new ArrayList<String>();
+            items.addAll(jsonItems);
+            String weaponId = (String)jsonInventory.get("weapon");
+            String suitId = (String) jsonInventory.get("suit");
+            String accessoryId = (String) jsonInventory.get("accessory");
+            int playerHp = Integer.parseInt(obj.get("hp").toString());
+            int maxPlayerHp = Integer.parseInt(obj.get("maxHp").toString());
+
+            return new GameInfo(IDstack, playerData, eventID, playerHp, maxPlayerHp, items, weaponId, suitId, accessoryId, attributes);
 
         } catch (IOException e) {
             System.err.print("Error reading file\n");

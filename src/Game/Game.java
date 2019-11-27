@@ -7,12 +7,12 @@ import Event.CheckEvent.CheckEvent;
 import Event.ExceptionEvent.ExceptionEvent;
 import Storage.IEventStorage;
 import Item.Item;
-import Item.Single.AidKit;
+import Item.Accessory;
 import Player.Player;
 import SaveLoader.GameInfo;
 import SaveLoader.ISaveLoader;
-import Item.OutfittedItem;
-import Item.SingleItem;
+import Item.Suit;
+import Item.Weapon;
 import Storage.IItemStorage;
 
 import java.util.ArrayList;
@@ -182,7 +182,7 @@ public class Game {
         switch (command[0]) {
             case ("/about"):
                 console.sendMessage(new Message(player.getId(),
-                        inventoryController.getItemInfo(player, Integer.parseInt(command[1]) - 1)));
+                        inventoryController.getItemInfo(player, Integer.parseInt(command[1]))));
                 break;
             case ("/inv"):
                 console.sendMessage(new Message(player.getId(),
@@ -190,11 +190,11 @@ public class Game {
                 break;
             case ("/use"):
                 console.sendMessage(new Message(player.getId(),
-                        inventoryController.use(player, Integer.parseInt(command[1]) - 1)));
+                        inventoryController.use(player, Integer.parseInt(command[1]))));
                 break;
             case ("/equip"):
                 console.sendMessage(new Message(player.getId(),
-                        inventoryController.equip(player, Integer.parseInt(command[1]) - 1)));
+                        inventoryController.equip(player, Integer.parseInt(command[1]))));
                 break;
             case ("/unequip"):
                 console.sendMessage(new Message(player.getId(),
@@ -217,15 +217,19 @@ public class Game {
         GameInfo info = save_loader.loadGame(filename2);
         if (info != null) {
             isGameLoaded = true;
-            Player player = new Player(5, 5, 5,5 , 5, 5, 10,
-                    new ArrayList<Item>() {
-                        {
-                            add(itemStorage.getById("Single/AidKit"));
-                            add(itemStorage.getById("Outfitted/Suit/Robe"));
-                            add(itemStorage.getById("Outfitted/Accessory/BaseKnowledgeBook"));
-                            add(itemStorage.getById("Outfitted/Weapon/Screwdriver"));
-                        }
-                    });
+            ArrayList<Item> items = new ArrayList<Item>();
+            for(String id: info.getPlayerItems())
+                items.add(itemStorage.getById(id));
+            Player player = new Player(info.getPlayerAttributes().getOrDefault("knowledge", 1),
+                    info.getPlayerAttributes().getOrDefault("strength", 1),
+                    info.getPlayerAttributes().getOrDefault("communication", 1),
+                    info.getPlayerAttributes().getOrDefault("attention", 1) ,
+                    info.getPlayerAttributes().getOrDefault("luck", 1),
+                    info.getPlayerHp(), info.getMaxPlayerHp(), items);
+            player.getInventory().setWeapon((Weapon)itemStorage.getById(info.getPlayerWeaponId()));
+            player.getInventory().setAccessory((Accessory)itemStorage.getById(info.getPlayerAccessoryId()));
+            player.getInventory().setSuit((Suit)itemStorage.getById(info.getPlayerSuitId()));
+
             player.setEventStack(info.getIDstack());
             player.setImportantData(info.getPlayerData());
             player.setCurrentEvent(info.getEventToStart());
