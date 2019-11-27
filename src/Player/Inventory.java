@@ -56,9 +56,9 @@ public class Inventory {
     }
 
     public String getInventoryAttributeDiceSet(String attribute) {
-        int n = this.getWeapon().getAttribute(attribute)
-                + this.getSuit().getAttribute(attribute)
-                + this.getAccessory().getAttribute(attribute);
+        int n = (this.getWeapon() != null ? this.getWeapon().getAttribute(attribute) : 0)
+                + (this.getSuit() != null ? this.getSuit().getAttribute(attribute) : 0)
+                + (this.getAccessory() != null ? this.getAccessory().getAttribute(attribute) : 0);
         return n > 0 ? n + "d6" : "";
     }
 
