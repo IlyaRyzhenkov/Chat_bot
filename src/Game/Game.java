@@ -49,7 +49,7 @@ public class Game {
         inConsole = cons;
         CreatePlayer("player");
         while(isGameRunning){
-                Message message = inConsole.getMessage();
+            Message message = inConsole.getMessage();
             makeEventIteration(message);
         }
     }

@@ -32,7 +32,7 @@ public class InventoryController implements iInventoryController{
         try {
             ((OutfittedItem) player.getInventory().getItems().get(itemInventoryPosition - 1)).equip(player);
         } catch (NullPointerException | ClassCastException | IndexOutOfBoundsException e) { return "Can't equip this item."; }
-        return "Item \"" + player.getInventory().getItems().get(itemInventoryPosition).getName() + "\" has been equipped.";
+        return "Item \"" + player.getInventory().getItems().get(itemInventoryPosition - 1).getName() + "\" has been equipped.";
     }
 
     @Override
@@ -61,7 +61,7 @@ public class InventoryController implements iInventoryController{
         try {
             ((SingleItem) player.getInventory().getItems().get(itemInventoryPosition - 1)).use(player);
         } catch (NullPointerException | ClassCastException | IndexOutOfBoundsException e) { return "Can't use this item."; }
-        return "Item \"" + player.getInventory().getItems().get(itemInventoryPosition).getName() + "\" has been used.";
+        return "Item \"" + player.getInventory().getItems().get(itemInventoryPosition - 1).getName() + "\" has been used.";
     }
 
 
