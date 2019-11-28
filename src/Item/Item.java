@@ -1,6 +1,6 @@
 package Item;
 
-public abstract class Item implements iItem{
+public abstract class Item implements IItem {
     private String info;
     private String name;
     private String id;

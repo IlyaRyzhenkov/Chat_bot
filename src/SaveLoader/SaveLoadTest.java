@@ -1,7 +1,7 @@
 package SaveLoader;
 
 import Checker.EldritchHorrorChecker;
-import Checker.iChecker;
+import Checker.IChecker;
 import Event.Answer;
 import Event.SimpleEvent.SimpleEvent;
 import Game.Message;
@@ -19,7 +19,7 @@ public class SaveLoadTest {
     public void saveGame() {
         AbstractSaveLoader loader = new AbstractSaveLoader();
         TestEventStorage storage = new TestEventStorage();
-        iChecker checker = new EldritchHorrorChecker();
+        IChecker checker = new EldritchHorrorChecker();
         IItemStorage itemStorage = new ItemStorage();
 
         storage.addEvent("1", new SimpleEvent("1", "1", "1",
@@ -44,7 +44,7 @@ public class SaveLoadTest {
     @Test
     public void loadGame() {
         AbstractSaveLoader loader = new AbstractSaveLoader();
-        iChecker checker = new EldritchHorrorChecker();
+        IChecker checker = new EldritchHorrorChecker();
         IItemStorage itemStorage = new ItemStorage();
         TestEventStorage storage = new TestEventStorage();
         storage.addEvent("1", new SimpleEvent("1", "1", "1",

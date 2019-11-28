@@ -1,9 +1,8 @@
 package Checker;
 
-import Checker.iChecker;
 import Dice.Dice;
 
-public class EldritchHorrorChecker implements iChecker {
+public class EldritchHorrorChecker implements IChecker {
 
     private Dice dice;
 

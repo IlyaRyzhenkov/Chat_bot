@@ -2,7 +2,7 @@ package Item;
 
 import Player.Player;
 
-public abstract class SingleItem extends Item implements iSingleItem {
+public abstract class SingleItem extends Item implements ISingleItem {
 
     private int numberOfUses;
     private int maxNumberOfUses;

@@ -1,7 +1,7 @@
 package Game;
 import AlternativeInteractionControllers.InventoryController.InventoryController;
-import AlternativeInteractionControllers.InventoryController.iInventoryController;
-import Checker.iChecker;
+import AlternativeInteractionControllers.InventoryController.IInventoryController;
+import Checker.IChecker;
 import Event.*;
 import Event.CheckEvent.CheckEvent;
 import Event.ExceptionEvent.ExceptionEvent;
@@ -25,15 +25,15 @@ public class Game {
     private IEventStorage eventStorage;
     private IItemStorage itemStorage;
     private ISaveLoader save_loader;
-    private iInventoryController inventoryController;
+    private IInventoryController inventoryController;
     private Event currentEvent;
-    private iChecker checker;
+    private IChecker checker;
     private HashMap<String, Player> playerTable;
 
     private boolean isGameRunning;
     private boolean isGameLoaded;
 
-    public Game(OInterface io, IEventStorage loader, ISaveLoader save_loader, iChecker checker, IItemStorage itemStorage) {
+    public Game(OInterface io, IEventStorage loader, ISaveLoader save_loader, IChecker checker, IItemStorage itemStorage) {
         console = io;
         this.inventoryController = new InventoryController();
         this.checker = checker;

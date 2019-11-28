@@ -1,5 +1,5 @@
 import Checker.EldritchHorrorChecker;
-import Checker.iChecker;
+import Checker.IChecker;
 import Storage.EventEventStorage;
 import Storage.IEventStorage;
 import Game.Game;
@@ -37,7 +37,7 @@ public class Main {
         IEventStorage storage = new EventEventStorage();
         IItemStorage itemStorage = new ItemStorage();
         ISaveLoader loader = new JSONsaveLoader();
-        iChecker checker = new EldritchHorrorChecker();
+        IChecker checker = new EldritchHorrorChecker();
         Game game = new Game(console, storage, loader, checker, itemStorage);
         game.startGameAtID("Main menu/menu", console);
     }
@@ -51,7 +51,7 @@ public class Main {
             IEventStorage storage = new EventEventStorage();
             ISaveLoader loader = new JSONsaveLoader();
             IItemStorage itemStorage = new ItemStorage();
-            iChecker checker = new EldritchHorrorChecker();
+            IChecker checker = new EldritchHorrorChecker();
             Bot bot = new Bot();
             Game game = new Game(bot, storage, loader, checker, itemStorage);
             bot.setGame(game);

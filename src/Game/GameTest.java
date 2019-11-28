@@ -1,7 +1,7 @@
 package Game;
 
 import Checker.EldritchHorrorChecker;
-import Checker.iChecker;
+import Checker.IChecker;
 import Event.ExceptionEvent.ExceptionEvent;
 import Event.SimpleEvent.SimpleEvent;
 import Event.Answer;
@@ -22,7 +22,7 @@ public class GameTest {
     @Test
     public void testIncorrectReplies1() {
         Test1IO console = new Test1IO(null);
-        iChecker checker = new EldritchHorrorChecker();
+        IChecker checker = new EldritchHorrorChecker();
         IItemStorage itemStorage = new ItemStorage();
 
         TestEventStorage storage = new TestEventStorage();
@@ -50,7 +50,7 @@ public class GameTest {
     @Test
     public void testIncorrectReplies2() {
         Test1IO console = new Test1IO(null);
-        iChecker checker = new EldritchHorrorChecker();
+        IChecker checker = new EldritchHorrorChecker();
         IItemStorage itemStorage = new ItemStorage();
 
         TestEventStorage storage = new TestEventStorage();
@@ -78,7 +78,7 @@ public class GameTest {
     @Test
     public void testEventAnswersText(){
         Test1IO console = new Test1IO(null);
-        iChecker checker = new EldritchHorrorChecker();
+        IChecker checker = new EldritchHorrorChecker();
         IItemStorage itemStorage = new ItemStorage();
 
         TestEventStorage storage = new TestEventStorage();
@@ -104,7 +104,7 @@ public class GameTest {
     @Test
     public void testHelpCommand() {
         Test1IO console = new Test1IO(null);
-        iChecker checker = new EldritchHorrorChecker();
+        IChecker checker = new EldritchHorrorChecker();
         IItemStorage itemStorage = new ItemStorage();
 
         TestEventStorage storage = new TestEventStorage();
@@ -132,7 +132,7 @@ public class GameTest {
     @Test
     public void testExitCommand() {
         Test1IO console = new Test1IO(null);
-        iChecker checker = new EldritchHorrorChecker();
+        IChecker checker = new EldritchHorrorChecker();
         IItemStorage itemStorage = new ItemStorage();
 
         TestEventStorage storage = new TestEventStorage();

@@ -4,7 +4,7 @@ import Item.OutfittedItem;
 import Item.SingleItem;
 import Player.Player;
 
-public class InventoryController implements iInventoryController{
+public class InventoryController implements IInventoryController {
 
     @Override
     public String getItemInfo(Player player, int itemInventoryPosition) {
