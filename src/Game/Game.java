@@ -47,7 +47,7 @@ public class Game {
     public void startGameAtID(String id, ConsoleInInterface cons) {
         isGameRunning = true;
         inConsole = cons;
-        CreatePlayer("player");
+        createPlayer("player");
         while(isGameRunning){
             Message message = inConsole.getMessage();
             makeEventIteration(message);
@@ -59,7 +59,7 @@ public class Game {
         isGameRunning = true;
         isGameLoaded = false;
         if (!playerTable.containsKey(message.getPlayer())) {
-            CreatePlayer(message.getPlayer());
+            createPlayer(message.getPlayer());
             return;
         }
         Player player = playerTable.get(message.getPlayer());
@@ -120,6 +120,7 @@ public class Game {
             return;
         sendEventInfo(player, nextEvent);
         player.setCurrentEvent(nextEventId);
+
     }
 
     private boolean handleMessage(Player player, String message) {
@@ -252,7 +253,7 @@ public class Game {
         console.sendMessage(new Message(player.getId(), message));
     }
 
-    private synchronized void CreatePlayer(String playerID) {
+    private synchronized void createPlayer(String playerID) {
         Player player = new Player(5, 5, 5, 5, 5,5, 10,
                 new ArrayList<Item>() {
                     {
