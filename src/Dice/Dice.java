@@ -1,5 +1,5 @@
 package Dice;
-import IDice;
+import Dice.IDice;
 
 import java.util.ArrayList;
 import java.util.Random;
