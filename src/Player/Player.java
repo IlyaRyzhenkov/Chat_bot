@@ -131,7 +131,7 @@ public class Player {
                 : this.getInventory().getSuit().getAttributes();
         HashMap<String, Integer> weaponAttrib = this.getInventory().getWeapon() == null
                 ? new HashMap<String, Integer>()
-                : this.getInventory().getSuit().getAttributes();
+                : this.getInventory().getWeapon().getAttributes();
         HashMap<String, Integer> accessoryAttrib = this.getInventory().getAccessory() == null
                 ? new HashMap<String, Integer>()
                 : this.getInventory().getAccessory().getAttributes();
