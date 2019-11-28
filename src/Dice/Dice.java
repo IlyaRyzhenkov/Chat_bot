@@ -1,12 +1,12 @@
 package Dice;
-import Dice.iDice;
+import Dice.IDice;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Dice implements iDice {
+public class Dice implements IDice {
 
     private Random rand;
 

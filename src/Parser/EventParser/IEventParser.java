@@ -2,7 +2,7 @@ package Parser.EventParser;
 
 import Event.Answer;
 
-public interface iEventParser {
+public interface IEventParser {
     String getID();
 
     String getName();

@@ -1,7 +1,7 @@
 package Game;
 
 import Checker.EldritchHorrorChecker;
-import Checker.iChecker;
+import Checker.IChecker;
 import Event.Answer;
 import Event.SimpleEvent.SimpleEvent;
 import SaveLoader.AbstractSaveLoader;
@@ -19,7 +19,7 @@ public class GameDataTest {
     public void addParentToStack() {
         AbstractSaveLoader loader = new AbstractSaveLoader();
         Test1IO console = new Test1IO(null);
-        iChecker checker = new EldritchHorrorChecker();
+        IChecker checker = new EldritchHorrorChecker();
         IItemStorage itemStorage = new ItemStorage();
 
         TestEventStorage storage = new TestEventStorage();
@@ -45,7 +45,7 @@ public class GameDataTest {
         AbstractSaveLoader loader = new AbstractSaveLoader();
         Test1IO console = new Test1IO(null);
         IItemStorage itemStorage = new ItemStorage();
-        iChecker checker = new EldritchHorrorChecker();
+        IChecker checker = new EldritchHorrorChecker();
 
         TestEventStorage storage = new TestEventStorage();
         storage.addEvent("test1", new SimpleEvent("test1", "test1", "test1",
@@ -71,7 +71,7 @@ public class GameDataTest {
     public void rememberData() {
         AbstractSaveLoader loader = new AbstractSaveLoader();
         Test1IO console = new Test1IO(null);
-        iChecker checker = new EldritchHorrorChecker();
+        IChecker checker = new EldritchHorrorChecker();
         IItemStorage itemStorage = new ItemStorage();
 
         TestEventStorage storage = new TestEventStorage();

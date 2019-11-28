@@ -2,6 +2,6 @@ package Item;
 
 import Player.Player;
 
-public interface iSingleItem {
+public interface ISingleItem {
     void use(Player player);
 }

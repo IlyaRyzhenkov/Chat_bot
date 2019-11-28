@@ -1,6 +1,6 @@
 package Dice;
 
-public interface iDice {
+public interface IDice {
     int d2();
     int d4();
     int d6();

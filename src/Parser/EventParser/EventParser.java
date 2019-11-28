@@ -8,7 +8,7 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class EventParser extends Parser implements iEventParser {
+public class EventParser extends Parser implements IEventParser {
 
     public EventParser(String path) throws ParseException, IOException {
         super(path);

@@ -3,7 +3,7 @@ package AlternativeInteractionControllers.InventoryController;
 import Item.Item;
 import Player.Player;
 
-public interface iInventoryController {
+public interface IInventoryController {
     String getHelpMessage();
     String getItemInfo(Player player, int itemInventoryPosition);
     String getInventoryInfo(Player player);

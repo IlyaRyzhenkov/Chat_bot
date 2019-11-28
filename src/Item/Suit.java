@@ -4,7 +4,7 @@ import Player.Player;
 
 import java.util.HashMap;
 
-public class Suit extends OutfittedItem implements iOutfittedItem {
+public class Suit extends OutfittedItem implements IOutfittedItem {
     public Suit(String id, String name, String info, HashMap<String, Integer> attributes) {
         super(id, name, info, attributes);
     }
