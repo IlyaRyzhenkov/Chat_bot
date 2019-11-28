@@ -1,5 +1,19 @@
 {
   "stack":["first", "second"],
   "Player data":[["key1","val1"], ["key2", "val2"]],
-  "StartEvent":"Start"
+  "StartEvent":"Start",
+  "hp":10,
+  "maxHp": 10,
+  "attributes":[{"attribute":"attribute1","value":1}],
+  "inventory":{
+    "weapon":"",
+    "suit":"",
+    "accessory":"",
+    "items":[
+      "Single\/AidKit",
+      "Outfitted\/Suit\/Robe",
+      "Outfitted\/Accessory\/BaseKnowledgeBook",
+      "Outfitted\/Weapon\/Screwdriver"
+    ]
+  }
 }

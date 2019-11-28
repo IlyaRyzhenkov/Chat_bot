@@ -91,10 +91,7 @@ public class JSONsaveLoaderTest {
             assertNull(e);
         }
 
-        String expected =
-                "{\"stack\":[\"first\",\"second\"]," +
-                "\"Player data\":[[\"key1\",\"val1\"],[\"key2\",\"val2\"]]," +
-                "\"StartEvent\":\"Start\"}";
+        String expected ="{\"maxHp\":5,\"stack\":[\"first\",\"second\"],\"Player data\":[[\"key1\",\"val1\"],[\"key2\",\"val2\"]],\"StartEvent\":\"Start\",\"hp\":5,\"attributes\":[{\"attribute\":\"luck\",\"value\":5},{\"attribute\":\"strength\",\"value\":5},{\"attribute\":\"attention\",\"value\":5},{\"attribute\":\"communication\",\"value\":5},{\"attribute\":\"knowledge\",\"value\":5}],\"inventory\":{\"weapon\":\"\",\"suit\":\"\",\"accessory\":\"\",\"items\":[]}}";
         assertEquals("Files not same", expected, actual);
         File file2 = new File(filename);
         if (file2.exists()) {
