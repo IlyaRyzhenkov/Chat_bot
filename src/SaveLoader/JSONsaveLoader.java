@@ -42,6 +42,7 @@ public class JSONsaveLoader implements ISaveLoader {
             JSONObject o = new JSONObject();
             o.put("attribute", a);
             o.put("value", gameData.getPlayerAttributes().get(a));
+            attributes.add(o);
         }
         obj.put("attributes", attributes);
         obj.put("inventory", inventory);
@@ -83,8 +84,9 @@ public class JSONsaveLoader implements ISaveLoader {
             JSONArray jsonAttributes = (JSONArray) obj.get("attributes");
             Iterator<JSONObject> attributesIterator = jsonAttributes.iterator();
             while(attributesIterator.hasNext()) {
-                attributes.put((String) attributesIterator.next().get("attribute"),
-                        Integer.parseInt((String)attributesIterator.next().get("value")));
+                JSONObject o = attributesIterator.next();
+                attributes.put((String) o.get("attribute"),
+                        Integer.parseInt(o.get("value").toString()));
             }
             JSONObject jsonInventory = (JSONObject) obj.get("inventory");
             JSONArray jsonItems = (JSONArray) jsonInventory.get("items");

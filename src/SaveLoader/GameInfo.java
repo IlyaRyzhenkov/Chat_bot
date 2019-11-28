@@ -48,7 +48,7 @@ public class GameInfo {
         this.accessoryId = player.getInventory().getAccessory() != null ? player.getInventory().getAccessory().getId() : "";
         this.playerAttributes = player.getAttributes();
         this.playerHp = player.getHp();
-        this.playerHp = player.getMaxHp();
+        this.maxPlayerHp = player.getMaxHp();
     }
 
     public Stack<String> getIDstack(){
