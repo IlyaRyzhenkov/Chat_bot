@@ -33,13 +33,13 @@ public class Game {
     private boolean isGameRunning;
     private boolean isGameLoaded;
 
-    public Game(OInterface io, IEventStorage loader, ISaveLoader save_loader, IChecker checker, IItemStorage itemStorage) {
+    public Game(OInterface io, IEventStorage loader, ISaveLoader saveLoader, IChecker checker, IItemStorage itemStorage) {
         console = io;
         this.inventoryController = new InventoryController();
         this.checker = checker;
         this.itemStorage = itemStorage;
         eventStorage = loader;
-        this.save_loader = save_loader;
+        this.save_loader = saveLoader;
         isGameRunning = false;
         this.playerTable = new HashMap<String, Player>();
     }
