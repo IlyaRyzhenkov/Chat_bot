@@ -5,7 +5,7 @@ import Storage.IEventStorage;
 import Game.Game;
 import Game.ConsoleIO;
 import SaveLoader.ISaveLoader;
-import SaveLoader.JSONsaveLoader;
+import SaveLoader.JSONSaveLoader;
 import Storage.IItemStorage;
 import Storage.ItemStorage;
 import TelegramBot.Bot;
@@ -36,7 +36,7 @@ public class Main {
         ConsoleIO console = new ConsoleIO();
         IEventStorage storage = new EventEventStorage();
         IItemStorage itemStorage = new ItemStorage();
-        ISaveLoader loader = new JSONsaveLoader();
+        ISaveLoader loader = new JSONSaveLoader();
         IChecker checker = new EldritchHorrorChecker();
         Game game = new Game(console, storage, loader, checker, itemStorage);
         game.startGameAtID("Main menu/menu", console);
@@ -49,7 +49,7 @@ public class Main {
 
         try {
             IEventStorage storage = new EventEventStorage();
-            ISaveLoader loader = new JSONsaveLoader();
+            ISaveLoader loader = new JSONSaveLoader();
             IItemStorage itemStorage = new ItemStorage();
             IChecker checker = new EldritchHorrorChecker();
             Bot bot = new Bot();

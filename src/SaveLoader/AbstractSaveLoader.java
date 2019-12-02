@@ -5,9 +5,15 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class AbstractSaveLoader implements ISaveLoader {
-    public String savedFilename;
-    public GameInfo savedGameInfo;
-    public boolean isGameSaved = false;
+    private String savedFilename;
+    private GameInfo savedGameInfo;
+    private boolean isGameSaved = false;
+
+    public String getSavedFilename() { return savedFilename; }
+
+    public GameInfo getSavedGameInfo() { return savedGameInfo; }
+
+    public boolean isGameSaved() { return isGameSaved; }
 
     public void saveGame(String filename, GameInfo gameData) {
         savedFilename = filename;

@@ -1,15 +1,11 @@
 package AlternativeInteractionControllers.InventoryController;
 
 import Item.Item;
-import Parser.ItemParser.ItemParser;
-import Player.Inventory;
 import Player.Player;
 import Item.SingleItem;
 import Storage.ItemStorage;
-import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;

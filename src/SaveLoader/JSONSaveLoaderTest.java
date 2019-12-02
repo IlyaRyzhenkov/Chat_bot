@@ -9,15 +9,15 @@ import java.util.HashMap;
 import java.util.Stack;
 import static org.junit.Assert.*;
 
-public class JSONsaveLoaderTest {
+public class JSONSaveLoaderTest {
 
     @Test
     public void testLoadCorrectFile() {
-        JSONsaveLoader loader = new JSONsaveLoader();
+        JSONSaveLoader loader = new JSONSaveLoader();
         GameInfo info = loader.loadGame("events/test/correct_savefile.json");
         assertEquals("Wrong event to start id","Start", info.getEventToStart());
 
-        Stack<String> stack = info.getIDstack();
+        Stack<String> stack = info.getIdStack();
         String[] expectedStack = {"first", "second"};
         assertEquals("Wrong stack size", 2, stack.size());
         for (int i = 0; i < expectedStack.length; i++) {
@@ -35,21 +35,21 @@ public class JSONsaveLoaderTest {
 
     @Test
     public void testLoadDamagedFile() {
-        JSONsaveLoader loader = new JSONsaveLoader();
+        JSONSaveLoader loader = new JSONSaveLoader();
         GameInfo info = loader.loadGame("events/test/damaged_savefile.json");
         assertNull("Game info not null", info);
     }
 
     @Test
     public void testLoadWithWrongFullFilename() {
-        JSONsaveLoader loader = new JSONsaveLoader();
+        JSONSaveLoader loader = new JSONSaveLoader();
         GameInfo info = loader.loadGame("bad_filename.json");
         assertNull("Game info not null", info);
     }
 
     @Test
     public void testLoadWithWrongFilename() {
-        JSONsaveLoader loader = new JSONsaveLoader();
+        JSONSaveLoader loader = new JSONSaveLoader();
         GameInfo info = loader.loadGame("bad_filename");
         assertNull("Game info not null", info);
     }
@@ -77,7 +77,7 @@ public class JSONsaveLoaderTest {
                 put("luck", 5);
             }
         });
-        JSONsaveLoader saver = new JSONsaveLoader();
+        JSONSaveLoader saver = new JSONSaveLoader();
         saver.saveGame(filename, info);
 
         String actual = "";

@@ -24,7 +24,7 @@ public class Game {
     private OInterface console;
     private IEventStorage eventStorage;
     private IItemStorage itemStorage;
-    private ISaveLoader save_loader;
+    private ISaveLoader saveLoader;
     private IInventoryController inventoryController;
     private Event currentEvent;
     private IChecker checker;
@@ -34,21 +34,21 @@ public class Game {
     private boolean isGameLoaded;
 
     public Game(OInterface io, IEventStorage loader, ISaveLoader saveLoader, IChecker checker, IItemStorage itemStorage) {
-        console = io;
+        this.console = io;
         this.inventoryController = new InventoryController();
         this.checker = checker;
         this.itemStorage = itemStorage;
-        eventStorage = loader;
-        this.save_loader = saveLoader;
-        isGameRunning = false;
+        this.eventStorage = loader;
+        this.saveLoader = saveLoader;
+        this.isGameRunning = false;
         this.playerTable = new HashMap<String, Player>();
     }
 
     public void startGameAtID(String id, ConsoleInInterface cons) {
-        isGameRunning = true;
-        inConsole = cons;
+        this.isGameRunning = true;
+        this.inConsole = cons;
         CreatePlayer("player");
-        while(isGameRunning){
+        while(this.isGameRunning){
             Message message = inConsole.getMessage();
             makeEventIteration(message);
         }
@@ -56,28 +56,28 @@ public class Game {
 
     public synchronized void makeEventIteration(Message message) {
         String nextEventId = "";
-        isGameRunning = true;
-        isGameLoaded = false;
-        if (!playerTable.containsKey(message.getPlayer())) {
+        this.isGameRunning = true;
+        this.isGameLoaded = false;
+        if (!this.playerTable.containsKey(message.getPlayer())) {
             CreatePlayer(message.getPlayer());
             return;
         }
-        Player player = playerTable.get(message.getPlayer());
-        currentEvent = eventStorage.getById(player.getCurrentEvent(), player.getImportantData());
+        Player player = this.playerTable.get(message.getPlayer());
+        this.currentEvent = this.eventStorage.getById(player.getCurrentEvent(), player.getImportantData());
         String reply = message.getMessage();
         if(reply == null)
             return;
 
 
 
-        if(currentEvent.getClass() == CheckEvent.class) {
-            reply = checker.check(player.getAttributeDiceSet(((CheckEvent)currentEvent).getAttribute()),
-                    ((CheckEvent) currentEvent).getDifficulty())
+        if(this.currentEvent.getClass() == CheckEvent.class) {
+            reply = this.checker.check(player.getAttributeDiceSet(((CheckEvent)currentEvent).getAttribute()),
+                    ((CheckEvent) this.currentEvent).getDifficulty())
             ? "y" : "n";
         }
 
-        if(currentEvent.isImportant()) {
-            player.remember(currentEvent.getId(), reply);
+        if(this.currentEvent.isImportant()) {
+            player.remember(this.currentEvent.getId(), reply);
         }
         boolean isCommand = handleMessage(player, reply);
         if(player.isInventoryOpen()) {
@@ -85,38 +85,38 @@ public class Game {
             if(player.isInventoryOpen())
                 return;
             else {
-                sendEventInfo(player, currentEvent);
+                sendEventInfo(player, this.currentEvent);
                 return;
             }
         }
-        if (!isGameRunning) {
-            isGameRunning = true;
+        if (!this.isGameRunning) {
+            this.isGameRunning = true;
             return;
         }
         if (!isCommand) {
-            nextEventId = currentEvent.reply(reply);
+            nextEventId = this.currentEvent.reply(reply);
         }
         else{
-            nextEventId = currentEvent.getId();
+            nextEventId = this.currentEvent.getId();
         }
         if(nextEventId.isEmpty()) {
             if(!player.getEventStack().empty()) {
-                currentEvent = eventStorage.getById(player.getEventStack().pop(), player.getImportantData());
-                sendEventInfo(player, currentEvent);
-                player.setCurrentEvent(currentEvent.getId());
+                this.currentEvent = this.eventStorage.getById(player.getEventStack().pop(), player.getImportantData());
+                sendEventInfo(player, this.currentEvent);
+                player.setCurrentEvent(this.currentEvent.getId());
             }
             else
                 stopGame(player);
             return;
         }
-        Event nextEvent = eventStorage.getById(nextEventId, player.getImportantData());
+        Event nextEvent = this.eventStorage.getById(nextEventId, player.getImportantData());
         if(nextEvent == null){
             return;
         }
-        if((currentEvent.isParent())||(nextEvent.getClass() == ExceptionEvent.class)) {
-            player.getEventStack().push(currentEvent.getId());
+        if((this.currentEvent.isParent())||(nextEvent.getClass() == ExceptionEvent.class)) {
+            player.getEventStack().push(this.currentEvent.getId());
         }
-        if (isGameLoaded)
+        if (this.isGameLoaded)
             return;
         sendEventInfo(player, nextEvent);
         player.setCurrentEvent(nextEventId);
@@ -153,73 +153,73 @@ public class Game {
 
 
     private void stopGame(Player player) {
-        isGameRunning = false;
-        playerTable.remove(player.getId());
-        console.sendMessage(new Message(player.getId(), "exit from game"));
-        if (inConsole != null) {
+        this.isGameRunning = false;
+        this.playerTable.remove(player.getId());
+        this.console.sendMessage(new Message(player.getId(), "exit from game"));
+        if (this.inConsole != null) {
             System.exit(0);
         }
     }
 
     private void sendEventInfo(Player player, Event event) {
-        console.sendMessage(new Message(player.getId(), event.toString()));
+        this.console.sendMessage(new Message(player.getId(), event.toString()));
     }
 
     private synchronized void saveGame(Player player, String command) {
         String filename = command.split(" ")[1];
         GameInfo info = new GameInfo(player);
-        save_loader.saveGame(filename, info);
-        console.sendMessage(new Message(player.getId(), "Игра сохранена"));
+        this.saveLoader.saveGame(filename, info);
+        this.console.sendMessage(new Message(player.getId(), "Игра сохранена"));
     }
 
     private synchronized void inventory(Player player, String message) {
         if (!player.isInventoryOpen()) {
-            console.sendMessage(new Message(player.getId(),
-                    "Inventory opened.\n" + inventoryController.getHelpMessage()));
+            this.console.sendMessage(new Message(player.getId(),
+                    "Inventory opened.\n" + this.inventoryController.getHelpMessage()));
             return;
         }
         String[] command = message.split(" ", 2);
         switch (command[0]) {
             case ("/about"):
-                console.sendMessage(new Message(player.getId(),
-                        inventoryController.getItemInfo(player, Integer.parseInt(command[1]))));
+                this.console.sendMessage(new Message(player.getId(),
+                        this.inventoryController.getItemInfo(player, Integer.parseInt(command[1]))));
                 break;
             case ("/inv"):
-                console.sendMessage(new Message(player.getId(),
-                        inventoryController.getInventoryInfo(player)));
+                this.console.sendMessage(new Message(player.getId(),
+                        this.inventoryController.getInventoryInfo(player)));
                 break;
             case ("/use"):
-                console.sendMessage(new Message(player.getId(),
-                        inventoryController.use(player, Integer.parseInt(command[1]))));
+                this.console.sendMessage(new Message(player.getId(),
+                        this.inventoryController.use(player, Integer.parseInt(command[1]))));
                 break;
             case ("/equip"):
-                console.sendMessage(new Message(player.getId(),
-                        inventoryController.equip(player, Integer.parseInt(command[1]))));
+                this.console.sendMessage(new Message(player.getId(),
+                        this.inventoryController.equip(player, Integer.parseInt(command[1]))));
                 break;
             case ("/unequip"):
-                console.sendMessage(new Message(player.getId(),
-                        inventoryController.unequip(player, command[1])));
+                this.console.sendMessage(new Message(player.getId(),
+                        this.inventoryController.unequip(player, command[1])));
                 break;
             case ("/help"):
-                console.sendMessage(new Message(player.getId(),
-                        inventoryController.getHelpMessage()));
+                this.console.sendMessage(new Message(player.getId(),
+                        this.inventoryController.getHelpMessage()));
                 break;
             case ("/back"):
                 player.closeInventory();
                 break;
             default:
-                console.sendMessage(new Message(player.getId(), "Try again."));
+                this.console.sendMessage(new Message(player.getId(), "Try again."));
         }
     }
 
     private synchronized void loadGame(Player play, String command) {
-        String filename2 = command.split(" ")[1];
-        GameInfo info = save_loader.loadGame(filename2);
+        String filename = command.split(" ")[1];
+        GameInfo info = this.saveLoader.loadGame(filename);
         if (info != null) {
-            isGameLoaded = true;
+            this.isGameLoaded = true;
             ArrayList<Item> items = new ArrayList<Item>();
             for(String id: info.getPlayerItems())
-                items.add(itemStorage.getById(id));
+                items.add(this.itemStorage.getById(id));
             Player player = new Player(info.getPlayerAttributes().getOrDefault("knowledge", 1),
                     info.getPlayerAttributes().getOrDefault("strength", 1),
                     info.getPlayerAttributes().getOrDefault("communication", 1),
@@ -230,13 +230,13 @@ public class Game {
             player.getInventory().setAccessory((Accessory)itemStorage.getById(info.getPlayerAccessoryId()));
             player.getInventory().setSuit((Suit)itemStorage.getById(info.getPlayerSuitId()));
 
-            player.setEventStack(info.getIDstack());
+            player.setEventStack(info.getIdStack());
             player.setImportantData(info.getPlayerData());
             player.setCurrentEvent(info.getEventToStart());
             player.setId(play.getId());
-            playerTable.put(player.getId(), player);
-            console.sendMessage(new Message(player.getId(), "Игра загружена"));
-            Event lastEvent = eventStorage.getById(player.getCurrentEvent(), player.getImportantData());
+            this.playerTable.put(player.getId(), player);
+            this.console.sendMessage(new Message(player.getId(), "Игра загружена"));
+            Event lastEvent = this.eventStorage.getById(player.getCurrentEvent(), player.getImportantData());
             sendEventInfo(player, lastEvent);
         }
     }
@@ -249,7 +249,7 @@ public class Game {
                 "You can stop the game by '/exit' command.\n" +
                 "You should'nt answering the questions by this commands and the 'default' word.\n" +
                 "Good luck and have fun!";
-        console.sendMessage(new Message(player.getId(), message));
+        this.console.sendMessage(new Message(player.getId(), message));
     }
 
     private synchronized void CreatePlayer(String playerID) {
@@ -263,18 +263,18 @@ public class Game {
                     }
                 });
         player.setId(playerID);
-        player.setCurrentEvent(initialID);
-        playerTable.put(playerID, player);
-        currentEvent = eventStorage.getById(player.getCurrentEvent(), player.getImportantData());
-        sendEventInfo(player, currentEvent);
+        player.setCurrentEvent(this.initialID);
+        this.playerTable.put(playerID, player);
+        this.currentEvent = this.eventStorage.getById(player.getCurrentEvent(), player.getImportantData());
+        sendEventInfo(player, this.currentEvent);
     }
 
     public HashMap<String, Player> getPlayerTable() {
-        return playerTable;
+        return this.playerTable;
     }
 
     public boolean isGameRunning() {
-        return isGameRunning;
+        return this.isGameRunning;
     }
 
     public void setInitialID(String initialID) {

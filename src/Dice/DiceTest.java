@@ -28,8 +28,6 @@ public class DiceTest {
                 results[dice.roll(t) - 1]++;
             for (int result : results)
                 assertFalse(0 == result);
-
-
         }
     }
 

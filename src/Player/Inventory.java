@@ -31,21 +31,16 @@ public class Inventory {
     public void removeItem(Item item) {
         this.items.remove(item);
     }
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
 
-    public Weapon getWeapon() {
-        return this.weapon;
-    }
+    public void setWeapon(Weapon weapon) { this.weapon = weapon; }
+
+    public Weapon getWeapon() { return this.weapon; }
 
     public void setSuit(Suit suit) {
         this.suit = suit;
     }
 
-    public Suit getSuit() {
-        return this.suit;
-    }
+    public Suit getSuit() { return this.suit; }
 
     public void setAccessory(Accessory accessory) {
         this.accessory = accessory;

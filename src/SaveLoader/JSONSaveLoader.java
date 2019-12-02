@@ -13,13 +13,13 @@ import java.util.Iterator;
 
 import java.util.Stack;
 
-public class JSONsaveLoader implements ISaveLoader {
+public class JSONSaveLoader implements ISaveLoader {
 
     public void saveGame(String filename, GameInfo gameData) {
         JSONObject obj = new JSONObject();
         JSONArray stack = new JSONArray();
-        for (int i = 0; i < gameData.getIDstack().size(); i++) {
-            stack.add(gameData.getIDstack().get(i));
+        for (int i = 0; i < gameData.getIdStack().size(); i++) {
+            stack.add(gameData.getIdStack().get(i));
         }
         obj.put("stack", stack);
         JSONArray hashSet = new JSONArray();
@@ -64,19 +64,19 @@ public class JSONsaveLoader implements ISaveLoader {
         JSONParser parser = new JSONParser();
         try(Reader reader = new FileReader(path)) {
             JSONObject obj = (JSONObject) parser.parse(reader);
-            Stack<String> IDstack = new Stack<String>();
-            JSONArray JSONstack = (JSONArray) obj.get("stack");
-            Iterator<String> iterator = JSONstack.iterator();
-            while (iterator.hasNext()) {
-                IDstack.push(iterator.next());
+            Stack<String> idStack = new Stack<String>();
+            JSONArray jsonStack = (JSONArray) obj.get("stack");
+            Iterator<String> stackIterator = jsonStack.iterator();
+            while (stackIterator.hasNext()) {
+                idStack.push(stackIterator.next());
             }
 
             HashMap<String, String> playerData = new HashMap<String, String>();
-            JSONArray JSONhash = (JSONArray) obj.get("Player data");
-            Iterator<JSONArray> iterator2 = JSONhash.iterator();
-            while (iterator2.hasNext()) {
+            JSONArray jsonPlayerData = (JSONArray) obj.get("Player data");
+            Iterator<JSONArray> playerDataIterator = jsonPlayerData.iterator();
+            while (playerDataIterator.hasNext()) {
 
-                JSONArray pair = iterator2.next();
+                JSONArray pair = playerDataIterator.next();
                 playerData.put((String) pair.get(0), (String) pair.get(1));
             }
             String eventID = (String) obj.get("StartEvent");
@@ -98,7 +98,7 @@ public class JSONsaveLoader implements ISaveLoader {
             int playerHp = Integer.parseInt(obj.get("hp").toString());
             int maxPlayerHp = Integer.parseInt(obj.get("maxHp").toString());
 
-            return new GameInfo(IDstack, playerData, eventID, playerHp, maxPlayerHp, items, weaponId, suitId, accessoryId, attributes);
+            return new GameInfo(idStack, playerData, eventID, playerHp, maxPlayerHp, items, weaponId, suitId, accessoryId, attributes);
 
         } catch (IOException e) {
             System.err.print("Error reading file\n");

@@ -41,6 +41,7 @@ public class Player {
     public boolean isInventoryOpen() { return this.isInventoryOpen; }
 
     public void openInventory() { this.isInventoryOpen = true; }
+
     public void closeInventory() { this.isInventoryOpen = false; }
 
     public void hit(int dmg) {

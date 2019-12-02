@@ -2,15 +2,13 @@ package SaveLoader;
 
 import Item.Item;
 import Player.Player;
-import Player.Inventory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Stack;
 
 public class GameInfo {
-    private Stack<String> IDstack;
+    private Stack<String> idStack;
     private HashMap<String, String> playerData;
     private HashMap<String, Integer> playerAttributes;
     private String eventToStart;
@@ -21,12 +19,12 @@ public class GameInfo {
     private int playerHp;
     private int maxPlayerHp;
 
-    public GameInfo(Stack<String> idstack, HashMap<String, String> playerData, String eventIdToStart,
+    public GameInfo(Stack<String> idStack, HashMap<String, String> playerData, String eventIdToStart,
                     int playerHp, int maxPlayerHp, ArrayList<String> items, String weaponId, String suitId, String accessoryId,
                     HashMap<String, Integer> playerAttributes) {
-        IDstack = idstack;
+        this.idStack = idStack;
         this.playerData = playerData;
-        eventToStart = eventIdToStart;
+        this.eventToStart = eventIdToStart;
         this.playerAttributes = playerAttributes;
         this.items = items;
         this.weaponId = weaponId;
@@ -37,7 +35,7 @@ public class GameInfo {
     }
 
     public GameInfo(Player player) {
-        IDstack = player.getEventStack();
+        idStack = player.getEventStack();
         playerData = player.getImportantData();
         eventToStart = player.getCurrentEvent();
         this.items = new ArrayList<String>();
@@ -51,9 +49,7 @@ public class GameInfo {
         this.maxPlayerHp = player.getMaxHp();
     }
 
-    public Stack<String> getIDstack(){
-        return IDstack;
-    }
+    public Stack<String> getIdStack() { return idStack; }
 
     public HashMap<String, String> getPlayerData() {
         return playerData;

@@ -41,9 +41,9 @@ public class GameTest {
         game.makeEventIteration(new Message("player", "asd"));
 
         String[] expected = {"1\n1. 1\n", "2\n1. 1\n", incorrect_reply_message, "2\n1. 1\n"};
-        assertEquals(console.received_replies.size(), expected.length);
+        assertEquals(console.getReceivedReplies().size(), expected.length);
         for(int i = 0; i < expected.length; i++){
-            assertEquals(console.received_replies.get(i), expected[i]);
+            assertEquals(console.getReceivedReplies().get(i), expected[i]);
         }
     }
 
@@ -69,9 +69,9 @@ public class GameTest {
         game.makeEventIteration(new Message("player", "asd"));
 
         String[] expected = {"1\n1. 1\n", "2\n1. 1\n", incorrect_reply_message, "2\n1. 1\n"};
-        assertEquals(console.received_replies.size(), expected.length);
+        assertEquals(console.getReceivedReplies().size(), expected.length);
         for(int i = 0; i < expected.length; i++){
-            assertEquals(console.received_replies.get(i), expected[i]);
+            assertEquals(console.getReceivedReplies().get(i), expected[i]);
         }
     }
 
@@ -95,9 +95,9 @@ public class GameTest {
         String[] expected = {
                 "event_text\n1. answer1_text\n2. answer2_text\n3. answer3_text\n",
                 "event_text\n1. answer1_text\n2. answer2_text\n3. answer3_text\n"};
-        assertEquals(console.received_replies.size(), expected.length);
+        assertEquals(console.getReceivedReplies().size(), expected.length);
         for(int i = 0; i < expected.length; i++){
-            assertEquals(console.received_replies.get(i), expected[i]);
+            assertEquals(console.getReceivedReplies().get(i), expected[i]);
         }
     }
 
@@ -123,10 +123,10 @@ public class GameTest {
                 "You should'nt answering the questions by this commands and the 'default' word.\n" +
                 "Good luck and have fun!";
 
-        assertEquals("wrong answers count", 3, console.received_replies.size());
-        assertEquals("wrong first message", "1\n1. 1\n", console.received_replies.get(0));
-        assertEquals("wrong help message", expectedHelpMessage, console.received_replies.get(1));
-        assertEquals("wronf third message", "1\n1. 1\n", console.received_replies.get(2));
+        assertEquals("wrong answers count", 3, console.getReceivedReplies().size());
+        assertEquals("wrong first message", "1\n1. 1\n", console.getReceivedReplies().get(0));
+        assertEquals("wrong help message", expectedHelpMessage, console.getReceivedReplies().get(1));
+        assertEquals("wronf third message", "1\n1. 1\n", console.getReceivedReplies().get(2));
     }
 
     @Test
@@ -144,8 +144,8 @@ public class GameTest {
         game.makeEventIteration(new Message("player", "/exit"));
 
         assertFalse("game not stoped", game.getPlayerTable().containsKey("player"));
-        assertEquals("wrong message count", 2, console.received_replies.size());
-        assertEquals("wrong first message", "1\n1. 1\n", console.received_replies.get(0));
-        assertEquals("wrong exit message", "exit from game", console.received_replies.get(1));
+        assertEquals("wrong message count", 2, console.getReceivedReplies().size());
+        assertEquals("wrong first message", "1\n1. 1\n", console.getReceivedReplies().get(0));
+        assertEquals("wrong exit message", "exit from game", console.getReceivedReplies().get(1));
     }
 }

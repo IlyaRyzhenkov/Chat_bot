@@ -1,6 +1,5 @@
 package AlternativeInteractionControllers.InventoryController;
 
-import Item.Item;
 import Player.Player;
 
 public interface IInventoryController {

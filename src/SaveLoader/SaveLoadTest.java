@@ -34,11 +34,11 @@ public class SaveLoadTest {
         game.makeEventIteration(new Message("player", "/save test1"));
         game.makeEventIteration(new Message("player", "/exit"));
 
-        assertTrue("error game not saved", loader.isGameSaved);
-        assertEquals("error wrong filename", loader.savedFilename, "test1");
-        assertTrue("error wrong stack", loader.savedGameInfo.getIDstack().empty());
-        assertEquals("error wrong event to start", loader.savedGameInfo.getEventToStart(), "2");
-        assertTrue("error wrong player info", loader.savedGameInfo.getPlayerData().isEmpty());
+        assertTrue("error game not saved", loader.isGameSaved());
+        assertEquals("error wrong filename", loader.getSavedFilename(), "test1");
+        assertTrue("error wrong stack", loader.getSavedGameInfo().getIdStack().empty());
+        assertEquals("error wrong event to start", loader.getSavedGameInfo().getEventToStart(), "2");
+        assertTrue("error wrong player info", loader.getSavedGameInfo().getPlayerData().isEmpty());
     }
 
     @Test
