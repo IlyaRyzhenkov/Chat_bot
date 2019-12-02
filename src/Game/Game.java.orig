@@ -45,10 +45,17 @@ public class Game {
     }
 
     public void startGameAtID(String id, ConsoleInInterface cons) {
+<<<<<<< HEAD
         this.isGameRunning = true;
         this.inConsole = cons;
-        createPlayer("player");
+        CreatePlayer("player");
         while(this.isGameRunning){
+=======
+        isGameRunning = true;
+        inConsole = cons;
+        createPlayer("player");
+        while(isGameRunning){
+>>>>>>> badf4e339d407903ea410e479c528304ad22a93b
             Message message = inConsole.getMessage();
             makeEventIteration(message);
         }
@@ -56,10 +63,17 @@ public class Game {
 
     public synchronized void makeEventIteration(Message message) {
         String nextEventId = "";
+<<<<<<< HEAD
         this.isGameRunning = true;
         this.isGameLoaded = false;
         if (!this.playerTable.containsKey(message.getPlayer())) {
+            CreatePlayer(message.getPlayer());
+=======
+        isGameRunning = true;
+        isGameLoaded = false;
+        if (!playerTable.containsKey(message.getPlayer())) {
             createPlayer(message.getPlayer());
+>>>>>>> badf4e339d407903ea410e479c528304ad22a93b
             return;
         }
         Player player = this.playerTable.get(message.getPlayer());
