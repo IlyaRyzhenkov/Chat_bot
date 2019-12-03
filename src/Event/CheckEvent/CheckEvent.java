@@ -2,6 +2,8 @@ package Event.CheckEvent;
 
 import Event.Event;
 import Event.Answer;
+import Event.EventType;
+import Event.EventInfo;
 
 public class CheckEvent extends Event {
 
@@ -31,5 +33,10 @@ public class CheckEvent extends Event {
     @Override
     public String toString() {
         return this.getText();
+    }
+
+    @Override
+    public EventInfo getEventInfo() {
+        return new EventInfo(EventType.CHECK, getText(), new Answer[0]);
     }
 }

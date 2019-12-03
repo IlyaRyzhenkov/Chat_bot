@@ -85,7 +85,7 @@ public class Game {
             if(player.isInventoryOpen())
                 return;
             else {
-                sendEventInfo(player, this.currentEvent);
+                sendEvent(player, this.currentEvent);
                 return;
             }
         }
@@ -102,7 +102,7 @@ public class Game {
         if(nextEventId.isEmpty()) {
             if(!player.getEventStack().empty()) {
                 this.currentEvent = this.eventStorage.getById(player.getEventStack().pop(), player.getImportantData());
-                sendEventInfo(player, this.currentEvent);
+                sendEvent(player, this.currentEvent);
                 player.setCurrentEvent(this.currentEvent.getId());
             }
             else
@@ -118,7 +118,7 @@ public class Game {
         }
         if (this.isGameLoaded)
             return;
-        sendEventInfo(player, nextEvent);
+        sendEvent(player, nextEvent);
         player.setCurrentEvent(nextEventId);
 
     }
@@ -162,8 +162,8 @@ public class Game {
         }
     }
 
-    private void sendEventInfo(Player player, Event event) {
-        this.console.sendMessage(new Message(player.getId(), event.toString()));
+    private void sendEvent(Player player, Event event) {
+        this.console.sendEvent(player.getId(), event.getEventInfo());
     }
 
     private synchronized void saveGame(Player player, String command) {
@@ -238,7 +238,7 @@ public class Game {
             this.playerTable.put(player.getId(), player);
             this.console.sendMessage(new Message(player.getId(), "Игра загружена"));
             Event lastEvent = this.eventStorage.getById(player.getCurrentEvent(), player.getImportantData());
-            sendEventInfo(player, lastEvent);
+            sendEvent(player, lastEvent);
         }
     }
 
@@ -267,7 +267,7 @@ public class Game {
         player.setCurrentEvent(this.initialID);
         this.playerTable.put(playerID, player);
         this.currentEvent = this.eventStorage.getById(player.getCurrentEvent(), player.getImportantData());
-        sendEventInfo(player, this.currentEvent);
+        sendEvent(player, this.currentEvent);
     }
 
     public HashMap<String, Player> getPlayerTable() {

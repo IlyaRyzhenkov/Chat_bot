@@ -2,6 +2,9 @@ package Event.AnyAnswerEvent;
 
 import Event.Event;
 import Event.Answer;
+import Event.EventType;
+import Event.EventInfo;
+
 public class AnyAnswerEvent extends Event {
 
     public AnyAnswerEvent(String id, String name, String text, Answer[] answers, boolean isImportant, boolean isParent) {
@@ -27,5 +30,10 @@ public class AnyAnswerEvent extends Event {
     @Override
     public String toString() {
         return this.getText();
+    }
+
+    @Override
+    public EventInfo getEventInfo() {
+        return new EventInfo(EventType.ANYANSWER, getText(), new Answer[0]);
     }
 }

@@ -1,5 +1,7 @@
 package Game;
 
+import Event.EventInfo;
+
 import java.util.ArrayList;
 
 public class Test1IO implements OInterface, ConsoleInInterface {
@@ -17,6 +19,11 @@ public class Test1IO implements OInterface, ConsoleInInterface {
 
     public void sendMessage(Message message) {
         receivedReplies.add(message.getMessage());
+    }
+
+    @Override
+    public void sendEvent(String player, EventInfo info) {
+
     }
 
     public Message getMessage() {

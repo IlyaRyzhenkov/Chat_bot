@@ -2,6 +2,8 @@ package Event.ExceptionEvent;
 
 import Event.Event;
 import Event.Answer;
+import Event.EventType;
+import Event.EventInfo;
 
 public class ExceptionEvent extends Event {
 
@@ -14,6 +16,10 @@ public class ExceptionEvent extends Event {
         return "";
     }
 
+    @Override
+    public EventInfo getEventInfo() {
+        return new EventInfo(EventType.EXCEPTION, getText(), getAnswers());
+    }
 }
 
 

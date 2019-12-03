@@ -27,6 +27,10 @@ public abstract class Event {
         return builder.toString();
     }
 
+    public EventInfo getEventInfo() {
+        return new EventInfo(EventType.BASE, text, answers);
+    }
+
     public String getText() { return this.text; }
 
     public String getId() { return this.id; }

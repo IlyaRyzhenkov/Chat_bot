@@ -2,6 +2,8 @@ package Event.SimpleEvent;
 
 import Event.Event;
 import Event.Answer;
+import Event.EventInfo;
+import Event.EventType;
 
 public final class SimpleEvent extends Event {
 
@@ -20,6 +22,11 @@ public final class SimpleEvent extends Event {
         if ((this.getAnswers().length >= n) && (n > 0))
            return this.getAnswers()[n - 1].getId();
         return "Exceptions/incorrect_reply";
+    }
+
+    @Override
+    public EventInfo getEventInfo() {
+        return new EventInfo(EventType.SIMPLE, getText(), getAnswers());
     }
 
 }
