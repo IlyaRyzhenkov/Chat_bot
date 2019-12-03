@@ -18,8 +18,8 @@ public class ConsoleIO implements OInterface, ConsoleInInterface {
     @Override
     public void sendEvent(String player, EventInfo info) {
         System.out.println(info.getText());
-        for (Answer answer : info.getAnswers()) {
-            System.out.println(answer.getText());
+        for (int i = 0; i < info.getAnswers().length; i++) {
+            System.out.println((i + 1) + ". " + info.getAnswers()[i].getText());
         }
     }
 

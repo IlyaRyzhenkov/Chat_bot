@@ -2,6 +2,7 @@ package TelegramBot;
 
 import Event.Answer;
 import Event.EventInfo;
+import Event.EventType;
 import Game.Game;
 import Game.OInterface;
 import Game.Message;
@@ -77,7 +78,7 @@ public class Bot extends TelegramLongPollingBot implements OInterface {
             list.add(button);
             list2.add(list);
         }
-        if (info.getAnswers().length == 0) {
+        if (info.getAnswers().length == 0 && info.getType() != EventType.ANYANSWER) {
             InlineKeyboardButton button = new InlineKeyboardButton();
             button.setText("Подожать..");
             button.setCallbackData("1");

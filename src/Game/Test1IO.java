@@ -23,7 +23,11 @@ public class Test1IO implements OInterface, ConsoleInInterface {
 
     @Override
     public void sendEvent(String player, EventInfo info) {
-
+        String message = info.getText() + '\n';
+        for(int i = 0; i < info.getAnswers().length; i++) {
+            message += (i + 1) + ". " + info.getAnswers()[i].getText() + "\n";
+        }
+        receivedReplies.add(message);
     }
 
     public Message getMessage() {
