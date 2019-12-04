@@ -58,7 +58,7 @@ public class InventoryControllerTest {
                 "  1. Test Item(99/99)\n" +
                 "  2. Test Suit\n" +
                 "  3. Test Weapon\n" +
-                "  4. Test Accessory\n", controller.getInventoryInfo(player));
+                "  4. Test Accessory\n", controller.getStringInventoryInfo(player));
     }
 
     @Test

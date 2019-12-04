@@ -19,4 +19,11 @@ public abstract class Item implements IItem {
 
     public String getName() { return  this.name; }
 
+    public boolean isUsable() {
+        return this instanceof ISingleItem;
+    }
+
+    public boolean isEquippable() {
+        return this instanceof IOutfittedItem;
+    }
 }

@@ -1,8 +1,11 @@
 package AlternativeInteractionControllers.InventoryController;
 
+import Item.ItemInfo;
 import Item.OutfittedItem;
 import Item.SingleItem;
 import Player.Player;
+import Player.InventoryInfo;
+import Player.Inventory;
 
 public class InventoryController implements IInventoryController {
 
@@ -25,8 +28,38 @@ public class InventoryController implements IInventoryController {
     }
 
     @Override
-    public String getInventoryInfo(Player player) {
+    public String getStringInventoryInfo(Player player) {
         return "\n" + player.toString() + "\n" + player.getInventory().toString() + "\n";
+    }
+
+    @Override
+    public InventoryInfo getInventoryInfo(Player player) {
+        Inventory inventory = player.getInventory();
+        return new InventoryInfo(
+                player.toString(), inventory.getWeapon(),
+                inventory.getSuit(), inventory.getAccessory(),
+                inventory.getItems());
+    }
+
+    @Override
+    public ItemInfo getItemInfoByButton(Player player, String id) {
+        if (id.equals("weapon")) {
+            return new ItemInfo(player.getInventory().getWeapon(), true, "weapon");
+        }
+        if (id.equals("suit")) {
+            return new ItemInfo(player.getInventory().getSuit(), true, "suit");
+        }
+        if (id.equals("accessory")) {
+            return new ItemInfo(player.getInventory().getAccessory(), true, "accessory");
+        }
+        try {
+            int num = Integer.parseInt(id);
+            return new ItemInfo(player.getInventory().getItems().get(num),
+                    false, Integer.toString(num + 1));
+        } catch (Exception e) {
+            System.err.println("Inventory error");
+            return null;
+        }
     }
 
     @Override

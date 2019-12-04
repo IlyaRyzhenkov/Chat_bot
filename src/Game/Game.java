@@ -174,6 +174,7 @@ public class Game {
     }
 
     private synchronized void inventory(Player player, String message) {
+        System.out.println(message);
         if (!player.isInventoryOpen()) {
             this.console.sendMessage(new Message(player.getId(),
                     "Inventory opened.\n" + this.inventoryController.getHelpMessage()));
@@ -186,8 +187,7 @@ public class Game {
                         this.inventoryController.getItemInfo(player, Integer.parseInt(command[1]))));
                 break;
             case ("/inv"):
-                this.console.sendMessage(new Message(player.getId(),
-                        this.inventoryController.getInventoryInfo(player)));
+                this.console.sendInventoryInfo(player.getId(), this.inventoryController.getInventoryInfo(player));
                 break;
             case ("/use"):
                 this.console.sendMessage(new Message(player.getId(),
@@ -207,6 +207,9 @@ public class Game {
                 break;
             case ("/back"):
                 player.closeInventory();
+                break;
+            case ("/item"):
+                this.console.sendItemInfo(player.getId(), this.inventoryController.getItemInfoByButton(player, command[1]));
                 break;
             default:
                 this.console.sendMessage(new Message(player.getId(), "Try again."));

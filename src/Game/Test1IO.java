@@ -1,6 +1,8 @@
 package Game;
 
 import Event.EventInfo;
+import Item.ItemInfo;
+import Player.InventoryInfo;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,16 @@ public class Test1IO implements OInterface, ConsoleInInterface {
             message += (i + 1) + ". " + info.getAnswers()[i].getText() + "\n";
         }
         receivedReplies.add(message);
+    }
+
+    @Override
+    public void sendInventoryInfo(String player, InventoryInfo info) {
+
+    }
+
+    @Override
+    public void sendItemInfo(String player, ItemInfo info) {
+
     }
 
     public Message getMessage() {
