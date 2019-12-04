@@ -27,7 +27,13 @@ public class ConsoleIO implements OInterface, ConsoleInInterface {
 
     @Override
     public void sendInventoryInfo(String player, InventoryInfo info) {
-
+        System.out.println(info.getPlayerInfo());
+        System.out.println("Weapon: " + (info.getWeapon() == null ? "" : info.getWeapon().getName()));
+        System.out.println("Suit: " + (info.getSuit() == null ? "" : info.getSuit().getName()));
+        System.out.println("Accessory: " + (info.getAccessory() == null ? "" : info.getAccessory().getName()));
+        for (int i = 0; i < info.getItems().size(); i++) {
+            System.out.println((i + 1) + ". " + info.getItems().get(i).getName());
+        }
     }
 
     @Override
