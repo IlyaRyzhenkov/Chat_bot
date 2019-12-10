@@ -1,0 +1,25 @@
+{
+  "id": "Battle/Attack",
+  "name": "Схватка. Атака",
+  "text": "В атаку!",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "Быстрый удар",
+      "id": "agility",
+      "dependencies": []
+    },
+    {
+      "text": "Сильный удар",
+      "id": "strength",
+      "dependencies": []
+    },
+    {
+      "text": "Точный удар удар",
+      "id": "attention",
+      "dependencies": []
+    },
+  ]
+}

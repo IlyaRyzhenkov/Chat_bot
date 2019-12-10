@@ -1,4 +1,5 @@
 package Game;
+import AlternativeInteractionControllers.FightController.Arena;
 import AlternativeInteractionControllers.InventoryController.InventoryController;
 import AlternativeInteractionControllers.InventoryController.IInventoryController;
 import Checker.IChecker;
@@ -28,6 +29,7 @@ public class Game {
     private IInventoryController inventoryController;
     private Event currentEvent;
     private IChecker checker;
+    private Arena arena;
     private HashMap<String, Player> playerTable;
 
     private boolean isGameRunning;
@@ -36,6 +38,7 @@ public class Game {
     public Game(OInterface io, IEventStorage loader, ISaveLoader saveLoader, IChecker checker, IItemStorage itemStorage) {
         this.console = io;
         this.inventoryController = new InventoryController();
+        this.arena = new Arena();
         this.checker = checker;
         this.itemStorage = itemStorage;
         this.eventStorage = loader;
@@ -68,8 +71,6 @@ public class Game {
         if(reply == null)
             return;
 
-
-
         if(this.currentEvent.getClass() == CheckEvent.class) {
             reply = this.checker.check(player.getAttributeDiceSet(((CheckEvent)currentEvent).getAttribute()),
                     ((CheckEvent) this.currentEvent).getDifficulty())
@@ -99,6 +100,7 @@ public class Game {
         else{
             nextEventId = this.currentEvent.getId();
         }
+
         if(nextEventId.isEmpty()) {
             if(!player.getEventStack().empty()) {
                 this.currentEvent = this.eventStorage.getById(player.getEventStack().pop(), player.getImportantData());
@@ -109,7 +111,13 @@ public class Game {
                 stopGame(player);
             return;
         }
-        Event nextEvent = this.eventStorage.getById(nextEventId, player.getImportantData());
+
+
+        Event nextEvent;
+        if(enterTheArena(player, message.getMessage()))
+            nextEvent = this.eventStorage.getById("Battle/wait", player.getImportantData());
+        else
+            nextEvent = this.eventStorage.getById(nextEventId, player.getImportantData());
         if(nextEvent == null){
             return;
         }
@@ -121,6 +129,14 @@ public class Game {
         sendEvent(player, nextEvent);
         player.setCurrentEvent(nextEventId);
 
+    }
+
+    private boolean enterTheArena(Player player, String message) {
+        if(message.compareTo("%arena%") == 0) {
+            arena.addPlayer(player);
+            return true;
+        }
+        return false;
     }
 
     private boolean handleMessage(Player player, String message) {
@@ -228,6 +244,8 @@ public class Game {
                     info.getPlayerAttributes().getOrDefault("strength", 1),
                     info.getPlayerAttributes().getOrDefault("communication", 1),
                     info.getPlayerAttributes().getOrDefault("attention", 1) ,
+                    info.getPlayerAttributes().getOrDefault("endurance", 1),
+                    info.getPlayerAttributes().getOrDefault("agility", 1),
                     info.getPlayerAttributes().getOrDefault("luck", 1),
                     info.getPlayerHp(), info.getMaxPlayerHp(), items);
             player.getInventory().setWeapon((Weapon)itemStorage.getById(info.getPlayerWeaponId()));
@@ -257,7 +275,7 @@ public class Game {
     }
 
     private synchronized void createPlayer(String playerID) {
-        Player player = new Player(5, 5, 5, 5, 5,5, 10,
+        Player player = new Player(5, 5, 5, 5, 5, 5, 5,5, 10,
                 new ArrayList<Item>() {
                     {
                         add(itemStorage.getById("Single/AidKit"));

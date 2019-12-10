@@ -1,0 +1,25 @@
+{
+  "id": "Battle/Wait",
+  "name": "Схватка. Ожидание противника",
+  "text": "Подождите, пока на арену выйдет кто-нибудь ещё",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "Быстрый удар",
+      "id": "agility",
+      "dependencies": []
+    },
+    {
+      "text": "Сильный удар",
+      "id": "strength",
+      "dependencies": []
+    },
+    {
+      "text": "Точный удар удар",
+      "id": "",
+      "dependencies": []
+    },
+  ]
+}

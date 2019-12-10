@@ -1,0 +1,25 @@
+{
+  "id": "Battle/defence",
+  "name": "Схватка. Защита",
+  "text": "Поднять щиты!",
+  "importance": false,
+  "parent": false,
+  "type": "simple",
+  "answers": [
+    {
+      "text": "Уклонение",
+      "id": "agility",
+      "dependencies": []
+    },
+    {
+      "text": "Блок",
+      "id": "strength",
+      "dependencies": []
+    },
+    {
+      "text": "Парирование",
+      "id": "attention",
+      "dependencies": []
+    },
+  ]
+}

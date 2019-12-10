@@ -9,6 +9,7 @@ public class EldritchHorrorChecker implements IChecker {
     public EldritchHorrorChecker() {
         dice = new Dice();
     }
+
     public boolean check(String diceSequence, int difficulty) {
         return roll(diceSequence) >= difficulty;
     }

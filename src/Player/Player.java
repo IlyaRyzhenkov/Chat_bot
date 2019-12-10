@@ -19,8 +19,10 @@ public class Player {
     private int hp;
     private int maxHp;
     private Inventory inventory;
+    private PlayerState state;
 
-    public Player(int knowledge, int strength, int communication, int attention, int luck, int hp, int maxHp, ArrayList<Item> items) {
+
+    public Player(int knowledge, int strength, int communication, int attention, int endurance, int agility, int luck, int hp, int maxHp, ArrayList<Item> items) {
         this.hp = hp;
         this.maxHp = maxHp;
         this.isInventoryOpen = false;
@@ -33,10 +35,16 @@ public class Player {
                 put("strength", strength);
                 put("communication", communication);
                 put("attention", attention);
+                put("agility", agility);
+                put("endurance", endurance);
                 put("luck", luck);
             }
         };
     }
+
+    public PlayerState getState() { return state; }
+
+    public void setPlayerState(PlayerState state) { this.state = state; }
 
     public boolean isInventoryOpen() { return this.isInventoryOpen; }
 
@@ -46,6 +54,8 @@ public class Player {
 
     public void hit(int dmg) {
         this.hp = Math.max(0, getHp() - dmg);
+        if(this.hp == 0)
+            this.state = PlayerState.Dead;
     }
 
     public void heal(int hp) {

@@ -1,6 +1,6 @@
 package Checker;
 
 public interface IChecker {
-    boolean check(String checkParams, int difficulty);
-    int roll(String checkParams);
+    boolean check(String diceSequence, int difficulty);
+    int roll(String diceSequence);
 }
