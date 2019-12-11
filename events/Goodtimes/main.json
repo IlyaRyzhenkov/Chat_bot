@@ -27,6 +27,11 @@
       ]
     },
     {
+      "text": "На арену",
+      "id": "Goodtimes/arena",
+      "dependencies": []
+    },
+    {
       "text": "Подробнее про Гудтаймс",
       "id": "Goodtimes/info",
       "dependencies": []

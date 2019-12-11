@@ -7,6 +7,7 @@ import Storage.ItemStorage;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -27,7 +28,16 @@ public class InventoryControllerTest {
                 add(storage.getById("Outfitted/Accessory/TestAccessory"));
             }
         };
-        player = new Player(1, 1, 1, 1, 1, 1, 1, 1, 1, itemKit);
+        player = new Player(new HashMap<String, Integer>() {
+            {
+                put("knowledge", 1);
+                put("strength", 1);
+                put("attention", 1);
+                put("communication", 1);
+                put("luck", 1);
+                put("agility", 1);
+            }
+        }, 1, 1, itemKit);
     }
 
     @Test
@@ -47,6 +57,7 @@ public class InventoryControllerTest {
                 " Характеристики:\n" +
                 "  Знание: 1\n" +
                 "  Сила: 1\n" +
+                "  Ловкость: 1\n" +
                 "  Общение: 1\n" +
                 "  Внимание: 1\n" +
                 "  Удача: 1\n" +
