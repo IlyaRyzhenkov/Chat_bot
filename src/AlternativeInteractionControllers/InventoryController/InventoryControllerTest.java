@@ -27,7 +27,7 @@ public class InventoryControllerTest {
                 add(storage.getById("Outfitted/Accessory/TestAccessory"));
             }
         };
-        player = new Player(1, 1, 1, 1, 1, 1, 1, itemKit);
+        player = new Player(1, 1, 1, 1, 1, 1, 1, 1, 1, itemKit);
     }
 
     @Test
