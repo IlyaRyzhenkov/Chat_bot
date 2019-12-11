@@ -118,9 +118,15 @@ public class Game {
             inBattle(player, nextEventId);
             return;
         }
-        Event nextEvent = enterTheArena(player, nextEventId)
-                    ? this.eventStorage.getById("Battle/wait", player.getImportantData())
-                    : this.eventStorage.getById(nextEventId, player.getImportantData());
+        if(nextEventId.compareTo("%arena%") == 0)
+            enterTheArena(player);
+        Event nextEvent;
+        if(player.getState() == PlayerState.InBattle)
+            return;
+        if(player.getState() == PlayerState.OnArena)
+            nextEvent = this.eventStorage.getById("Battle/wait", player.getImportantData());
+        else
+            nextEvent = this.eventStorage.getById(nextEventId, player.getImportantData());
         if(nextEvent == null){
             return;
         }
@@ -133,7 +139,7 @@ public class Game {
         player.setCurrentEvent(nextEventId);
     }
 
-    private synchronized boolean inBattle(Player player, String attribute) {
+    private boolean inBattle(Player player, String attribute) {
         Battle battle = arena.getBattleByPlayer(player);
         console.sendMessage(new Message(player.getId(), battle.setAttribute(player, attribute)));
         if(battle.isBattlePhaseReady()) {
@@ -143,32 +149,34 @@ public class Game {
             if(!battle.getAttacker().isAlive()) {
                 stopGame(battle.getAttacker());
                 battle.getDefender().setCurrentEvent(battle.getDefender().getEventStack().pop());
+                battle.getDefender().setPlayerState(PlayerState.InGame);
+                sendEvent(battle.getDefender(), eventStorage.getById(battle.getDefender().getCurrentEvent(), battle.getDefender().getImportantData()));
                 return true;
             }
             String s = battle.getDefender().getCurrentEvent();
             battle.getDefender().setCurrentEvent(battle.getAttacker().getCurrentEvent());
             battle.getAttacker().setCurrentEvent(s);
+            sendEvent(battle.getAttacker(), eventStorage.getById(battle.getAttacker().getCurrentEvent(), battle.getAttacker().getImportantData()));
+            sendEvent(battle.getDefender(), eventStorage.getById(battle.getDefender().getCurrentEvent(), battle.getDefender().getImportantData()));
             return true;
         }
         return false;
     }
 
 
-    private synchronized boolean enterTheArena(Player player, String message) {
-        if(message.compareTo("%arena%") == 0) {
-            player.setPlayerState(PlayerState.OnArena);
-            if(arena.addPlayer(player)) {
-                Battle battle = arena.getBattleByPlayer(player);
-                battle.getAttacker().setPlayerState(PlayerState.InBattle);
-                battle.getDefender().setPlayerState(PlayerState.InBattle);
-                battle.getAttacker().setCurrentEvent("Battle/attack");
-                battle.getDefender().setCurrentEvent("Battle/defence");
-                sendEvent(battle.getAttacker(), eventStorage.getById(battle.getAttacker().getCurrentEvent(), battle.getAttacker().getImportantData()));
-                sendEvent(battle.getDefender(), eventStorage.getById(battle.getDefender().getCurrentEvent(), battle.getDefender().getImportantData()));
-            }
-            return true;
+    private boolean enterTheArena(Player player) {
+        player.setPlayerState(PlayerState.OnArena);
+
+        if (arena.addPlayer(player)) {
+            Battle battle = arena.getBattleByPlayer(player);
+            battle.getAttacker().setPlayerState(PlayerState.InBattle);
+            battle.getDefender().setPlayerState(PlayerState.InBattle);
+            battle.getAttacker().setCurrentEvent("Battle/attack");
+            battle.getDefender().setCurrentEvent("Battle/defence");
+            sendEvent(battle.getAttacker(), eventStorage.getById(battle.getAttacker().getCurrentEvent(), battle.getAttacker().getImportantData()));
+            sendEvent(battle.getDefender(), eventStorage.getById(battle.getDefender().getCurrentEvent(), battle.getDefender().getImportantData()));
         }
-        return false;
+        return true;
     }
 
     private boolean handleMessage(Player player, String message) {
@@ -309,7 +317,7 @@ public class Game {
                 put("luck", 5);
                 put("agility", 5);
             }
-        },5, 10,
+        },1, 10,
                 new ArrayList<Item>() {
                     {
                         add(itemStorage.getById("Single/AidKit"));

@@ -99,7 +99,8 @@ public class Battle {
         Player p = defender;
         defender = attacker;
         attacker = p;
-
+        this.defenceAttribute = "";
+        this.attackAttribute = "";
     }
 
     public String getEventIdByPlayerRole(Player player) {
@@ -108,15 +109,15 @@ public class Battle {
         return "Exceptions/damaged_file";
     }
 
-    public String getAttackerMessage() {
+    public String getDefenderMessage() {
         return "Вы проводите " + (dmg == 0 ? "без" : "") + "успешную атаку. "
-                + (attacker.getInventory().getWeapon() == null ? "Ваша рука" : attacker.getInventory().getWeapon().getName())
+                + (defender.getInventory().getWeapon() == null ? "Ваша рука" : defender.getInventory().getWeapon().getName())
                 + " - это последнее, что видит ваш оппонент, прежде чем получить " + dmg + " урона. У него остаётся "
-                + defender.getHp() + "hp.";
+                + attacker.getHp() + "hp.";
     }
 
-    public String getDefenderMessage() {
-        return "Вам " + (dmg == 0 ? "" : "не ") + "удаётся избежать атаки. Вы плучаете " + dmg + " урона. Ваше здоровье: " + defender.getHp() + "hp.";
+    public String getAttackerMessage() {
+        return "Вам " + (dmg == 0 ? "" : "не ") + "удаётся избежать атаки. Вы плучаете " + dmg + " урона. Ваше здоровье: " + attacker.getHp() + "hp.";
     }
 
     public Player getAttacker() { return attacker; }
