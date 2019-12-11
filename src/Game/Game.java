@@ -1,5 +1,6 @@
 package Game;
 import AlternativeInteractionControllers.FightController.Arena;
+import AlternativeInteractionControllers.FightController.Battle;
 import AlternativeInteractionControllers.InventoryController.InventoryController;
 import AlternativeInteractionControllers.InventoryController.IInventoryController;
 import Checker.IChecker;
@@ -10,6 +11,7 @@ import Storage.IEventStorage;
 import Item.Item;
 import Item.Accessory;
 import Player.Player;
+import Player.PlayerState;
 import SaveLoader.GameInfo;
 import SaveLoader.ISaveLoader;
 import Item.Suit;
@@ -112,12 +114,13 @@ public class Game {
             return;
         }
 
-
-        Event nextEvent;
-        if(enterTheArena(player, message.getMessage()))
-            nextEvent = this.eventStorage.getById("Battle/wait", player.getImportantData());
-        else
-            nextEvent = this.eventStorage.getById(nextEventId, player.getImportantData());
+        if(player.getState() == PlayerState.InBattle) {
+            inBattle(player, nextEventId);
+            return;
+        }
+        Event nextEvent = enterTheArena(player, nextEventId)
+                    ? this.eventStorage.getById("Battle/wait", player.getImportantData())
+                    : this.eventStorage.getById(nextEventId, player.getImportantData());
         if(nextEvent == null){
             return;
         }
@@ -128,12 +131,41 @@ public class Game {
             return;
         sendEvent(player, nextEvent);
         player.setCurrentEvent(nextEventId);
-
     }
 
-    private boolean enterTheArena(Player player, String message) {
+    private synchronized boolean inBattle(Player player, String attribute) {
+        Battle battle = arena.getBattleByPlayer(player);
+        console.sendMessage(new Message(player.getId(), battle.setAttribute(player, attribute)));
+        if(battle.isBattlePhaseReady()) {
+            battle.fight();
+            console.sendMessage(new Message(battle.getDefender().getId(), battle.getDefenderMessage()));
+            console.sendMessage(new Message(battle.getAttacker().getId(), battle.getAttackerMessage()));
+            if(!battle.getAttacker().isAlive()) {
+                stopGame(battle.getAttacker());
+                battle.getDefender().setCurrentEvent(battle.getDefender().getEventStack().pop());
+                return true;
+            }
+            String s = battle.getDefender().getCurrentEvent();
+            battle.getDefender().setCurrentEvent(battle.getAttacker().getCurrentEvent());
+            battle.getAttacker().setCurrentEvent(s);
+            return true;
+        }
+        return false;
+    }
+
+
+    private synchronized boolean enterTheArena(Player player, String message) {
         if(message.compareTo("%arena%") == 0) {
-            arena.addPlayer(player);
+            player.setPlayerState(PlayerState.OnArena);
+            if(arena.addPlayer(player)) {
+                Battle battle = arena.getBattleByPlayer(player);
+                battle.getAttacker().setPlayerState(PlayerState.InBattle);
+                battle.getDefender().setPlayerState(PlayerState.InBattle);
+                battle.getAttacker().setCurrentEvent("Battle/attack");
+                battle.getDefender().setCurrentEvent("Battle/defence");
+                sendEvent(battle.getAttacker(), eventStorage.getById(battle.getAttacker().getCurrentEvent(), battle.getAttacker().getImportantData()));
+                sendEvent(battle.getDefender(), eventStorage.getById(battle.getDefender().getCurrentEvent(), battle.getDefender().getImportantData()));
+            }
             return true;
         }
         return false;
@@ -240,14 +272,7 @@ public class Game {
             ArrayList<Item> items = new ArrayList<Item>();
             for(String id: info.getPlayerItems())
                 items.add(this.itemStorage.getById(id));
-            Player player = new Player(info.getPlayerAttributes().getOrDefault("knowledge", 1),
-                    info.getPlayerAttributes().getOrDefault("strength", 1),
-                    info.getPlayerAttributes().getOrDefault("communication", 1),
-                    info.getPlayerAttributes().getOrDefault("attention", 1) ,
-                    info.getPlayerAttributes().getOrDefault("endurance", 1),
-                    info.getPlayerAttributes().getOrDefault("agility", 1),
-                    info.getPlayerAttributes().getOrDefault("luck", 1),
-                    info.getPlayerHp(), info.getMaxPlayerHp(), items);
+            Player player = new Player(info.getPlayerAttributes(), info.getPlayerHp(), info.getMaxPlayerHp(), items);
             player.getInventory().setWeapon((Weapon)itemStorage.getById(info.getPlayerWeaponId()));
             player.getInventory().setAccessory((Accessory)itemStorage.getById(info.getPlayerAccessoryId()));
             player.getInventory().setSuit((Suit)itemStorage.getById(info.getPlayerSuitId()));
@@ -275,7 +300,16 @@ public class Game {
     }
 
     private synchronized void createPlayer(String playerID) {
-        Player player = new Player(5, 5, 5, 5, 5, 5, 5,5, 10,
+        Player player = new Player(new HashMap<String, Integer>() {
+            {
+                put("knowledge", 5);
+                put("strength", 5);
+                put("attention", 5);
+                put("communication", 5);
+                put("luck", 5);
+                put("agility", 5);
+            }
+        },5, 10,
                 new ArrayList<Item>() {
                     {
                         add(itemStorage.getById("Single/AidKit"));

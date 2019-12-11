@@ -1,9 +1,6 @@
 package Player;
 
 import Item.Item;
-import Item.Weapon;
-import Item.Accessory;
-import Item.Suit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,24 +19,14 @@ public class Player {
     private PlayerState state;
 
 
-    public Player(int knowledge, int strength, int communication, int attention, int endurance, int agility, int luck, int hp, int maxHp, ArrayList<Item> items) {
+    public Player(HashMap<String, Integer> attributes, int hp, int maxHp, ArrayList<Item> items) {
         this.hp = hp;
         this.maxHp = maxHp;
         this.isInventoryOpen = false;
         this.importantData = new HashMap<String, String>();
         this.eventStack = new Stack<>();
         this.inventory = new Inventory(items);
-        this.attributes = new HashMap<String, Integer>() {
-            {
-                put("knowledge", knowledge);
-                put("strength", strength);
-                put("communication", communication);
-                put("attention", attention);
-                put("agility", agility);
-                put("endurance", endurance);
-                put("luck", luck);
-            }
-        };
+        this.attributes = new HashMap<String, Integer>(attributes);
     }
 
     public PlayerState getState() { return state; }
@@ -156,6 +143,12 @@ public class Player {
                 + accessoryAttrib.getOrDefault("strength", 0)
                 + suitAttrib.getOrDefault("strength", 0)
                 + weaponAttrib.getOrDefault("strength", 0));
+        builder.append("\n  Ловкость: ");
+        builder.append(this.getAttribute("agility")
+                + accessoryAttrib.getOrDefault("agility", 0)
+                + suitAttrib.getOrDefault("agility", 0)
+                + weaponAttrib.getOrDefault("agility", 0));
+
         builder.append("\n  Общение: ");
         builder.append(this.getAttribute("communication")
                 + accessoryAttrib.getOrDefault("communication", 0)

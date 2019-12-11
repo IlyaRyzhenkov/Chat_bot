@@ -96,6 +96,16 @@ public class Battle {
                 + rps.get(attackAttribute).getOrDefault(defenceAttribute, 0) + "d6");
         dmg = Math.max(0, attackValue - defenceValue);
         defender.hit(dmg);
+        Player p = defender;
+        defender = attacker;
+        attacker = p;
+
+    }
+
+    public String getEventIdByPlayerRole(Player player) {
+        if(player.equals(attacker)) return "Battle/attack";
+        if(player.equals(defender)) return "Battle/defence";
+        return "Exceptions/damaged_file";
     }
 
     public String getAttackerMessage() {

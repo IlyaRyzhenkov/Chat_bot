@@ -1,5 +1,6 @@
 package AlternativeInteractionControllers.FightController;
 
+import Game.OInterface;
 import Player.Player;
 import Player.PlayerState;
 
@@ -17,17 +18,21 @@ public class Arena {
         players = new ArrayDeque<Player>();
     }
 
-    public void addPlayer(Player player) {
+    public boolean addPlayer(Player player) {
         players.add(player);
-        player.setPlayerState(PlayerState.OnArena);
-        this.tryStartBattle();
+        return this.tryStartBattle();
     }
 
     public int getQueueSize() {
         return players.size();
     }
 
-
+    public Battle getBattleByPlayer(Player player) {
+        for(Battle battle: battles)
+            if((battle.getAttacker().equals(player)) || (battle.getDefender().equals(player)))
+                return battle;
+        return null;
+    }
 
     public boolean tryStartBattle() {
         if(players.size() >= 2) {
