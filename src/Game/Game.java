@@ -230,7 +230,6 @@ public class Game {
     }
 
     private synchronized void inventory(Player player, String message) {
-        System.out.println(message);
         if (!player.isInventoryOpen()) {
             this.console.sendMessage(new Message(player.getId(),
                     "Inventory opened.\n" + this.inventoryController.getHelpMessage()));
